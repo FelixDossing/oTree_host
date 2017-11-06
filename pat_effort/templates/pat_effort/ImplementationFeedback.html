@@ -2,7 +2,7 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Results
+    Implementation Results
 {% endblock %}
 
 {% block content %}
@@ -74,7 +74,7 @@
     <td>Probability of partner choice</td>
     <td>{{ player.paternalee_decision4|floatformat:2 }}</td>
     <td>{% if player.choice24_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
-    <td><strong>{% if player.choice24_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button. 
+    <td><strong>{% if player.choice24_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button.
     {% if player.partner_given_choice == True %}<br>Player {{ player.partner_id }} chose {% if player.partner_choice == False %}not{% endif %} to remove the button{% endif %}{% endif %}</strong></td>
   </tr>
 </table>

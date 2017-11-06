@@ -42,24 +42,25 @@ class PaternaleeDecisionPage(Page):
 class CommitDecisionPageSecond(Page):
 
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.player.role() == 'paternalee_first'
 
     form_model = models.Player
     form_fields = ['commit_decision1', 'commit_decision2', 'commit_decision3', 'commit_decision4']
-
-
-class DecisionForPartner(Page):
-    form_model = models.Player
-    form_fields = ['decisionForPartner']
 
 class PartnerBeliefPage(Page):
     form_model = models.Player
     form_fields = ['partner_belief']
 
+class DecisionForPartner(Page):
+    form_model = models.Player
+    form_fields = ['decisionForPartner']
+
+
 class DecisionWaitPage(WaitPage):
 
     def after_all_players_arrive(self):
         self.group.handleImplementation()
+
 
 class ImplementationFeedback(Page):
     pass
@@ -70,7 +71,7 @@ class TaskPrep(Page):
 
 class RealEffortPage(Page):
 
-    timeout_seconds = 5
+    timeout_seconds = 400
 
     form_model = models.Player
     form_fields = ['tasksCompleted']
@@ -93,9 +94,9 @@ page_sequence = [
     CommitDecisionPageFirst,
     PaternaleeDecisionPage,
     CommitDecisionPageSecond,
+    PartnerBeliefPage,
     DecisionForPartner,
     DecisionWaitPage,
-    PartnerBeliefPage,
     ImplementationFeedback,
     TaskPrep,
     RealEffortPage,

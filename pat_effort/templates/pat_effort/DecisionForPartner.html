@@ -7,6 +7,9 @@
 
 {% block content %}
 
+    <p>
+      You may now decide whether you wish to remove the <span class="btn btn-primary">surf the web</span>-button from the slider task screen of <strong>Player {{ player.partner_id }}</strong>.
+    </p>
     {% formfield player.decisionForPartner with label="Do you wish to remove the 'surf the web'-button from your partner's screen?" %}
 
     {% next_button %}

@@ -17,8 +17,8 @@
   <div class="slider_row" id="slider_row1"></div>
   <div class="slider_row" id="slider_row2"></div>
   <div class="slider_row" id="slider_row3"></div>
-  <p id="taskCountText">Points earned: <span id="taskCount">0</span></p>
 </div>
+<p id="taskCountText">Points earned: <span id="taskCount">0</span></p>
 
 {% block styles %}
 
@@ -32,7 +32,7 @@
   }
 
   #otree-timeout {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 
   input[type=range] {
@@ -56,20 +56,19 @@
   }
 
   #surf_button {
-    font-size: 1.7em;
+    font-size: 1.5em;
     display:table;
     margin: 0 auto;
-
   }
 
   #slider_task_div {
-    height: 600px;
+    height: 550px;
     width: 100%;
     overflow:hidden;
   }
 
   #taskCountText {
-    font-size: 3em;
+    font-size: 2em;
     display:table;
     margin: 0 auto;
   }
@@ -186,7 +185,7 @@ $('#surf_button').click(function() {
         winSurf.close();
       }
     }
-  }, 400);
+  }, 200);
 
   // Close down task
   $('#slider_task_div').hide();

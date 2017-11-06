@@ -17,8 +17,8 @@
   <div class="slider_row" id="slider_row1"></div>
   <div class="slider_row" id="slider_row2"></div>
   <div class="slider_row" id="slider_row3"></div>
-  <p id="taskCount">0</p>
 </div>
+<p id="taskCountText">Points earned: <span id="taskCount">0</span></p>
 
 {% block styles %}
 
@@ -52,22 +52,25 @@
   }
 
   #surf_button {
-    font-size: 1.7em;
+    font-size: 1.5em;
     display:table;
     margin: 0 auto;
   }
 
   #slider_task_div {
-    height: 600px;
+    height: 550px;
     width: 100%;
     overflow:hidden;
   }
 
-  #taskCount {
-    font-size: 4em;
-    display:table;
-    margin: 0 auto;
+  .otree-timer {
+    display: none;
   }
+
+  /*#otree-timeout {
+    font-size: 1.3em;
+  }*/
+
 
   .slider {
     margin: 10px 5px 10px 20px;
@@ -132,8 +135,6 @@
 
 <script>
 
-var button_present = {{ player.button_present|json }}
-
 var round_number = {{ player.round_number|json }}
 
 var tasksCompleted = 0;
@@ -144,11 +145,7 @@ var count = 0;
 var pagesStorage = [sessionStorage.pagesCompletedRound1, sessionStorage.pagesCompletedRound2, sessionStorage.pagesCompletedRound3, sessionStorage.pagesCompletedRound4]
 var surfingStorage = [sessionStorage.surfingTrial, sessionStorage.surfingRound1, sessionStorage.surfingRound2, sessionStorage.surfingRound3, sessionStorage.surfingRound4]
 
-
-if (button_present == false) {
-  $('#surf_button').css('visibility', 'hidden');
-}
-
+// Set score correctly if page is reloaded
 if ($('#otree-title').html().includes('Trial')) {
   if(sessionStorage.pagesCompletedTrial) {
     pagesCompleted = parseInt(sessionStorage.pagesCompletedTrial);
@@ -163,6 +160,7 @@ else {
     }
   }
 }
+
 
 setCompletedTasks();
 
@@ -179,16 +177,14 @@ else {
 
 //Surf the web button-action
 $('#surf_button').click(function() {
-
-  // Open and close browser
   var winSurf = window.open('http://google.com', '_blank');
   setInterval(function() {
     if (parseInt($('.otree-timer__time-left').html().substring(0)) < 1) {
-      if (parseInt($('.otree-timer__time-left').html().substring(2,4)) < 3) {
+      if (parseInt($('.otree-timer__time-left').html().substring(2,4)) < 2) {
         winSurf.close();
       }
     }
-  }, 1000);
+  }, 200);
 
   // Close down task
   $('#slider_task_div').hide();
