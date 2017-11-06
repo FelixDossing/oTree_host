@@ -1,0 +1,47 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<!-- <table class="table">
+
+</table>
+
+
+<table class="table">
+  <tr>
+    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+  </tr>
+  {% for field in form %}
+  <tr>
+    <td><input type="radio" name="{{ field.html_name }}" value="0" required {% if field.value|stringformat:"s" == '0' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="1" required {% if field.value|stringformat:"s" == '1' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="2" required {% if field.value|stringformat:"s" == '2' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="3" required {% if field.value|stringformat:"s" == '3' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="4" required {% if field.value|stringformat:"s" == '4' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="5" required {% if field.value|stringformat:"s" == '5' %}checked{% endif %}></td>
+  </tr>
+  {% endfor %}
+<table class="table"> -->
+
+{% for field in form %}
+{% formfield field %}
+{% endfor %}
+
+{% next_button %}
+
+{% endblock %}
+
+{% block styles %}
+<style>
+
+.form-group {
+  padding-top: 30px;
+}
+
+</style>
+{% endblock %}

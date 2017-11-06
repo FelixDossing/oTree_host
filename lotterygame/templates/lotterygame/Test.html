@@ -1,0 +1,64 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test
+{% endblock %}
+
+{% block content %}
+
+{% include "lotterygame/Calculator.html" %}
+
+<p>
+  Please answer the following questions as best as possible. One player will be selected to recieve one point
+  for each question answered correcly. You have 25 minutes in total to answer the quiz.<br><br>
+</p>
+
+  <p><strong>1</strong></p>
+  {% formfield player.submitted_answer1 with label=player.question1 %}
+  <p><strong>2</strong></p>
+  {% formfield player.submitted_answer2 with label=player.question2 %}
+  <p><strong>3</strong></p>
+  {% formfield player.submitted_answer3 with label=player.question3 %}
+  <p><strong>4</strong></p>
+  {% formfield player.submitted_answer4 with label=player.question4 %}
+  <p><strong>5</strong></p>
+  {% formfield player.submitted_answer5 with label=player.question5 %}
+  <p><strong>6</strong></p>
+  {% formfield player.submitted_answer6 with label=player.question6 %}
+  <p><strong>7</strong></p>
+  {% formfield player.submitted_answer7 with label=player.question7 %}
+  <p><strong>8</strong></p>
+  {% formfield player.submitted_answer8 with label=player.question8 %}
+  <p><strong>9</strong></p>
+  {% formfield player.submitted_answer9 with label=player.question9 %}
+  <p><strong>10</strong></p>
+  {% formfield player.submitted_answer10 with label=player.question10 %}
+  <p><strong>11</strong></p>
+  {% formfield player.submitted_answer11 with label=player.question11 %}
+  <p><strong>12</strong></p>
+  {% formfield player.submitted_answer12 with label=player.question12 %}
+  <p><strong>13</strong></p>
+  {% formfield player.submitted_answer13 with label=player.question13 %}
+  <p><strong>14</strong></p>
+  {% formfield player.submitted_answer14 with label=player.question14 %}
+  <p><strong>15</strong></p>
+  {% formfield player.submitted_answer15 with label=player.question15 %}
+  <p><strong>16</strong></p>
+  {% formfield player.submitted_answer16 with label=player.question16 %}
+  <p><strong>17</strong></p>
+  {% formfield player.submitted_answer17 with label=player.question17 %}
+  <p><strong>18</strong></p>
+  {% formfield player.submitted_answer18 with label=player.question18 %}
+  <p><strong>19</strong></p>
+  {% formfield player.submitted_answer19 with label=player.question19 %}
+  <p><strong>20</strong></p>
+  {% formfield player.submitted_answer20 with label=player.question20 %}
+
+{% next_button %}
+
+<p>
+  Please wait for the time to run out.
+</p>
+
+{% endblock %}

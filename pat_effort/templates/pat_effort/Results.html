@@ -1,0 +1,43 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+
+<table class="table">
+  <tr>
+    <th>Round</th>
+    <th>Tasks completed</th>
+    <th>Choice cost</th>
+    <th>Earnings</th>
+    <th>Total earnings</th>
+    <th>Surf button on screen</th>
+  </tr>
+  {% for p in player.in_all_rounds %}
+  <tr>
+    <td>{{ p.round_number }}</td>
+    <td>
+      {{ p.tasksCompleted }}
+    </td>
+    <td>
+      {{ p.choice_cost }}
+    </td>
+    <td>
+      {{ p.payoff }}
+    </td>
+    <td>
+      {{ p.accumulated_payoff }} points
+    </td>
+    <td>
+      {% if p.button_present == True %}Yes{% else %}No{% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+
+    {% next_button %}
+{% endblock %}

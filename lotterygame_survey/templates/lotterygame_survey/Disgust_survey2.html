@@ -1,0 +1,44 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<p>
+  How disgusting would you find each of the following experiences?<br>
+  Please choose a number (0-4) to indicate your answer:<br><br>
+  0 = Not disgusting at all<br>
+  1 = Slightly disgusting<br>
+  2 = Moderately disgusting<br>
+  3 = Very disgusting<br>
+  4 = Extremely disgusting<br><br><br>
+</p>
+
+<table class="table">
+  <tr>
+    <th>Question</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+  </tr>
+  {% for field in form %}
+  <tr>
+    <td width="50%">
+      {{ field.help_text }}
+      {{ field.errors }}
+    </td>
+    <td><input type="radio" name="{{ field.html_name }}" value="0" required {% if field.value|stringformat:"s" == '0' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="1" required {% if field.value|stringformat:"s" == '1' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="2" required {% if field.value|stringformat:"s" == '2' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="3" required {% if field.value|stringformat:"s" == '3' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="4" required {% if field.value|stringformat:"s" == '4' %}checked{% endif %}></td>
+
+  </tr>
+  {% endfor %}
+<table class="table">
+
+
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% load otree_tags staticfiles %}
+
+<div id="calculator">
+  <textarea id="input_area"></textarea>
+  <div id=display_area><p id="output"></p></div>
+  <div id="instr"><p>You can perform factorial calculations (n!) by using the function fact() (fact(n))</p></div>
+</div>
+<div class="btn btn-primary" id="calc-hider">Hide/show calculator</div>
+
+
+{% block styles %}
+<style type="text/css">
+
+  #calculator {
+    height: 440px;
+    width: 400px;
+    background-color: black;
+    position:fixed;
+    right: 150px;
+    bottom: 140px;
+    overflow:hidden;
+  }
+  #input_area {
+    width: 400px;
+    height: 50px;
+    text-align: right;
+    background-color: rgb(235,235,235);
+    font-family: monospace;
+    padding-right: 10px;
+  }
+  #display_area {
+    width: 400px;
+    height: 350px;
+    background-color: black;
+    text-align: right;
+    font-family: monospace;
+    padding-right: 10px;
+    padding-top: 7px;
+  }
+  #instr {
+    background-color: rgb(235,235,235);
+    height: 40px;
+    width: 400px;
+    text-align: center;
+    font-family: monospace;
+    padding-right: 10px;
+  }
+  #calculation {
+    color: white;
+  }
+  #evaluation {
+    color: orange;
+  }
+  #calc-hider {
+    position:fixed;
+    bottom: 50px;
+    right: 150px;
+  }
+
+</style>
+{% endblock %}
+
+{% block script %}
+<script>
+
+var calc_visible = false;
+
+var input_area_selected = false;
+
+var last_input = 0;
+
+
+$("#calculator").toggle();
+$(document).ready(function() {
+
+  $("#calc-hider").click(function(e) {
+    if (calc_visible == false) {
+      calc_visible = true;
+      $("#input_area").focus();
+    }
+    else {
+      calc_visible = false;
+    }
+    $("#calculator").toggle('fast');
+  });
+
+  $('#input_area').click(function() {
+    input_area_selected = true;
+  })
+
+  $(document).keyup(function(eve) {
+    if(eve.which == 27 && calc_visible) {
+      calc_visible = false;
+      $("#calculator").toggle('fast');
+    }
+  });
+
+  var factorials_list = ["fact(0)","fact(1)","fact(2)","fact(3)","fact(4)","fact(5)","fact(6)","fact(7)",
+                       "fact(8)","fact(9)","fact(10)"]
+
+
+  $(document).keyup(function(event) {
+    if (calc_visible == true) {
+      if(event.which == 13) {
+
+        var input_seq = $("#input_area").val();
+        var evaluat;
+
+        last_input = input_seq;
+
+        function make_calculation(input) {
+          try {
+            evaluat = eval(input);
+          } catch(e) {
+
+            if (input.indexOf("fact(") != -1) {
+
+              var index_start = input.indexOf("fact(") + 5;
+              var index_end = input.indexOf(")");
+
+              try {
+                var number = String(eval(String(input.substring(index_start,index_end))));
+
+                if (eval(number) <= 20) {
+                  input = input.replace(input.substring(index_start,index_end), number);
+
+                  input = input.replace("fact(0)", "1");
+                  input = input.replace("fact(1)", "1");
+                  input = input.replace("fact(2)", "2");
+                  input = input.replace("fact(3)", "6");
+                  input = input.replace("fact(4)", "24");
+                  input = input.replace("fact(5)", "120");
+                  input = input.replace("fact(6)", "720");
+                  input = input.replace("fact(7)", "5040");
+                  input = input.replace("fact(8)", "40320");
+                  input = input.replace("fact(9)", "362880");
+                  input = input.replace("fact(10)", "3628800");
+
+                  input = input.replace("fact(11)", "39916800");
+                  input = input.replace("fact(12)", "479001600");
+                  input = input.replace("fact(13)", "6227020800");
+                  input = input.replace("fact(14)", "87178291200");
+                  input = input.replace("fact(15)", "1307674368000");
+                  input = input.replace("fact(16)", "20922789888000");
+                  input = input.replace("fact(17)", "355687428096000");
+                  input = input.replace("fact(18)", "6402373705728000");
+                  input = input.replace("fact(19)", "121645100408832000");
+                  input = input.replace("fact(20)", "2432902008176640000");
+
+                  make_calculation(input);
+                }
+                else {
+                  return undefined;
+                }
+              } catch(ev) {
+                return undefined;
+              }
+            }
+          }
+        }
+        make_calculation(input_seq);
+
+        $("#display_area").prepend('<p id="evaluation">'+evaluat+'</p>');
+        $('#display_area').prepend("<p id='calculation'>"+$("#input_area").val()+"</p>");
+        $('#input_area').val("");
+      }
+      else if (event.which == 38) {
+        $("#input_area").val(last_input)
+      }
+    }
+  });
+});
+
+</script>
+{% endblock %}

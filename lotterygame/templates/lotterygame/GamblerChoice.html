@@ -1,0 +1,78 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Blue player choice
+{% endblock %}
+
+{% block content %}
+
+    {% include 'lotterygame/Calculator.html' %}
+
+    <h3>Lottery 1</h3>
+    <p>
+      {{ player.lottery1 }}
+    </p>
+
+    {% if group.lev_gamble1 == -10 %}
+        <p>
+          Your partner has chosen to restict your lottery choice completely.
+        </p>
+        {% formfield group.gam_gamble1 with label="You are forced to choose the following:" %}
+    {% elif group.lev_gamble1 == 10 %}
+        <p>
+          Your partner has chosen to restrict your lottery choice completely.
+        {% formfield group.gam_gamble1 with label="You are forced to choose the following:" %}
+        </p>
+    {% elif group.lev_gamble1 < 0 %}
+        <p>
+          Your partner has chosen to put an upper limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble1 with label="How many points do you wish to bet?" %}
+    {% elif group.lev_gamble1 > 0 %}
+        <p>
+          Your partner has chosen to put a lower limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble1 with label="How many points do you wish to bet?" %}
+    {% elif group.lev_gamble1 == 0 %}
+        <p>
+          Your partner has chosen not to put a limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble1 with label="How many points do you wish to bet?" %}
+    {% endif %}
+
+    <h3>Lottery 2</h3>
+    <p>
+      {{ player.lottery2 }}
+    </p>
+
+    {% if group.lev_gamble2 == -10 %}
+        <p>
+          Your partner has chosen to restict your lottery choice completely.
+        </p>
+        {% formfield group.gam_gamble2 with label="You are forced to choose the following:" %}
+    {% elif group.lev_gamble2 == 10 %}
+        <p>
+          Your partner has chosen to restrict your lottery choice completely.
+        {% formfield group.gam_gamble2 with label="You are forced to choose the following:" %}
+        </p>
+    {% elif group.lev_gamble2 < 0 %}
+        <p>
+          Your partner has chosen to put an upper limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble2 with label="How many points do you wish to bet?" %}
+    {% elif group.lev_gamble2 > 0 %}
+        <p>
+          Your partner has chosen to put a lower limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble2 with label="How many points do you wish to bet?" %}
+    {% elif group.lev_gamble2 == 0 %}
+        <p>
+          Your partner has chosen not to put a limit on your lottery choice.
+        </p>
+        {% formfield group.gam_gamble2 with label="How many points do you wish to bet?" %}
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

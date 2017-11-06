@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+  <div id="instructions_div" class="instructions well well-1g">
+    <h3 id="ready_text">
+      Get ready for the task to start
+    </h3>
+
+  </div>
+
+  {% block style %}
+  <style>
+
+  #ready_text {
+    text-align: center;
+  }
+
+  </style>
+
+  {% endblock %}
+
+  {% block script %}
+    <script>
+
+    $('#otree-timeout:first-child').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
+
+    </script>
+  {% endblock %}
+
+{% endblock %}

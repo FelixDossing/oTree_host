@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.partner_belief with label="How likely (in percent) do you think it is, that your partner has chosen to remove the 'surf the web'-button from your screen?" %}
+
+    {% next_button %}
+
+{% endblock %}

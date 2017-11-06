@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Evaluation
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please state your level of agreement with the following statement{% if player.role == 'Gambler' %}s{% endif %}:
+</p>
+
+{% formfield player.outcome_happiness with label='"I am happy with my payoff"' %}
+
+{% if player.role == 'Gambler' %}
+{% formfield player.restriction_happiness with label='"I am happy with the restriction set by my partner"' %}
+{% else %}
+{% formfield player.restriction_happiness with label='"I am happy with the restriction I set on my partner"' %}
+{% endif %}
+
+    {% next_button %}
+
+{% endblock %}

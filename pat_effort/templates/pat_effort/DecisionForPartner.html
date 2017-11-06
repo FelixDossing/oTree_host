@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+
+    {% formfield player.decisionForPartner with label="Do you wish to remove the 'surf the web'-button from your partner's screen?" %}
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+
+<br>
+<table class="table">
+  <tr>
+    <th>Type</th>
+    <th>Outcome</th>
+    <th>Points wagered</th>
+    <th>Points Earned</th>
+  </tr>
+  <tr>
+    <th>Lottery 1</th>
+    <th>{% if group.lottery1_outcome == 1 %} Won {% elif group.lottery1_outcome == 0 %} Lost {% endif %}</th>
+    {% if player.role == 'Gambler' %}
+    <th>{% if player.restricted_choice == True %} {{ group.gam_gamble1 }} {% else %} {{ player.gam_gamble_free1 }} {% endif %}</th>
+    {% elif player.leviathan_gamble_bool == True %}
+    <th>{{ player.lev_gamble1_own }}</th>
+    {% else %}
+    <th></th>
+    {% endif %}
+    <th>{{ player.payoff_lottery1 }}</th>
+  </tr>
+  <tr>
+    <th>Lottery 2</th>
+    <th>{% if group.lottery2_outcome == 1 %} Won {% elif group.lottery2_outcome == 0 %} Lost {% endif %}</th>
+    {% if player.role == 'Gambler' %}
+    <th>{% if player.restricted_choice == True %} {{ group.gam_gamble2 }} {% else %} {{ player.gam_gamble_free2 }} {% endif %}</th>
+    {% elif player.leviathan_gamble_bool == True %}
+    <th>{{ player.lev_gamble2_own }}</th>
+    {% else %}
+    <th></th>
+    {% endif %}
+    <th>{{ player.payoff_lottery2 }}</th>
+  </tr>
+  {% if player.role == 'Leviathan' %}
+  <tr>
+    <th>Restrictor bonus</th>
+    <th></th>
+    <th></th>
+    <th>{{ Constants.leviathanfee }}</th>
+  </tr>
+  {% endif %}
+  <tr>
+    <th>Showup Fee</th>
+    <th></th>
+    <th></th>
+    <th>{{ Constants.showupfee }}</th>
+  <tr>
+    <th>Quiz bonus</th>
+    <th>{% if player.quiz_payoff_bool == True %} Won {% else %} Lost {% endif %}</th>
+    <th></th>
+    <th>{{ player.payoff_quiz }}</th>
+  </tr>
+  {% if player.role == 'Leviathan' %}
+  <tr>
+    <th>Bets added to payoff</th>
+    <th>{% if player.leviathan_gamble_bool == True %}Yes{% else %}No{% endif %}</th>
+    <th></th>
+    <th></th>
+  </tr>
+  {% endif %}
+  {% if player.role == 'Gambler' %}
+  <tr>
+    <th>Lottery choice restricted</th>
+    <th>{% if player.restricted_choice == False %}No{% elif player.restricted_choice == True %}Yes{% endif %}</th>
+    <th></th>
+    <th></th>
+  </tr>
+  {% endif %}
+  <tr>
+    <th>Total</th>
+    <th></th>
+    <th></th>
+    <th>{{ player.payoff }}</th>
+  </tr>
+</table>
+
+{% next_button %}
+{% endblock %}

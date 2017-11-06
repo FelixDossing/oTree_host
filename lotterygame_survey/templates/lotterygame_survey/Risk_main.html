@@ -1,0 +1,140 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please choose the amount of boxes you wish to open by clicking below.<br><br>
+</p>
+<p>
+  You have selected <span id="chosen" class="number">0</span> out of <span class="number">100</span> boxes.
+</p>
+
+<div id="bomber_box">
+</div>
+
+<p id="click-info" class="text-center"></p>
+
+<input type="hidden" name="boxes_opened" value="0" id="id_boxes_opened"/>
+
+    {% next_button %}
+
+{% block styles %}
+
+<style type="text/css">
+
+  #bomber_box {
+    margin-left: 25%;
+    width: 50%;
+  }
+  .box {
+    background-color:  lightgrey;
+    width: 10%;
+    height: 10%;
+    float: left;
+    border-style: solid;
+    border-width: thin;
+    border-color: black;
+  }
+  .number {
+    font-size: 30px;
+  }
+
+</style>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+$('#bomber_box').css('height', $('#bomber_box').css('width'));
+
+for (i=0; i < 100; i++) {
+  $('#bomber_box').append('<div class="box" id="box'+i+'"></div>');
+}
+
+mouseover_box = 999;
+mouseover_main = false;
+selected_box = 999; // 999 when no box is selected
+mouseover_button = false;
+
+// CHECK IF MOUSE IS OVER BUTTON
+$('.next-button').mouseenter(function(event) {
+  mouseover_button = true;
+})
+$('.next-button').mouseleave(function(event) {
+  mouseover_button = false;
+})
+
+// CHECK IF MOUSE IS OVER MAIN BOX
+$(document).ready(function() {
+  $('#bomber_box').mouseover(function() {
+    mouseover_main = true;
+  });
+  $('#bomber_box').mouseout(function() {
+    mouseover_main = false;
+  })
+})
+
+// SET MOUSE OVER BOX
+$(window).mousemove(function(event) {
+  if (mouseover_main == true) {
+    for (i = 0; i < 100; i++) {
+      $('#box'+i).hover(function() {
+        mouseover_box = this.id.replace('box', '');
+      })
+    }
+  }
+  else {
+    mouseover_box = 999;
+  }
+})
+
+// SET SELECTED BOX
+$(window).click(function(event) {
+  if (mouseover_button == false) {
+    selected_box = mouseover_box
+  }
+})
+
+// COLOR MOUSE OVER
+$(window).mousemove(function(event) {
+  if (mouseover_main == true) {
+    for (i = 0; i < 100; i++) {
+      $('#box'+i).css('background-color', 'lightgrey');
+    }
+    for (i = 0; i <= mouseover_box; i++) {
+      $('#box'+i).css('background-color', 'grey');
+    }
+  }
+  else {
+    for (i = 0; i < 100; i++) {
+      $('#box'+i).css('background-color', 'lightgrey');
+    }
+  }
+})
+
+$(window).mousemove(function(event) {
+  if (selected_box != 999) {
+    for (i = 0; i <= selected_box; i++) {
+      $('#box'+i).css('background-color', 'grey');
+    }
+    $('#chosen').html(parseInt(selected_box)+1);
+    $('#click-info').html('Click outside the box to unselect');
+    $('#id_boxes_opened').val(parseInt(selected_box)+1);
+  }
+  else {
+    $('#chosen').html('0')
+    $('#click-info').html('')
+    $('#id_boxes_opened').val(0)
+  }
+})
+
+</script>
+{% endblock %}
+
+{% endblock %}

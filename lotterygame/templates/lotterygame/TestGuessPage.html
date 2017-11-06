@@ -1,0 +1,92 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test score guess
+{% endblock %}
+
+{% block content %}
+
+<p>Below you see the distribution of test scores in this session. Please click to denote, where you
+  think you are.</p>
+
+<input type="hidden" name="score_guess" value="0" id="id_score_guess"/>
+
+<table id="histogram">
+</table>
+
+{% block styles %}
+
+  <style type="text/css">
+
+  #feedback {
+    width: 35%;
+    font-size: 20px;
+  }
+  .number {
+    text-align: right;
+  }
+
+  #histogram {
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .clipart_man {
+    width: 100%;
+    height: 90px;
+  }
+
+  </style>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+  var scores_list = {{ player_scores }}
+
+  var player_score = {{ player.test_score|json }}
+  var num_questions = {{ Constants.num_questions|json }}+1
+
+  var freq_list = []
+
+  for (i = 0; i < 21; i++) {
+    numOccur = $.grep(scores_list, function (elem) {
+      return elem == i
+    }).length;
+    freq_list.push(numOccur)
+  }
+  var highest_freq = Math.max.apply(Math, freq_list);
+
+  for (i = 0; i < highest_freq; i++) {
+    $('#histogram').prepend('<tr id="row'+i+'"></tr>');
+    for (j = 0; j < 21; j++) {
+      if (freq_list[j] <= i) {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/blank.png" %}" class="clipart_man"></td>');
+      }
+      else {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/clipart_man.png" %}" class="clipart_man"></td>');
+      }
+    }
+  }
+
+
+  $('#histogram').append('<tr id="axis"></tr>');
+  for (i = 0; i < 21; i++) {
+    $('#axis').append('<td><button class="btn btn-primary" id="'+i+'" style="width:98%">'+i+'</button></td>');
+  }
+  $('#histogram').append('<tr id="axis_title"></tr>');
+  $('#axis_title').append('<td colspan="21">Number of correct answers</td>');
+
+  $(window).click(function(event) {
+    $("#id_score_guess").val(event.target.id)
+  })
+
+  </script>
+
+{% endblock %}
+
+{% endblock %}

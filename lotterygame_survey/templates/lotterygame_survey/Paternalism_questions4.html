@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please indicate which of the following statements you agree with.<br>
+</p>
+
+<p>
+  There is a need for organ donors. Many people say that they would like to be an organ donor, but
+  that they just don't sign up. It has therefore been suggested that everyone automatically is
+  registered as an organ donor and has to resign if they don't want to. Do you think that...
+</p>
+
+{% formfield player.paternalism_question10 with label="" %}
+
+{% next_button %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+{% formfield player.vote2015 with label="Which party did you vote for in the 2015 Danish general election?" %}
+{% formfield player.votenow with label="Whcih party would you vote for of there was a Danish general election tomorrow?" %}
+
+{% next_button %}
+
+{% endblock %}

@@ -1,0 +1,258 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test results
+{% endblock %}
+
+{% block content %}
+
+<table id=feedback>
+  <tr>
+    <td>Number of questions</td>
+    <td class="number">{{ Constants.num_questions }}</td>
+  <tr>
+  {% if group.treatment == "self" or group.treatment == "full" %}
+    <td>Your score</td>
+    <td class="number">{{ player.test_score }}</td>
+  {% endif %}
+  </tr>
+  {% if group.treatment == "partner" or group.treatment == "full" %}
+  <tr>
+    <td>Your partner's score</td>
+    <td class="number">{{ player.partner_test_score }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td>Average score in session</td>
+    <td id="avg" class="number"></td>
+  </tr>
+</table>
+
+<h1></h1>
+
+<p>
+  You have been selected to be the <strong>{% if player.role == "Gambler" %}<span style="color:blue">
+  blue</span>{% elif player.role == "Leviathan" %}<span style="color:DarkOrange">orange</span>{% endif %} player</strong>
+</p>
+
+<p>
+  <br>
+  Below it is shown for each possible score, how many participants got that score.
+  {% if group.treatment == "self" or group.treatment == "full" %}The {% if player.role == "Gambler" %}
+  <span style="color:blue">blue</span>{% elif player.role == "Leviathan" %}<span style="color:DarkOrange">
+  orange</span>{% endif %} person shows your score.{% endif %}
+  {% if group.treatment == "partner" or group.treatment == "full" %}The {% if player.role == "Gambler" %}
+  <span style="color:DarkOrange">orange</span>{% elif player.role == "Leviathan" %}<span style="color:blue">
+  blue</span>{% endif %} person shows your partner's score.{% endif %}
+
+  Individuals on top of each other got the same score.
+</p>
+
+<table id="histogram">
+</table>
+
+<div>
+  <br>
+</div>
+
+<p>
+  <strong>{{ subsession.num_players }}</strong> players took the test.
+</p>
+
+{% if group.treatment == "full" or group.treatment == "self" %}
+<p>
+  <strong><span id="less_self"></span></strong> player(s) got less points than you,
+  <strong><span id="same_self"></span></strong> player(s) got the same amount of points as you, and
+  <strong><span id="more_self"></span></strong> player(s) got more points than you.
+</p>
+{% endif %}
+{% if group.treatment == "full" or group.treatment == "partner" %}
+<p>
+  <strong><span id="less_partner"></span></strong> player(s) got less points than your partner,
+  <strong><span id="same_partner"></span></strong> player(s) got the same amount of points as your partner, and
+  <strong><span id="more_partner"></span></strong> player(s) got more points than your partner.
+</p>
+{% endif %}
+
+<h1>
+  <br>
+</h1>
+
+{% if player.quiz_payoff_bool = False %}
+  <p>
+    You have <strong>not</strong> been randomly chosen to have your quiz score added to your payoff.
+    <br><br>
+  </p>
+{% elif player.quiz_payoff_bool = True %}
+  <p>
+    You have been randomly chosen to have your quiz score added to your payoff.
+    <br><br>
+  </p>
+{% endif %}
+
+{% if player.role == "Gambler" %}
+  {% include 'lotterygame/instructions_refresher_gambler.html' %}
+{% else %}
+  {% include 'lotterygame/instructions_refresher_leviathan.html' %}
+{% endif %}
+
+{% next_button %}
+
+
+{% block styles %}
+
+  <style type="text/css">
+
+  #feedback {
+    width: 35%;
+    font-size: 20px;
+  }
+  .number {
+    text-align: right;
+  }
+
+  #histogram {
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .clipart_man {
+    width: 100%;
+    height: 90px;
+  }
+
+  </style>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+  var group_avg = {{ subsession.average_score|json }}.toFixed(2);
+
+  var scores_list = {{ player_scores }}
+  var partner_score = {{ player.partner_test_score|json }}
+  var treatment = {{ group.treatment|json }}
+
+  if ({{ player.id_in_group|json }} == 1) {
+    player_role = "Blue"
+  }
+  else {
+    player_role = "Orange"
+  }
+  var player_score = {{ player.test_score|json }}
+  var num_questions = {{ Constants.num_questions|json }}+1
+
+  var freq_list = []
+
+  $('#avg').text(group_avg)
+
+  for (i = 0; i < 21; i++) {
+    numOccur = $.grep(scores_list, function (elem) {
+      return elem == i
+    }).length;
+    freq_list.push(numOccur)
+  }
+  var highest_freq = Math.max.apply(Math, freq_list);
+
+  for (i = 0; i < highest_freq; i++) {
+    $('#histogram').prepend('<tr id="row'+i+'"></tr>');
+    for (j = 0; j < 21; j++) {
+      if (freq_list[j] <= i) {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/blank.png" %}" class="clipart_man"></td>');
+      }
+      else {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/clipart_man.png" %}" class="clipart_man"></td>');
+      }
+    }
+  }
+
+  if (treatment == "full" || treatment == "self") {
+    for (i = 0; i < 21; i++) {
+      if (i == player_score) {
+        if (player_role == "Orange") {
+          $('#cell0-'+i+' img').attr('src', '{% static "lotterygame/clipart_man_orange.png" %}');
+        }
+        else if (player_role == "Blue") {
+          $('#cell0-'+i+' img').attr('src', '{% static "lotterygame/clipart_man_blue.png" %}');
+        }
+      }
+    }
+  }
+  if (treatment == "full" || treatment == "partner") {
+    for (i = 0; i < 21; i++) {
+      if (i == partner_score) {
+        if (player_role == "Orange") {
+          $('#cell0-'+i+' img').attr('src', '{% static "lotterygame/clipart_man_blue.png" %}');
+        }
+        else if (player_role == "Blue") {
+          $('#cell0-'+i+' img').attr('src', '{% static "lotterygame/clipart_man_orange.png" %}');
+        }
+      }
+    }
+  }
+
+  $('#histogram').append('<tr id="axis"></tr>');
+  for (i = 0; i < 21; i++) {
+    $('#axis').append('<td>'+i+'</td>');
+  }
+  $('#histogram').append('<tr id="axis_title"></tr>');
+  $('#axis_title').append('<td colspan="21">Number of correct answers</td>');
+
+  //Set points info
+
+
+  function checkLessPlayer(number) {
+    return number < player_score
+  }
+  function checkSamePlayer(number) {
+    return number == player_score
+  }
+  function checkMorePlayer(number) {
+    return number > player_score
+  }
+
+  $('#less_self').append(function(e) {
+    var less = scores_list.filter(checkLessPlayer);
+     return less.length;
+  });
+  $('#same_self').append(function(e) {
+    var same = scores_list.filter(checkSamePlayer);
+    return same.length -1;
+  });
+  $('#more_self').append(function(e) {
+    var more = scores_list.filter(checkMorePlayer);
+    return more.length;
+  })
+
+  function checkLessPartner(number) {
+    return number < partner_score
+  }
+  function checkSamePartner(number) {
+    return number == partner_score
+  }
+  function checkMorePartner(number) {
+    return number > partner_score
+  }
+
+  $('#less_partner').append(function(e) {
+    var less = scores_list.filter(checkLessPartner);
+     return less.length;
+  });
+  $('#same_partner').append(function(e) {
+    var same = scores_list.filter(checkSamePartner);
+    return same.length -1;
+  });
+  $('#more_partner').append(function(e) {
+    var more = scores_list.filter(checkMorePartner);
+    return more.length;
+  })
+
+  </script>
+
+{% endblock %}
+
+{% endblock %}

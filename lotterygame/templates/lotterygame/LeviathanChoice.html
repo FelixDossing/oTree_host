@@ -1,0 +1,92 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Restriction choice
+{% endblock %}
+
+{% block content %}
+
+{% include 'lotterygame/Calculator.html' %}
+
+
+<p>
+  Here you may choose whether and how you wish to restrict the lottery choice of your partner. We
+  emphasize that the choices on this page do not have implications for your own payoff, but only for
+  the choices that your partner will be able to make in his or her subsequent lottery choice.
+</p>
+
+<h3>Lottery 1</h3>
+<p>
+  {{ player.lottery1 }}
+</p>
+{% formfield group.lev_gamble1 with label="Please select the gambling restriction you prefer" %}
+
+<p>
+  Your partner may now bet between <span id="lower_limit1">0</span> and
+  <span id="upper_limit1">10</span> points on this lottery.
+</p>
+
+<h3>Lottery 2</h3>
+<p>
+  {{ player.lottery2 }}
+</p>
+{% formfield group.lev_gamble2 with label="Please select the gambling restriction you prefer" %}
+
+<p>
+  Your partner may now bet between <span id="lower_limit2">0</span> and
+  <span id="upper_limit2">10</span> points on this lottery.
+</p>
+
+
+{% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+$(window).mousemove(function() {
+  if ($(".field-lev_gamble1 .input-group-addon").html() >= 0) {
+    $("#lower_limit1").html(
+      $(".field-lev_gamble1 .input-group-addon").html()
+    );
+    $("#upper_limit1").html(10);
+  }
+  else if ($(".field-lev_gamble1 .input-group-addon").html() > -10) {
+    $("#lower_limit1").html(0);
+    $("#upper_limit1").html(
+      10 + parseFloat($(".field-lev_gamble1 .input-group-addon").html())
+    );
+  }
+  else if ($(".field-lev_gamble1 .input-group-addon").html() == -10){
+    $("#lower_limit1").html(0);
+    $("#upper_limit1").html(0);
+  }
+}
+);
+
+$(window).mousemove(function() {
+  if ($(".field-lev_gamble2 .input-group-addon").html() >= 0) {
+    $("#lower_limit2").html(
+      $(".field-lev_gamble2 .input-group-addon").html()
+    );
+    $("#upper_limit2").html(10);
+  }
+  else if ($(".field-lev_gamble2 .input-group-addon").html() > -10) {
+    $("#lower_limit2").html(0);
+    $("#upper_limit2").html(
+      10 + parseFloat($(".field-lev_gamble2 .input-group-addon").html())
+    );
+  }
+  else if ($(".field-lev_gamble2 .input-group-addon").html() == -10){
+    $("#lower_limit2").html(0);
+    $("#upper_limit2").html(0);
+  }
+}
+);
+
+</script>
+
+{% endblock %}

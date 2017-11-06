@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+{% formfield player.smoker with label="A smoker is a person who smokes every day. Please select the answer which describes you best. You..." %}
+{% formfield player.gender with label="What is your gender?" %}
+{% formfield player.height with label="How tall are you in cm without your shoes on?" %}
+{% formfield player.weight with label="How much do you weigh in kg?" %}
+{% formfield player.birthyear with label="Which year where you born?" %}
+
+{% next_button %}
+
+{% endblock %}

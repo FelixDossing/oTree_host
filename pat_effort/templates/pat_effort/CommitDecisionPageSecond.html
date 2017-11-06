@@ -1,0 +1,302 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Choice Page 2
+{% endblock %}
+
+{% block content %}
+
+
+<!-- If round == round1 -->
+
+<div id="instructions_div" class="instructions well well-1g">
+  <h4>Instructions</h4>
+  <p>
+    You will now be asked to make some choices, which will affect whether the <strong>'surf the web'</strong>-button will be removed from your slider task-screen <strong>in the following round</strong>.<br><br>
+    There are 2 pages with choices (Choice page 1 and Choice page 2) and there are 4 choices on each page. Each of these 8 choices will be implemented with an
+    equal probability. Some choices may involve a cost. This cost is only subtracted from your earnings if the choice is actually implemented.
+  </p>
+</div>
+<br>
+
+<h3>Choice 1</h3>
+<p>Click below to determine the probability that the 'surf the web'-button is removed if this choice is implemented.</p>
+<div id="choice1_div">
+{% formfield player.commit_decision1 label="Please choose a probability with which you wish for the button to be removed:" %}
+</div>
+<p>The button will appear with a probability of: <strong><span id="choice1_prob"></span></strong></p>
+<br><button type="button" id="continue1">Continue</button>
+
+<br><br><br><br>
+
+<div id="choice2">
+<h3>Choice 2</h3>
+<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the 'surf the web'-button is removed from the task screen.
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+<br>
+<div id="choice2_div">
+{% formfield player.commit_decision2 label="Please choose a probability with which you wish for the button to be removed:" %}
+</div>
+<p>The button will appear with a probability of: <strong><span id="choice2_prob"></span></strong></p>
+<p>You will pay: <strong><span id="choice2_cost"></span></strong></p>
+<br><button type="button" id="continue2">Continue</button>
+</div>
+
+<br><br><br><br>
+
+<div id="choice3">
+<h3>Choice 3</h3>
+<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the 'surf the web'-button is removed from the task screen.
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+<br>
+<div id="choice3_div">
+{% formfield player.commit_decision3 label="Please choose a probability with which you wish for the button to be removed:" %}
+</div>
+<p>The button will appear with a probability of: <strong><span id="choice3_prob"></span></strong></p>
+<p>You will pay: <strong><span id="choice3_cost"></span></strong></p>
+<br><button type="button" id="continue3">Continue</button>
+</div>
+
+<br><br><br><br>
+
+<div id="choice4">
+<h3>Choice 4</h3>
+<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the 'surf the web'-button is removed from the task screen.
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+<br>
+<div id="choice4_div">
+{% formfield player.commit_decision4 label="Please choose a probability with which you wish for the button to be removed:" %}
+</div>
+<p>The button will appear with a probability of: <strong><span id="choice4_prob"></span></strong></p>
+<p>You will pay: <strong><span id="choice4_cost"></span></strong></p>
+</div>
+<br>
+
+{% next_button %}
+
+{% block styles %}
+  <style type="text/css">
+
+  #choice2, #choice3, #choice4, .otree-btn-next {
+    display: none;
+  }
+
+  </style>
+{% endblock %}
+
+{% block script %}
+  <script type="text/javascript" src="https://d3js.org/d3.v4.js"></script>
+
+  <script type="text/javascript">
+
+  var commitChoices = {{ Constants.commitChoices|json }}
+
+  var data0 = commitChoices.slice(0,9);
+  var data1 = commitChoices.slice(9,18);
+  var data2 = commitChoices.slice(18,27);
+  var data3 = commitChoices.slice(27,36);
+
+  maxCost_points = 40;
+  number_of_choices = 4;
+
+  // for (j=1; i<=4; i++) {
+  //   $(".field-commit_decision"+j).click(function() {
+  //     for (i=0; i<10; i++) {
+  //       if($('#id_commit_decision'+j+'_'+i)is.(':checked')) {
+  //         $('#choice1_prob').text(i*10+'%');
+  //         $('#choice1_cost').text(data)
+  //       }
+  //     }
+  //   })
+  // }
+
+  $(".field-commit_decision1").click(function() {
+    for (i=1; i<10; i++) {
+      if($('#id_commit_decision1_'+i).is(':checked')) {
+        $('#choice1_prob').text(i*10+'%');
+        $('#choice1_cost').text(data0[i-1].cost+' points');
+      }
+    }
+  });
+  $(".field-commit_decision2").click(function() {
+    for (i=1; i<10; i++) {
+      if($('#id_commit_decision2_'+i).is(':checked')) {
+        $('#choice2_prob').text(i*10+'%');
+        $('#choice2_cost').text(data1[i-1].cost+' points');
+      }
+    }
+  });
+  $(".field-commit_decision3").click(function() {
+    for (i=1; i<10; i++) {
+      if($('#id_commit_decision3_'+i).is(':checked')) {
+        $('#choice3_prob').text(i*10+'%');
+        $('#choice3_cost').text(data2[i-1].cost+' points');
+      }
+    }
+  });
+  $(".field-commit_decision4").click(function() {
+    for (i=1; i<10; i++) {
+      if($('#id_commit_decision4_'+i).is(':checked')) {
+        $('#choice4_prob').text(i*10+'%');
+        $('#choice4_cost').text(data3[i-1].cost+' points');
+      }
+    }
+  });
+
+  // Buttons
+  $("#continue1").click(function() {
+    oneChecked = false;
+    for (i=1; i<10; i++) {
+      if ($('#id_commit_decision1_'+i).is(':checked')) {
+        oneChecked = true;
+      }
+    }
+    if (oneChecked) {
+      $('#choice2').show();
+      $('html, body').animate({
+        scrollTop: $('#choice2').offset().top - 30
+      })
+    }
+  })
+  $("#continue2").click(function() {
+    oneChecked = false;
+    for (i=1; i<10; i++) {
+      if ($('#id_commit_decision2_'+i).is(':checked')) {
+        oneChecked = true;
+      }
+    }
+    if (oneChecked) {
+      $('#choice3').show();
+      $('html, body').animate({
+        scrollTop: $('#choice3').offset().top - 30
+      })
+    }
+  })
+  $("#continue3").click(function() {
+    oneChecked = false;
+    for (i=1; i<10; i++) {
+      if ($('#id_commit_decision3_'+i).is(':checked')) {
+        oneChecked = true;
+      }
+    }
+    if (oneChecked) {
+      $('#choice4').show();
+      $('html, body').animate({
+        scrollTop: $('#choice4').offset().top - 30
+      });
+      $('.otree-btn-next').show();
+    }
+  })
+
+
+
+  function drawGraph(data, parrent) {
+
+    var pcts = data.map(function(d) { return d.pct});
+
+    var margin = {top: 5, right: 5, bottom: 50, left: 50};
+
+    var fullWidth = 500;
+    var fullHeight = 350;
+
+    var width = fullWidth - margin.right - margin.left;
+    var height = fullHeight - margin.top - margin.bottom;
+
+    var svg = d3.select(parrent)
+                .insert('svg',":first-child")
+                .attr('width', fullWidth)
+                .attr('height', fullHeight)
+                // Bar chart drawn
+                .append('g')
+                //leave room for margins
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    var pctScale = d3.scaleBand()
+    .domain(pcts)
+    .range([0, width])
+    .paddingInner(0.1);
+
+    var bandwidth = pctScale.bandwidth();
+
+    var maxCost = maxCost_points;
+    var costScale = d3.scaleLinear()
+    .domain([0, maxCost])
+    .range([height, 0])
+    .nice();
+
+    var xAxis = d3.axisBottom(pctScale);
+    var yAxis = d3.axisLeft(costScale);
+
+    var xAxisEle = svg.append('g')
+    .classed('x axis', true)
+    .attr('transform', 'translate(0,' + height + ')')
+    .call(xAxis);
+
+    var yAxisEle = svg.append('g')
+    .classed('y axis', true)
+    .call(yAxis);
+
+
+    // Label to yAxis
+    var yText = yAxisEle.append('text')
+    .attr('transform', 'rotate(-90)translate(-' + height/2 + ',0)')
+    .style('text-anchor', 'middle')
+    .style('fill', 'black')
+    .attr('dy', '-2.5em')
+    .text('COST IN POINTS');
+
+
+    var barHolder = svg.append('g')
+    .classed('bar-holder', true);
+
+    var bars = barHolder.selectAll('rect.bar')
+    .data(data)
+    .enter()
+    .append('rect')
+    .classed('bar', true)
+    .attr('x', function(d, i) {
+      return pctScale(d.pct);
+    })
+    .attr('width', bandwidth)
+    .attr('y', function(d) {
+      return costScale(d.cost);
+    })
+    .attr('height', function(d) {
+      return height - costScale(d.cost);
+    })
+    .attr('fill', 'teal')
+    .on("mouseover", function(d) {
+      d3.select(this)
+      .attr("fill", "orange");
+
+      var xPosition = parseFloat(d3.select(this).attr('x')) + bandwidth / 2;
+      var yPosition = parseFloat(d3.select(this).attr('y')) + 15;
+      svg.append('text')
+        .attr('id', 'tooltip')
+        .attr('x', xPosition)
+        .attr('y', yPosition)
+        .attr('text-anchor', 'middle')
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '13px')
+        .attr('font-weight', 'bold')
+        .attr('fill', 'black')
+        .text(d.cost);
+
+    })
+    .on("mouseout", function() {
+      d3.select(this)
+      .attr("fill", "teal")
+      d3.select('#tooltip').remove();
+    })
+
+  }
+
+  drawGraph(data1, '#choice2_div');
+  drawGraph(data2, '#choice3_div');
+  drawGraph(data3, '#choice4_div');
+  </script>
+
+{% endblock %}
+
+{% endblock %}

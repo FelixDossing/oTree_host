@@ -1,0 +1,89 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+
+<br>
+<table class="table">
+  <tr>
+    <th>#</th>
+    <th>Type of choice</th>
+    <th>Your chosen proabbility</th>
+    <th>Choice implemented</th>
+    <th>Outcome<th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Probability of button removal</td>
+    <td>{{ player.commit_decision1|floatformat:2 }}</td>
+    <td>{% if player.choice11_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice11_implemented == True %}Button was {% if player.button_present == True %}not{% endif %} removed{% endif %}</strong></td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td>Probability of button removal</td>
+    <td>{{ player.commit_decision2|floatformat:2 }}</td>
+    <td>{% if player.choice12_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice12_implemented == True %}Button was {% if player.button_present == True %}not{% endif %} removed{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Probability of button removal</td>
+    <td>{{ player.commit_decision3|floatformat:2 }}</td>
+    <td>{% if player.choice13_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice13_implemented == True %}Button was {% if player.button_present == True %}not{% endif %} removed{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Probability of button removal</td>
+    <td>{{ player.commit_decision4|floatformat:2 }}</td>
+    <td>{% if player.choice14_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice14_implemented == True %}Button was {% if player.button_present == True %}not{% endif %} removed{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Probability of partner choice</td>
+    <td>{{ player.paternalee_decision1|floatformat:2 }}</td>
+    <td>{% if player.choice21_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice21_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button.
+    {% if player.partner_given_choice == True %}<br>Player {{ player.partner_id }} chose {% if player.partner_choice == False %}not{% endif %} to remove the button{% endif %}{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Probability of partner choice</td>
+    <td>{{ player.paternalee_decision2|floatformat:2 }}</td>
+    <td>{% if player.choice22_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice22_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button.
+    {% if player.partner_given_choice == True %}<br>Player {{ player.partner_id }} chose {% if player.partner_choice == False %}not{% endif %} to remove the button{% endif %}{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Probability of partner choice</td>
+    <td>{{ player.paternalee_decision3|floatformat:2 }}</td>
+    <td>{% if player.choice23_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice23_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button.
+    {% if player.partner_given_choice == True %}<br>Player {{ player.partner_id }} chose {% if player.partner_choice == False %}not{% endif %} to remove the button{% endif %}{% endif %}</strong></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Probability of partner choice</td>
+    <td>{{ player.paternalee_decision4|floatformat:2 }}</td>
+    <td>{% if player.choice24_implemented == True %}<strong>Yes</strong>{% else %}No{% endif %}</td>
+    <td><strong>{% if player.choice24_implemented == True %}Player {{ player.partner_id }} was {% if player.partner_given_choice == False %}not{% endif %} given the choice<br> to remove the button. 
+    {% if player.partner_given_choice == True %}<br>Player {{ player.partner_id }} chose {% if player.partner_choice == False %}not{% endif %} to remove the button{% endif %}{% endif %}</strong></td>
+  </tr>
+</table>
+
+<p>
+  Your implemented choice cost: <strong>{{ player.choice_cost }} points</strong><br>
+  This will be substracted from your earnings.<br><br>
+  Press the next button to continue to the slider task.
+</p>
+
+    {% next_button %}
+{% endblock %}

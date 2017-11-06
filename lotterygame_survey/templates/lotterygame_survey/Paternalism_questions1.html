@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please indicate how much you agree with each of the following statements.<br>
+  Please choose a number (0-4) to indicate your answer:<br><br>
+  0 = Strongly disagree (very untrue about me)<br>
+  1 = Mildly disagree (somewhat untrue about me)<br>
+  2 = Neither agree nor disagree<br>
+  3 = Mildly agree (somewhat true about me)<br>
+  4 = Strongly agree (very true about me)<br>
+  5 = Don't know<br><br><br>
+</p>
+
+<p>
+  In recent years, it has been discussed to what extent the state should control people's behavior.
+  Do you agree or disagree that the state should legislate to affect...
+</p>
+
+<table class="table">
+  <tr>
+    <th>Question</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+  </tr>
+  {% for field in form %}
+  <tr>
+    <td width="50%">
+      {{ field.help_text }}
+      {{ field.errors }}
+    </td>
+    <td><input type="radio" name="{{ field.html_name }}" value="0" required {% if field.value|stringformat:"s" == '0' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="1" required {% if field.value|stringformat:"s" == '1' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="2" required {% if field.value|stringformat:"s" == '2' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="3" required {% if field.value|stringformat:"s" == '3' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="4" required {% if field.value|stringformat:"s" == '4' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="5" required {% if field.value|stringformat:"s" == '5' %}checked{% endif %}></td>
+  </tr>
+  {% endfor %}
+<table class="table">
+
+    {% next_button %}
+
+{% endblock %}

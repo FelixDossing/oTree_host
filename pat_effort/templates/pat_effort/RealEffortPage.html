@@ -1,0 +1,290 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Task
+{% endblock %}
+
+{% block content %}
+
+<input type="hidden" name="tasksCompleted" value="0" id="tasksCompleted"/>
+
+<div id="surf" width="100%">
+<button type="button" id="surf_button" class="btn btn-primary">Surf the web</button><br>
+</div>
+
+<div id="slider_task_div">
+  <div class="slider_row" id="slider_row1"></div>
+  <div class="slider_row" id="slider_row2"></div>
+  <div class="slider_row" id="slider_row3"></div>
+  <p id="taskCount">0</p>
+</div>
+
+{% block styles %}
+
+  <style type="text/css">
+
+  .slider_row {
+    padding-left: 40px;
+    padding-top: 20px;
+    width: 33.33333%;
+    float: left;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: teal;
+    margin-top: -4px;
+  }
+
+  #surf_button {
+    font-size: 15px;
+    display:table;
+    margin: 0 auto;
+  }
+
+  #slider_task_div {
+    height: 600px;
+    width: 100%;
+    overflow:hidden;
+  }
+
+  #taskCount {
+    font-size: 4em;
+    display:table;
+    margin: 0 auto;
+  }
+
+  .slider {
+    margin: 10px 5px 10px 20px;
+  }
+  .value {
+    font-size: 1.4em;
+  }
+  .slider1 {
+    margin-left: 50px;
+  }
+  .slider2 {
+    margin-left: 25px;
+  }
+  .slider3 {
+    margin-left: 75px;
+  }
+  .slider4 {
+    margin-left: 10px;
+  }
+  .slider5 {
+    margin-left: 40px;
+  }
+  .slider6 {
+    margin-left: 15px;
+  }
+  .slider7 {
+    margin-left: 90px;
+  }
+  .slider8 {
+    margin-left: 5px;
+  }
+  .slider9 {
+    margin-left: 20px;
+  }
+  .slider10 {
+    margin-left: 10px;
+  }
+  .slider11 {
+    margin-left: 60px;
+  }
+  .slider12 {
+    margin-left: 45px;
+  }
+  .slider13 {
+    margin-left: 100px;
+  }
+  .slider14 {
+    margin-left: 23px;
+  }
+  .slider15 {
+    margin-left: 45px;
+  }
+  .slider16 {
+    margin-left: 80px;
+  }
+
+  </style>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+var button_present = {{ player.button_present|json }}
+
+var round_number = {{ player.round_number|json }}
+
+var tasksCompleted = 0;
+var pagesCompleted = 0;
+var slidersPerPage = 48;
+var count = 0;
+
+var pagesStorage = [sessionStorage.pagesCompletedRound1, sessionStorage.pagesCompletedRound2, sessionStorage.pagesCompletedRound3, sessionStorage.pagesCompletedRound4]
+var surfingStorage = [sessionStorage.surfingTrial, sessionStorage.surfingRound1, sessionStorage.surfingRound2, sessionStorage.surfingRound3, sessionStorage.surfingRound4]
+
+
+if (button_present == false) {
+  $('#surf_button').css('visibility', 'hidden');
+}
+
+if ($('#otree-title').html().includes('Trial')) {
+  if(sessionStorage.pagesCompletedTrial) {
+    pagesCompleted = parseInt(sessionStorage.pagesCompletedTrial);
+  }
+}
+else {
+  for (i=0; i<5; i++) {
+    if (round_number == i) {
+      if (pagesStorage[i]) {
+        pagesCompleted = parseInt(pagesStorage[i]);
+      }
+    }
+  }
+}
+
+setCompletedTasks();
+
+if ($('#otree-title').html().includes('Trial') && surfingStorage[0]) {
+  $('#slider_task_div').hide();
+}
+else {
+  for (i=1; i<6; i++) {
+    if (round_number == i && surfingStorage[i] == true) {
+      $('#slider_task_div').hide();
+    }
+  }
+}
+
+//Surf the web button-action
+$('#surf_button').click(function() {
+
+  // Open and close browser
+  var winSurf = window.open('http://google.com', '_blank');
+  setInterval(function() {
+    if (parseInt($('.otree-timer__time-left').html().substring(0)) < 1) {
+      if (parseInt($('.otree-timer__time-left').html().substring(2,4)) < 3) {
+        winSurf.close();
+      }
+    }
+  }, 1000);
+
+  // Close down task
+  $('#slider_task_div').hide();
+
+  if ($('#otree-title').html().includes('Trial')) {
+    sessionStorage.surfingTrial = true;
+  }
+  else if(round_number == 1) {
+    sessionStorage.surfingRound1 = true;
+  }
+  else if(round_number == 2) {
+    sessionStorage.surfingRound2 = true;
+  }
+  else if(round_number == 3) {
+    sessionStorage.surfingRound3 = true;
+  }
+  else if(round_number == 4) {
+    sessionStorage.surfingRound4 = true;
+  }
+});
+
+//Slider creation and action
+for(i=1; i<4; i++) {
+  for(j=1; j<17; j++) {
+    $('#slider_row'+i).append("<input type='range' min='0' max='100' step='1' class='slider slider"+j+"' id='slider"+i+"-"+j+"'>");
+    $('#slider_row'+i).append('<label id="value'+i+'-'+j+'" class="value">0</label><br>');
+  }
+}
+
+$('.slider').val(0);
+
+$(document).on('input', '#slider1-1, #slider1-2, #slider1-3, #slider1-4, #slider1-5, #slider1-6, #slider1-7, #slider1-8, #slider1-9, #slider1-10, #slider1-11, '+
+                        '#slider1-12, #slider1-13, #slider1-14, #slider1-15, #slider1-16', function() {
+  $('#value'+this.id.substring(6,10)).text($(this).val());
+  setCompletedTasks();
+})
+$(document).on('input', '#slider2-1, #slider2-2, #slider2-3, #slider2-4, #slider2-5, #slider2-6, #slider2-7, #slider2-8, #slider2-9, #slider2-10, #slider2-11, '+
+                        '#slider2-12, #slider2-13, #slider2-14, #slider2-15, #slider2-16', function() {
+  $('#value'+this.id.substring(6,10)).text($(this).val());
+  setCompletedTasks();
+})
+$(document).on('input', '#slider3-1, #slider3-2, #slider3-3, #slider3-4, #slider3-5, #slider3-6, #slider3-7, #slider3-8, #slider3-9, #slider3-10, #slider3-11, '+
+                        '#slider3-12, #slider3-13, #slider3-14, #slider3-15, #slider3-16', function() {
+  $('#value'+this.id.substring(6,10)).text($(this).val());
+  setCompletedTasks();
+})
+
+function setCompletedTasks() {
+  count = 0;
+  for(i=1; i<4; i++) {
+    for(j=1; j<17; j++) {
+      if($('#slider'+i+'-'+j).val()==50) {
+        count += 1;
+      }
+    }
+  }
+  if(count == slidersPerPage) {
+    pagesCompleted += 1;
+    location.reload();
+  }
+  else {
+    tasksCompleted = count + pagesCompleted*slidersPerPage;
+  }
+  $('#taskCount').html(tasksCompleted);
+
+  if($('#otree-title').html().includes('Trial')) {
+    $('#tasksCompleted_trial').val(tasksCompleted);
+  }
+  else {
+    $('#tasksCompleted').val(tasksCompleted);
+  }
+}
+
+$(window).unload(function() {
+  if($('#otree-title').html().includes('Trial')) {
+    sessionStorage.pagesCompletedTrial = pagesCompleted;
+  }
+  else if (round_number==1) {
+    sessionStorage.pagesCompletedRound1 = pagesCompleted;
+  }
+  else if (round_number==2) {
+    sessionStorage.pagesCompletedRound2 = pagesCompleted;
+  }
+  else if (round_number==3) {
+    sessionStorage.pagesCompletedRound3 = pagesCompleted;
+  }
+  else if (round_number==4) {
+    sessionStorage.pagesCompletedRound4 = pagesCompleted;
+  }
+
+});
+
+$('#otree-timeout:first-child').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
+
+</script>
+
+{% endblock %}
+
+{% endblock %}

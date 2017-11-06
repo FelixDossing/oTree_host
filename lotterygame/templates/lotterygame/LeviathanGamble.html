@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Own lottery
+{% endblock %}
+
+{% block content %}
+
+{% include "lotterygame/Calculator.html" %}
+
+<p>
+  A random Orange player will be alowed to place bets. Please select your prefered bets in case you are
+  selected to be that player.
+</p>
+
+<h3>Lottery 1</h3>
+<p>
+  {{ player.lottery1 }}
+</p>
+{% formfield player.lev_gamble1_own with label="How much would you choose to bet?" %}
+
+<h3>Lottery 2</h3>
+<p>
+  {{ player.lottery2 }}
+</p>
+{% formfield player.lev_gamble2_own with label="How much would you choose to bet?" %}
+
+    {% next_button %}
+
+{% endblock %}

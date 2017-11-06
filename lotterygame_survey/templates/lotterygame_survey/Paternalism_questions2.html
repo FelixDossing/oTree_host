@@ -1,0 +1,33 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please indicate whether you agree with each of the following statements.<br><br>
+</p>
+
+<table class="table">
+  <tr>
+    <th>Question</th><th>Yes</th><th>No</th><th>Don't know</th>
+  </tr>
+  {% for field in form %}
+  <tr>
+    <td width="70%">
+      {{ field.help_text }}
+      {{ field.errors }}
+    </td>
+    <td><input type="radio" name="{{ field.html_name }}" value="0" required {% if field.value|stringformat:"s" == '0' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="1" required {% if field.value|stringformat:"s" == '1' %}checked{% endif %}></td>
+    <td><input type="radio" name="{{ field.html_name }}" value="2" required {% if field.value|stringformat:"s" == '2' %}checked{% endif %}></td>
+  </tr>
+  {% endfor %}
+<table class="table">
+
+    {% next_button %}
+
+{% endblock %}

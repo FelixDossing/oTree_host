@@ -1,0 +1,75 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+  <div id="instructions_div" class="instructions well well-1g">
+    <p>
+      Thank you for participating in our experiment!<br><br>
+      In this experiment, you will have the chance to earn money through effort in a simple task, which we call <strong>the slider task</strong>. The point of the slider task is to move
+      sliders from 0 to 50. Sliders are initially set at 0 and are moved to 50 by clicking and draging with the mouse. You will earn 1 point for each slider you place at 50.
+      The design of the slider task is shown in the picture below.
+    </p>
+    <img src="{% static 'pat_effort/sliderscreenexample.png' %}" id="picture"><br>
+    <p>
+      In the picture above the participant has moved the first two sliders to 50 and has therefore earned 2 points.<br><br>
+      Each slider is called a "task" and moving a slider from 0 to 50 is called "completing a task". If you complete all tasks on the screen, all sliders will be set to 0 so that you can
+      continue to complete tasks and earn more points. This means that the only limit on the amount of tasks you will be able to complete - and thereby the amount of
+      money you will be able to make - is the time limit. In a moment, you will get to know the task in a trial round. The trial round takes 2 minutes and you are not able to earn real money in the trial round.<br><br>
+
+    <h4>Points and money</h4>
+    <p>
+      After the trial round, the experiment will consist of 4 rounds where real money can be earned. At the end of the experiment points will be
+      translated into money with the following conversion rate:<br><br>
+
+      1 point = {{ Constants.point_conversion }} DKK<br><br>
+
+      It is in principle possible to end up with negative earnings. In that case you will simply have no earnings from this experiment (apart from the showup fee).
+
+    <h4>The experiment</h4>
+    <p>
+      There are 4 rounds where you will get to work on the slider task. You will have the opportunity to work for {{ Constants.worktime_minutes }} minutes each round. The slider task screen may
+      include a button with the words 'surf the web' on it (see example below).
+    </p>
+    <img src="{% static 'pat_effort/surftheweb.png' %}" id="picture"><br>
+    <p>
+      Completing tasks earns money but completing tasks for {{ Constants.worktime_minutes }} minutes may be boring. If you choose to press the <span class="btn btn-primary">surf the web
+      </span>-button, the slider task will close down and a new screen will appear where you can access the internet until the time runs out. The tasks you complete before pressing
+      the button will be saved and added to your total earnings. If you choose this option, do not exit full screen mode. Instead use Google.com (the defualt screen) to access what you want and use ALT and
+      the left and right arrow keys to pass forwards and backwards between screens. As an example, if you want to visit facebook.com, simply type facebook into the the search field of Google and enter through
+      the link. Once the time runs out, you will automatically be directed back to the experiment.<br><br>
+    </p>
+    <h4>Decision screens</h4>
+    <p>
+      In each round you will be asked to make a number of decisions before entering the slider task. You will be paired randomly with another participant in the experiment. Some of the choices you make may
+      affect this other participant just as some of the choices (s)he makes may affect you. You will be paired randomly with a new partner in each round and will not interact with the same participant in more
+      than one round. Each player is given an anonymous ID (e.g. Player 9), which is the name the player will go by in the experiment. Please read the instructions on the decision-screens carefully before makeing your choices.<br><br><br>
+
+      If you at any point during the experiment have a question, then you may raise your hand and a lab assistant will be there to assist you.<br><br>
+
+      When you understand these instructions, click the button below in order to continue to the trial round.
+    </p>
+    {% next_button %}
+
+  </div>
+
+{% block styles %}
+
+<style type="text/css">
+
+#picture {
+  padding-top: 20px;
+  padding-bottom: 60px;
+  margin-left: 10%;
+  width: 80%;
+}
+
+</style>
+
+{% endblock %}
+
+{% endblock %}
