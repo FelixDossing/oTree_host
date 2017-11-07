@@ -17,7 +17,8 @@ class Constants(BaseConstants):
 
     number_of_choices = 4
     point_conversion = 0.25
-    worktime_minutes = 10
+    worktime_minutes = 15
+    trial_minutes = 3
 
     with open ('pat_effort/commit_choices.csv') as csvfile:
         commitChoices = list(csv.DictReader(csvfile))
@@ -174,6 +175,8 @@ class Player(BasePlayer):
 
     partner_id = models.CharField()
     player_id = models.CharField()
+
+    surf_timing = models.CharField()
 
     choice_cost = models.IntegerField(initial=0)
 

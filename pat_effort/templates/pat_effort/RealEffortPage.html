@@ -8,6 +8,7 @@
 {% block content %}
 
 <input type="hidden" name="tasksCompleted" value="0" id="tasksCompleted"/>
+<input type="hidden" name="surf_timing" id="surf_timing"/>
 
 <div id="surf" width="100%">
 <button type="button" id="surf_button" class="btn btn-primary">Surf the web</button><br>
@@ -18,7 +19,6 @@
   <div class="slider_row" id="slider_row2"></div>
   <div class="slider_row" id="slider_row3"></div>
 </div>
-<p id="taskCountText">Points earned: <span id="taskCount">0</span></p>
 
 {% block styles %}
 
@@ -63,9 +63,9 @@
     overflow:hidden;
   }
 
-  .otree-timer {
+  /*.otree-timer {
     display: none;
-  }
+  }*/
 
   /*#otree-timeout {
     font-size: 1.3em;
@@ -136,6 +136,7 @@
 <script>
 
 var round_number = {{ player.round_number|json }}
+var num_rounds = {{ Constants.num_rounds|json }}
 
 var tasksCompleted = 0;
 var pagesCompleted = 0;
@@ -152,8 +153,8 @@ if ($('#otree-title').html().includes('Trial')) {
   }
 }
 else {
-  for (i=0; i<5; i++) {
-    if (round_number == i) {
+  for (i=0; i<num_rounds; i++) {
+    if (round_number == i+1) {
       if (pagesStorage[i]) {
         pagesCompleted = parseInt(pagesStorage[i]);
       }
@@ -177,6 +178,7 @@ else {
 
 //Surf the web button-action
 $('#surf_button').click(function() {
+  $('#surf_timing').val(String($('.otree-timer__time-left').text()));
   var winSurf = window.open('http://google.com', '_blank');
   setInterval(function() {
     if (parseInt($('.otree-timer__time-left').html().substring(0)) < 1) {
@@ -248,7 +250,6 @@ function setCompletedTasks() {
   else {
     tasksCompleted = count + pagesCompleted*slidersPerPage;
   }
-  $('#taskCount').html(tasksCompleted);
 
   if($('#otree-title').html().includes('Trial')) {
     $('#tasksCompleted_trial').val(tasksCompleted);

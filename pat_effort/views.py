@@ -18,7 +18,7 @@ class TrialPage(Page):
     def is_displayed(self):
         return self.player.round_number == 1
 
-    timeout_seconds = 5
+    timeout_seconds = Constants.trial_minutes*60
 
     form_model = models.Player
     form_fields = ['tasksCompleted_trial']
@@ -71,10 +71,10 @@ class TaskPrep(Page):
 
 class RealEffortPage(Page):
 
-    timeout_seconds = 400
+    timeout_seconds = Constants.worktime_minutes*60
 
     form_model = models.Player
-    form_fields = ['tasksCompleted']
+    form_fields = ['tasksCompleted', 'surf_timing']
 
 
 class ResultsWaitPage(WaitPage):
