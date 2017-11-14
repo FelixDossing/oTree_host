@@ -7,11 +7,11 @@
 
 {% block content %}
 
-{% include "lotterygame/Calculator.html" %}
+{% include "lottery_game/Calculator.html" %}
 
 <p>
   Please answer the following questions as best as possible. One player will be selected to recieve one point
-  for each question answered correcly. You have 25 minutes in total to answer the quiz.<br><br>
+  for each question answered correcly.
 </p>
 
   <p><strong>1</strong></p>
@@ -55,10 +55,21 @@
   <p><strong>20</strong></p>
   {% formfield player.submitted_answer20 with label=player.question20 %}
 
-{% next_button %}
-
 <p>
+  <br>
   Please wait for the time to run out.
 </p>
+
+{% block styles %}
+
+<style type="text/css">
+
+.otree-timer {
+  font-size: 1.3em;
+}
+
+</style>
+
+{% endblock %}
 
 {% endblock %}

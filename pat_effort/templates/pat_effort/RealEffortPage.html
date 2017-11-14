@@ -63,9 +63,9 @@
     overflow:hidden;
   }
 
-  /*.otree-timer {
+  .otree-timer {
     display: none;
-  }*/
+  }
 
   /*#otree-timeout {
     font-size: 1.3em;
@@ -135,6 +135,8 @@
 
 <script>
 
+button_present = {{ player.button_present|json }}
+
 var round_number = {{ player.round_number|json }}
 var num_rounds = {{ Constants.num_rounds|json }}
 
@@ -145,6 +147,10 @@ var count = 0;
 
 var pagesStorage = [sessionStorage.pagesCompletedRound1, sessionStorage.pagesCompletedRound2, sessionStorage.pagesCompletedRound3, sessionStorage.pagesCompletedRound4]
 var surfingStorage = [sessionStorage.surfingTrial, sessionStorage.surfingRound1, sessionStorage.surfingRound2, sessionStorage.surfingRound3, sessionStorage.surfingRound4]
+
+if (button_present == false) {
+  $('#surf_button').css('visibility', 'hidden');
+}
 
 // Set score correctly if page is reloaded
 if ($('#otree-title').html().includes('Trial')) {
@@ -162,19 +168,18 @@ else {
   }
 }
 
-
-setCompletedTasks();
-
 if ($('#otree-title').html().includes('Trial') && surfingStorage[0]) {
   $('#slider_task_div').hide();
 }
 else {
   for (i=1; i<6; i++) {
-    if (round_number == i && surfingStorage[i] == true) {
+    if (round_number == i && surfingStorage[i]) {
       $('#slider_task_div').hide();
     }
   }
 }
+
+setCompletedTasks();
 
 //Surf the web button-action
 $('#surf_button').click(function() {

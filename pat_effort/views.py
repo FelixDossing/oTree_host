@@ -3,6 +3,8 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+class WaitForStart(Page):
+    pass
 
 class Instructions(Page):
     def is_displayed(self):
@@ -87,6 +89,7 @@ class Results(Page):
 
 
 page_sequence = [
+    WaitForStart,
     Instructions,
     TrialPrep,
     TrialPage,

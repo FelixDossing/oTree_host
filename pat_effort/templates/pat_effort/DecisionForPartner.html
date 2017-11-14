@@ -2,14 +2,16 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Task
+    Decision for partner
 {% endblock %}
 
 {% block content %}
+    <div id="instructions_div" class="instructions well well-1g">
+      You may be selected to choose whether to remove the <span class="btn btn-primary">surf the web</span>-button from the slider task screen of <strong>Player {{ player.partner_id }}</strong>.
+      If so, the following choice will be implemented. Please note that if you are selected to make this choice, then Player {{ player.partner_id }} will not be given the chance to remove the button
+      from his or her own screen. In that case, whether or not the button will appear is completely up to you.
+    </div>
 
-    <p>
-      You may now decide whether you wish to remove the <span class="btn btn-primary">surf the web</span>-button from the slider task screen of <strong>Player {{ player.partner_id }}</strong>.
-    </p>
     {% formfield player.decisionForPartner with label="Do you wish to remove the 'surf the web'-button from your partner's screen?" %}
 
     {% next_button %}

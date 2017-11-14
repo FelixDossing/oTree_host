@@ -1,0 +1,7 @@
+lottery_number,condition,return per point invested,description,return_for_calc
+1,No condition,"1 * investment","You keep your all of your points regardless of the outcome of the dice",1
+2,One die shows a number above 3,"sum * 0.5 * investment","If one of the two dice shows a number above 3, then you get the sum of the two dice times one half of the amount of points invested",0.5
+3,One die shows an even number,"sum * investment","If one of the dice shows an even number, then you get the sum of the dice times the amount of points invested points",1
+4,Both dice show an even number,"sum * 1.5 * investment","If both dice show an even number, then you get the sum of the dice times 1.5 times the amount of points invested",1.5
+5,Both dice show an even number,"sum * 0.5 * investement","If both dice show an even number, then you get the sum of the dice times half of the amount of points invested",0.5
+6,Both dice show an uneven number,"highest * 0.5 * investment","If both dice show an uneven number, then you get the highest number shown times half of the amount of points invested",0.5

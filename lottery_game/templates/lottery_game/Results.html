@@ -1,0 +1,100 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block content %}
+
+<br>
+<table class="table">
+  <tr>
+    <td>Round #</td>
+    <td>Die 1</td>
+    <td>Die 2</td>
+    <td>Unrestricted lottery choice</td>
+    <td>Payoff</td>
+  </tr>
+  <tr style="font-weight:bold;">
+    <td>1</td>
+    <td>{{ subsession.die1round1 }}</td>
+    <td>{{ subsession.die2round1 }}</td>
+    {% for p in player.in_all_rounds %}
+    {% if p.round_number == 1 %}
+    <td>{{ p.lotteryChoiceOwn }}</td>
+    <td>{{ p.unrestricted_payoff }}</td>
+    {% endif %}
+    {% endfor %}
+</table>
+
+<br>
+<table class="table">
+  <tr>
+    <td>Round #</td>
+    <td>Die 1</td>
+    <td>Die 2</td>
+    <td>Restricted lottery choice</td>
+    <td>Payoff</td>
+  </tr>
+  {% for p in player.in_all_rounds %}
+  {% if p.round_number == p.restricted_payoff_round %}<tr style="font-weight:bold">{% else %}<tr>{% endif %}
+    <td>{{ p.round_number }}</td>
+    <td>
+      {% if p.round_number == 1 %}
+      {{ subsession.die1round1 }}
+      {% elif p.round_number == 2 %}
+      {{ subsession.die1round2 }}
+      {% elif p.round_number == 3 %}
+      {{ subsession.die1round3 }}
+      {% elif p.round_number == 4 %}
+      {{ subsession.die1round4 }}
+      {% elif p.round_number == 5 %}
+      {{ subsession.die1round5 }}
+      {% elif p.round_number == 6 %}
+      {{ subsession.die1round6 }}
+      {% elif p.round_number == 7 %}
+      {{ subsession.die1round7 }}
+      {% elif p.round_number == 8 %}
+      {{ subsession.die1round8 }}
+      {% elif p.round_number == 9 %}
+      {{ subsession.die1round9 }}
+      {% elif p.round_number == 10 %}
+      {{ subsession.die1round10 }}
+      {% endif %}
+    </td>
+    <td>
+      {% if p.round_number == 1 %}
+      {{ subsession.die2round1 }}
+      {% elif p.round_number == 2 %}
+      {{ subsession.die2round2 }}
+      {% elif p.round_number == 3 %}
+      {{ subsession.die2round3 }}
+      {% elif p.round_number == 4 %}
+      {{ subsession.die2round4 }}
+      {% elif p.round_number == 5 %}
+      {{ subsession.die2round5 }}
+      {% elif p.round_number == 6 %}
+      {{ subsession.die2round6 }}
+      {% elif p.round_number == 7 %}
+      {{ subsession.die2round7 }}
+      {% elif p.round_number == 8 %}
+      {{ subsession.die2round8 }}
+      {% elif p.round_number == 9 %}
+      {{ subsession.die2round9 }}
+      {% elif p.round_number == 10 %}
+      {{ subsession.die2round10 }}
+      {% endif %}
+    </td>
+    <td>{{ p.restrictedChoice }}</td>
+    <td>{{ p.restricted_payoff }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p>The highlighted rows are those that have been selected to be paid out. The highlighted row in the second table was randomly selected.<br><br></p>
+
+<h3>Your total payoff is {{ player.payoff }}<br><br></h3>
+
+{% next_button %}
+{% endblock %}

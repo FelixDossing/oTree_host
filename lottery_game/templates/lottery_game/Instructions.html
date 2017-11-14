@@ -1,0 +1,137 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Instructions
+{% endblock %}
+
+{% block content %}
+
+<div id="instructions">
+  <p>
+    Welcome and thank you for participating in our experiment on social preferences and choice.<br>
+    Please take your time to read the following instructions carefully.
+  </p>
+  <h4>
+    <br>Introduction
+  </h4>
+  <p>
+    The following experiment involes two parts. Part one involves a short test of your understanding of
+    probabilities. Part two involves choices relating to different lotteries. Both are explained in more detail
+    below.
+  <h4>
+    <br>The point system
+  </h4>
+  <p>
+    This experiment will involve points. At the end of the experiment the points you have earned, will be exchanged
+    into DKK (danish currency) at the exchange rate of 1 point = 4 DKK. So if you have 50 points at the end of the
+    experiment, then you will recieve 200 DKK from the experimenter.
+  </p>
+  <h4>
+    <br>The probability test
+  </h4>
+  <p>
+    The first part of the experiment involves a test of your ability to understand and calculate
+    probabilities. After the test, one random participant will be choosen to recieve 1 points for
+    each correct answer. There are 20 questions in the test, so you have the potential to earn 20 points
+    from the test. During the test there will be a calculator available, which can be accessed by pressing the
+    <span class="btn btn-primary">Hide/show calculator</span>-button located in the bottom right corner of the screen.
+    The calculator can perform addition (+), substraction (-), multiplication (*) and division (/). Exponents are done with
+    double stars, so that 2**3 is 2 raised to the power of 3. The caluclator can also return factorials. This is done by
+    typing fact(x) to get the factorial of x (which is commonly written as x!).
+  </p>
+
+  <h4>
+    <br>The test feedback screen
+  </h4>
+  <p>
+    During the experiment, you will be shown screens with information about the scores attained by different players.
+    This screen will involve a representation of the distribution of scores similar to that shown in the image
+    below. In the picture it is shown how many individuals got a particular score for each score from 0 to
+    20. The number of persons stacked on top of each other represents the amount of persons in the
+    experiment who got that excact score. In the picture below 0 players got a score of 0-5, 2 players
+    got a score of 6, 2 players got at score of 7, 6 players got a score of 8 and so on.
+  </p>
+
+  <img src="{% static 'lotterygame/histogram_instr.png' %}"/ class="hist_img">
+
+  <h4>
+    <br>The lottery choice
+  </h4>
+  <p>
+    In the second part of the experiment, you will make choices over lotteries. Some choices will affect only yourself and some choices will affect other participants. The choices you make
+    will be explained in more detail on the choice screens. Note that the particpants who are affect by the choices you make, will not make choices in the experiment that affect you. So if you make choices
+    that affect Player 1 and 3, then Player 1 and 3 will not make choices that affect you.<br>
+    The <span class="btn btn-primary">Hide/show calculator</span>-button will also be present on some of the choice screens.<br><br>
+  </p>
+  <p>
+    Please make sure that you understand the instructions. If you have any questions, raise your hand to get help from one of the experiment assistants. When you are ready, click the next-button
+    to proceed to the probability test.
+  </p>
+
+
+{% next_button %}
+
+{% endblock %}
+
+
+{% block styles %}
+<style>
+
+  .above_text {
+    padding-top: 30px;
+  }
+  .restr_img {
+    padding-bottom: 10px;
+  }
+  .hist_img {
+    padding-bottom: 10px;
+    width: 100%;
+  }
+  #control_div {
+    margin-top: 70px;
+  }
+  #control_div h2 {
+    margin-bottom: 50px;
+  }
+  #control_button {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+</style>
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+
+$(document).ready(function() {
+
+  $(window).mousemove(function() {
+    if ($(".input-group-addon").html() >= 0) {
+      $("#lower_limit").html(
+        $(".input-group-addon").html()
+      );
+      $("#upper_limit").html(10);
+    }
+    else if ($(".input-group-addon").html() > -10) {
+      $("#lower_limit").html(0);
+      $("#upper_limit").html(
+        10 + parseFloat($(".input-group-addon").html())
+      );
+    }
+    else if ($(".input-group-addon").html() == -10){
+      $("#lower_limit").html(0);
+      $("#upper_limit").html(0);
+    }
+  }
+  );
+})
+
+
+
+</script>
+{% endblock %}

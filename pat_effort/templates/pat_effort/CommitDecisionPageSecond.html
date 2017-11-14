@@ -1,29 +1,25 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
-{% block title %}
-    Choice Page 2
-{% endblock %}
 
 {% block content %}
 
 
 <!-- If round == round1 -->
 
+<p id="scroll_info"><strong>Scroll up to change previous choice</strong></p>
 <div id="instructions_div" class="instructions well well-1g">
-  <h4>Instructions</h4>
+  <h3>Instructions</h3>
   <p>
-    You will now be asked to make some choices, which will affect whether the <span class="btn btn-primary">surf the web</span>-button will be removed from your slider task-screen in
-    the following round. Having the button present on the screen may be seen as an advantage, since it allows you to substitute the task for something more
-    interesting. On the other hand, not having the button present on the screen may be seen as an advantage, if you wish to remove the posibility of shirking from the task.<br><br>
-    If you choose a high percentage, it means that it is likely that the button will be removed from your screen. If you choose a low Percent
-    it means that it is unlikely that the button will be removed from your screen.<br><br>
+    <strong>On this screen</strong> we ask you to make choices, which determine the probability that the <span class="btn btn-primary">surf the web</span>-button will be removed from
+    your slider task-screen. If you choose a high percentage, it means that it is likely that the button will be removed from your screen. If you choose a low percentage
+    it means that it is unlikely that the button will be removed from your screen.
   </p>
 </div>
 <br>
 
-<h3>Choice 1</h3>
-<p>Click below to determine the probability that the <span class="btn btn-primary">surf the web</span>-button is removed if this choice is implemented.</p>
+<h2>Choice <strong>2A</strong></h2>
+<p>Click below to determine the probability that the <span class="btn btn-primary">surf the web</span>-button is removed if this choice (<strong>2A</strong>) is implemented.</p>
 <div id="choice1_div">
 {% formfield player.commit_decision1 label="Please choose a probability with which you wish for the button to be removed:" %}
 </div>
@@ -33,8 +29,9 @@
 <br><br><br><br>
 
 <div id="choice2">
-<h3>Choice 2</h3>
-<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed from the task screen.
+<h2>Choice <strong>2B</strong></h2>
+<p>If this choice (<strong>2B</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is
+  removed from the task screen. This choice is similar to the previous choice except for that fact that it involves potential costs.
   The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice2_div">
@@ -48,8 +45,9 @@
 <br><br><br><br>
 
 <div id="choice3">
-<h3>Choice 3</h3>
-<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed from the task screen.
+<h2>Choice <strong>2C</strong></h2>
+<p>If this choice (<strong>2C</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed
+  from the task screen. This choice is similar to the previous choice except for that fact that the size of the potential costs has changed.
   The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice3_div">
@@ -63,8 +61,9 @@
 <br><br><br><br>
 
 <div id="choice4">
-<h3>Choice 4</h3>
-<p>If this choice is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed from the task screen.
+<h2>Choice <strong>2D</strong></h2>
+<p>If this choice (<strong>2D</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed from
+  the task screen. This choice is similar to the previous choice except for that fact that the size of the potential costs has changed.
   The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice4_div">
@@ -79,6 +78,15 @@
 
 {% block styles %}
   <style type="text/css">
+
+  #scroll_info {
+    position: fixed;
+    top: 10px;
+    text-align: center;
+    width: 100%;
+    left: 0%;
+    opacity: 0;
+  }
 
   #choice2, #choice3, #choice4, .otree-btn-next {
     display: none;
@@ -158,6 +166,8 @@
       $('#choice2').show();
       $('html, body').animate({
         scrollTop: $('#choice2').offset().top - 30
+      }, function() {
+        $('#scroll_info').animate({opacity: '1', top:'5px'},300).stop().delay(1000).animate({opacity: '0', top: '10px'});
       })
     }
   })
@@ -172,6 +182,8 @@
       $('#choice3').show();
       $('html, body').animate({
         scrollTop: $('#choice3').offset().top - 30
+      }, function() {
+        $('#scroll_info').animate({opacity: '1', top:'5px'},300).stop().delay(1000).animate({opacity: '0', top: '10px'});
       })
     }
   })
@@ -186,12 +198,12 @@
       $('#choice4').show();
       $('html, body').animate({
         scrollTop: $('#choice4').offset().top - 30
+      }, function() {
+        $('#scroll_info').animate({opacity: '1', top:'5px'},300).stop().delay(1000).animate({opacity: '0', top: '10px'});
       });
       $('.otree-btn-next').show();
     }
   })
-
-
 
   function drawGraph(data, parrent) {
 

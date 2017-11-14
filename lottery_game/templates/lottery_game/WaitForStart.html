@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Wait for experiment to start
+{% endblock %}
+
+{% block content %}
+
+<p>
+  Please wait until the experimental assistant tells you to proceed.
+</p>
+
+{% next_button %}
+
+{% endblock %}

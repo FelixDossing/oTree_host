@@ -161,10 +161,6 @@ else {
     }
   }
 }
-
-
-setCompletedTasks();
-
 if ($('#otree-title').html().includes('Trial') && surfingStorage[0]) {
   $('#slider_task_div').hide();
 }
@@ -175,6 +171,8 @@ else {
     }
   }
 }
+
+setCompletedTasks();
 
 //Surf the web button-action
 $('#surf_button').click(function() {

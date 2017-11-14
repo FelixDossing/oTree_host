@@ -17,6 +17,8 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 1
 
+    minutes_for_quiz = 30
+
     with open('lotterygame/probability_quiz.csv') as q:
         questions = list(csv.DictReader(q))
 
@@ -47,8 +49,6 @@ class Constants(BaseConstants):
     lottery2_prob_likely = 1/3
     lottery2_prob_unlikely = 1/6
 
-    leviathanfee = c(50)
-    showupfee = c(10)
     endowment = c(10)
 
 
@@ -59,8 +59,6 @@ class Subsession(BaseSubsession):
     average_score = models.FloatField()
 
     quiz_payoff_draw = models.IntegerField()
-    leviathan_gamble_draw = models.IntegerField() # Is 1 for the one leviathan which has her gamble added as payoff
-
 
     def before_session_starts(self):
 
@@ -77,7 +75,6 @@ class Subsession(BaseSubsession):
         self.session.vars['free_choice_draws'] = random.sample(range(int(self.num_players/2)),int(self.num_players/4))
         # self.free_choice_draw = random.randint(1, self.num_players/2)
 
-        self.leviathan_gamble_draw = random.randint(1, self.num_players/2)
 
         for p in self.get_players():
             question_data = self.session.vars['questions']
@@ -129,7 +126,7 @@ class Subsession(BaseSubsession):
             p.quiz_payoff_bool = True if p.participant.id_in_session == self.quiz_payoff_draw else False
 
         # treat = itertools.cycle(['partner','self','full'])
-        treat = itertools.cycle(['partner','full'])
+        treat = itertools.cycle(['partner', 'full', 'full'])
 
         group_id_list = []
         for i in range(0,int(self.num_players/2)):
@@ -157,17 +154,6 @@ class Subsession(BaseSubsession):
                     p.lottery2 = lottery_data[1]['high_likely'] if g.lottery2_likelyhood == 'likely' else lottery_data[1]['high_unlikely']
                 elif g.lottery2_returntype == 'low':
                     p.lottery2 = lottery_data[1]['low_likely'] if g.lottery2_likelyhood == 'likely' else lottery_data[1]['low_unlikely']
-
-        gambler_list = []
-        leviathan_list = []
-        for p in self.get_players():
-            if p.role() == 'Gambler':
-                gambler_list.append(p)
-            elif p.role() == 'Leviathan':
-                leviathan_list.append(p)
-        for i in self.session.vars['free_choice_draws']:
-            gambler_list[i].restricted_choice = False
-        leviathan_list[self.leviathan_gamble_draw-1].leviathan_gamble_bool = True
 
 
     def calc_stats(self):
@@ -285,7 +271,7 @@ class Group(BaseGroup):
                 else:
                     payoffcalc_lottery2(self, gambler.gam_gamble_free2, Constants.lottery2_return_low_unlikely)
 
-        gambler.payoff = gambler.payoff_lottery1 + gambler.payoff_lottery2 + Constants.showupfee
+        gambler.payoff = gambler.payoff_lottery1 + gambler.payoff_lottery2
 
         if gambler.quiz_payoff_bool == True:
             gambler.payoff_quiz = gambler.test_score * Constants.quiz_points

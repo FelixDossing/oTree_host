@@ -1,0 +1,191 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Test feedback
+{% endblock %}
+
+{% block content %}
+
+
+<table id="feedback_table">
+  <tr>
+    <td>Number of questions</td>
+    <td class="number">{{ Constants.num_questions }}</td>
+  </tr>
+  {% if player.treatment == "full" %}
+  <tr>
+    <td><strong>Your score</strong></td>
+    <td class="number"><strong>{{ player.test_score }}</strong></td>
+  </tr>
+  {% endif %}
+</table>
+
+<p>
+  <br>
+  Below it is shown for each possible score, how many participants got that score.
+  Individuals on top of each other got the same score.<br>
+  The <span style="color:blue; font-weight: bold;">blue player is you</span>.
+</p>
+
+<table id="histogram">
+</table>
+
+<br>
+{% if player.round_number == 1 %}
+{% if player.quiz_payoff_bool = False %}
+  <p>
+    You have <strong>not</strong> been randomly chosen to have your quiz score added to your payoff.
+    <br>
+  </p>
+{% elif player.quiz_payoff_bool = True %}
+  <p>
+    You have been randomly chosen to have your quiz score added to your payoff.
+    <br><br>
+  </p>
+{% endif %}
+{% endif %}
+
+{% next_button %}
+
+
+{% block styles %}
+
+  <style type="text/css">
+
+  #feedback_table {
+    width: 40%;
+    margin-left: 30%;
+    font-size: 20px;
+    border-collapse: separate;
+    border-spacing: 10px;
+    border: 1px solid black;
+  }
+  .number {
+    text-align: right;
+  }
+
+  #histogram {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .clipart_man {
+    width: 100%;
+    height: 90px;
+    padding: 2px;
+  }
+
+  </style>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+  var group_avg = {{ subsession.average_score|json }}.toFixed(2);
+
+  var scores_list = {{ player_scores }}
+  var partner_score = {{ player.partner_test_score|json }}
+  var treatment = {{ player.treatment|json }}
+
+  var player_score = {{ player.test_score|json }}
+  var num_questions = {{ Constants.num_questions|json }}+1
+
+  var freq_list = []
+
+  $('#avg').text(group_avg)
+
+  for (i = 0; i < 21; i++) {
+    numOccur = $.grep(scores_list, function (elem) {
+      return elem == i
+    }).length;
+    freq_list.push(numOccur)
+  }
+  var highest_freq = Math.max.apply(Math, freq_list);
+
+  for (i = 0; i < highest_freq; i++) {
+    $('#histogram').prepend('<tr id="row'+i+'"></tr>');
+    for (j = 0; j < 21; j++) {
+      if (freq_list[j] <= i) {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/blank.png" %}" class="clipart_man"></td>');
+      }
+      else {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/clipart_man.png" %}" class="clipart_man"></td>');
+      }
+    }
+  }
+
+  if (treatment == "full") {
+    for (i = 0; i < 21; i++) {
+      if (i == player_score) {
+        $('#cell0-'+i+' img').attr('src', '{% static "lottery_game/clipart_man_blue.png" %}');
+      }
+    }
+  }
+
+  $('#histogram').append('<tr id="axis"></tr>');
+  for (i = 0; i < 21; i++) {
+    $('#axis').append('<td>'+i+'</td>');
+  }
+  $('#histogram').append('<tr id="axis_title"></tr>');
+  $('#axis_title').append('<td colspan="21">Number of correct answers</td>');
+
+  //Set points info
+
+
+  function checkLessPlayer(number) {
+    return number < player_score
+  }
+  function checkSamePlayer(number) {
+    return number == player_score
+  }
+  function checkMorePlayer(number) {
+    return number > player_score
+  }
+
+  $('#less_self').append(function(e) {
+    var less = scores_list.filter(checkLessPlayer);
+     return less.length;
+  });
+  $('#same_self').append(function(e) {
+    var same = scores_list.filter(checkSamePlayer);
+    return same.length -1;
+  });
+  $('#more_self').append(function(e) {
+    var more = scores_list.filter(checkMorePlayer);
+    return more.length;
+  })
+
+  function checkLessPartner(number) {
+    return number < partner_test_score
+  }
+  function checkSamePartner(number) {
+    return number == partner_test_score
+  }
+  function checkMorePartner(number) {
+    return number > partner_test_score
+  }
+
+  $('#less_partner').append(function(e) {
+    var less = scores_list.filter(checkLessPartner);
+     return less.length;
+  });
+  $('#same_partner').append(function(e) {
+    var same = scores_list.filter(checkSamePartner);
+    return same.length -1;
+  });
+  $('#more_partner').append(function(e) {
+    var more = scores_list.filter(checkMorePartner);
+    return more.length;
+  })
+
+  </script>
+
+{% endblock %}
+
+{% endblock %}

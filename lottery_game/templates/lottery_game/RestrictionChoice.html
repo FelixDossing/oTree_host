@@ -1,0 +1,460 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Restriction choice
+{% endblock %}
+
+{% block content %}
+
+
+  {% include 'lottery_game/Calculator.html' %}
+
+  <div class="instructions well well-1g">
+    <p>
+      On this screen you will make choices that affect <strong>Player {{ player.partner_id }}</strong>.
+      Player {{ player.partner_id }} has been given <strong>{{ Constants.endowment }}</strong> to invest in one of the lotteries in the table below. The lotteries are the same as those you have seen
+      on the previous screen{% if player.round_number != 1 %}s{% endif %}. If you wish, you may remove lotteries, so that Player {{ player.partner_id }} will be unable to choose those lotteries.
+      Note that Player {{ player.partner_id }} will not make any choices that affect you in this experiment.<br><br>
+
+      Below you see information regarding {% if player.treatment == 'full' %}your own score, as well as {% endif %}Player {{ player.partner_id }}'s score.<br><br>
+    </p>
+
+    <table id="feedback_table">
+      <tr>
+        <td>Number of questions</td>
+        <td class="number">{{ Constants.num_questions }}</td>
+      </tr>
+      {% if player.treatment == "full" %}
+      <tr>
+        <td><strong>Your score</strong></td>
+        <td class="number"><strong>{{ player.test_score }}</strong></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td><strong>Player {{ player.partner_id }}'s score</strong></td>
+        <td class="number"><strong>{{ player.partner_test_score }}</strong></td>
+      </tr>
+    </table>
+
+    <p>
+      <br>In the picture below it is shown for each possible score, how many participants got that score. Individuals on top of each other got the same score.
+      {% if player.treatment == "full" %}<span style="color:blue; font-weight: bold;">blue player is you</span>. {% endif %}The <span style="color:orange; font-weight: bold;">orange player
+      is Player {{ player.partner_id }}</span>.
+    </p>
+    <table id="histogram">
+    </table>
+  </div>
+
+  <table class="table">
+    <tr>
+      <th>Lottery</th>
+      <th>Condition</th>
+      <th>Return per point invested</th>
+      <th>Full description</th>
+    </tr>
+    <tr id="tr1">
+      <td>A</td>
+      {% if player.lotteryA == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryA == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryA == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryA == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryA == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryA == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+      </td>
+    </tr>
+    <tr id="tr2">
+      <td>B</td>
+      {% if player.lotteryB == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryB == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryB == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryB == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryB == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryB == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+    </tr>
+    <tr id="tr3">
+      <td>C</td>
+      {% if player.lotteryC == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryC == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryC == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryC == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryC == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryC == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+    </tr>
+    <tr id="tr4">
+      <td>D</td>
+      {% if player.lotteryD == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryD == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryD == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryD == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryD == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryD == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+    </tr>
+    <tr id="tr5">
+      <td>E</td>
+      {% if player.lotteryE == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryE == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryE == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryE == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryE == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryE == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+    </tr>
+    <tr id="tr6">
+      <td>F</td>
+      {% if player.lotteryF == 'Lottery 1' %}
+      <td>{{ lottery1_condition }}</td>
+      <td>{{ lottery1_return}}</td>
+      <td>{{ lottery1_description }}</td>
+      {% elif player.lotteryF == 'Lottery 2' %}
+      <td>{{ lottery2_condition }}</td>
+      <td>{{ lottery2_return}}</td>
+      <td>{{ lottery2_description }}</td>
+      {% elif player.lotteryF == 'Lottery 3' %}
+      <td>{{ lottery3_condition }}</td>
+      <td>{{ lottery3_return}}</td>
+      <td>{{ lottery3_description }}</td>
+      {% elif player.lotteryF == 'Lottery 4' %}
+      <td>{{ lottery4_condition }}</td>
+      <td>{{ lottery4_return}}</td>
+      <td>{{ lottery4_description }}</td>
+      {% elif player.lotteryF == 'Lottery 5' %}
+      <td>{{ lottery5_condition }}</td>
+      <td>{{ lottery5_return}}</td>
+      <td>{{ lottery5_description }}</td>
+      {% elif player.lotteryF == 'Lottery 6' %}
+      <td>{{ lottery6_condition }}</td>
+      <td>{{ lottery6_return}}</td>
+      <td>{{ lottery6_description }}</td>
+      {% endif %}
+    </tr>
+  </table>
+  <br><br>
+
+<p style="font-weight:bold;">Please select the lotteries you wish to remove from Player {{ player.partner_id }}'s screen</p>
+<div id="check">
+  <input type='checkbox' id="restrictChoice1"> Lottery A</br>
+  <input type='checkbox' id="restrictChoice2"> Lottery B</br>
+  <input type='checkbox' id="restrictChoice3"> Lottery C</br>
+  <input type='checkbox' id="restrictChoice4"> Lottery D</br>
+  <input type='checkbox' id="restrictChoice5"> Lottery E</br>
+  <input type='checkbox' id="restrictChoice6"> Lottery F</br>
+</div>
+<br>
+<p>The highlighted lotteries will not be shown on Player {{ player.partner_id }}'s screen and so Player {{ player.partner_id }} will not be able to select those.
+<br><br>
+
+
+
+<input type='hidden' name='restrictionChoiceLottery1' value="False" id="restrictionChoiceLottery1">
+<input type='hidden' name='restrictionChoiceLottery2' value="False" id="restrictionChoiceLottery2">
+<input type='hidden' name='restrictionChoiceLottery3' value="False" id="restrictionChoiceLottery3">
+<input type='hidden' name='restrictionChoiceLottery4' value="False" id="restrictionChoiceLottery4">
+<input type='hidden' name='restrictionChoiceLottery5' value="False" id="restrictionChoiceLottery5">
+<input type='hidden' name='restrictionChoiceLottery6' value="False" id="restrictionChoiceLottery6">
+
+<div id="next_button_div">
+  {% next_button %}
+</div>
+<div id="please_text">
+</div>
+
+{% block style %}
+<style type="text/css">
+
+#feedback_table {
+  width: 40%;
+  margin-left: 30%;
+  font-size: 20px;
+  border-collapse: separate;
+  border-spacing: 10px;
+  border: 1px solid black;
+}
+
+  #check {
+    margin-left: 30px;
+    font-weight: bold;
+    line-height: 27px;
+  }
+  .number {
+    text-align: right;
+  }
+
+  #histogram {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: white;
+  }
+  .clipart_man {
+    width: 100%;
+    height: 90px;
+    background-color: white;
+    padding: 2px;
+  }
+
+
+</style>
+
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+var lotteryA = {{ player.lotteryA|json }}
+var lotteryB = {{ player.lotteryB|json }}
+var lotteryC = {{ player.lotteryC|json }}
+var lotteryD = {{ player.lotteryD|json }}
+var lotteryE = {{ player.lotteryE|json }}
+var lotteryF = {{ player.lotteryF|json }}
+var lotteries_checked = [false, false, false, false, false, false]
+var lottery_identities = [lotteryA, lotteryB, lotteryC, lotteryD, lotteryE, lotteryF]
+
+for (i = 0; i < 6; i++) {
+  lottery_identities[i] = lottery_identities[i][8]
+};
+
+$('#check').change(function() {
+  for (i=1; i<7; i++) {
+    if(document.getElementById('restrictChoice'+i).checked) {
+      $('#tr'+i).css('font-weight', 'bold');
+      lotteries_checked[i-1] = true;
+      $('#restrictionChoiceLottery'+lottery_identities[i-1]).val("True");
+    }
+    else {
+      $('#tr'+i).css('font-weight', 'normal');
+      lotteries_checked[i-1] = false;
+      $('#restrictionChoiceLottery'+lottery_identities[i-1]).val("False");
+    }
+  }
+  if(lotteries_checked.filter(v => v).length == 6) {
+    $('#next_button_div').hide();
+    $('#please_text').html('<p><strong>Please leave at least one option available</strong></p>')
+  }
+  else {
+    $('#next_button_div').show();
+    $('#please_text').html('')
+  }
+});
+
+
+// Histogram
+
+var group_avg = {{ subsession.average_score|json }}.toFixed(2);
+
+var scores_list = {{ player_scores }}
+var partner_score = {{ player.partner_test_score|json }}
+var treatment = {{ player.treatment|json }}
+
+var player_score = {{ player.test_score|json }}
+var num_questions = {{ Constants.num_questions|json }}+1
+
+var freq_list = []
+
+$('#avg').text(group_avg)
+
+for (i = 0; i < 21; i++) {
+  numOccur = $.grep(scores_list, function (elem) {
+    return elem == i
+  }).length;
+  freq_list.push(numOccur)
+}
+var highest_freq = Math.max.apply(Math, freq_list);
+
+for (i = 0; i < highest_freq; i++) {
+  $('#histogram').prepend('<tr id="row'+i+'"></tr>');
+  for (j = 0; j < 21; j++) {
+    if (freq_list[j] <= i) {
+      $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/blank.png" %}" class="clipart_man"></td>');
+    }
+    else {
+      $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/clipart_man.png" %}" class="clipart_man"></td>');
+    }
+  }
+}
+
+for (i = 0; i < 21; i++) {
+  if (i == partner_score) {
+    $('#cell0-'+i+' img').attr('src', '{% static "lottery_game/clipart_man_orange.png" %}');
+  }
+}
+if (treatment == "full") {
+  if (player_score != partner_score) {
+    for (i = 0; i < 21; i++) {
+      if (i == player_score) {
+        $('#cell0-'+i+' img').attr('src', '{% static "lottery_game/clipart_man_blue.png" %}');
+      }
+    }
+  }
+  else {
+    for (i = 0; i < 21; i++) {
+      if (i == player_score) {
+        $('#cell1-'+i+' img').attr('src', '{% static "lottery_game/clipart_man_blue.png" %}')
+      }
+    }
+  }
+}
+
+$('#histogram').append('<tr id="axis"></tr>');
+for (i = 0; i < 21; i++) {
+  $('#axis').append('<td>'+i+'</td>');
+}
+$('#histogram').append('<tr id="axis_title"></tr>');
+$('#axis_title').append('<td colspan="21">Number of correct answers</td>');
+
+//Set points info
+
+
+function checkLessPlayer(number) {
+  return number < player_score
+}
+function checkSamePlayer(number) {
+  return number == player_score
+}
+function checkMorePlayer(number) {
+  return number > player_score
+}
+
+$('#less_self').append(function(e) {
+  var less = scores_list.filter(checkLessPlayer);
+   return less.length;
+});
+$('#same_self').append(function(e) {
+  var same = scores_list.filter(checkSamePlayer);
+  return same.length -1;
+});
+$('#more_self').append(function(e) {
+  var more = scores_list.filter(checkMorePlayer);
+  return more.length;
+})
+
+function checkLessPartner(number) {
+  return number < partner_test_score
+}
+function checkSamePartner(number) {
+  return number == partner_test_score
+}
+function checkMorePartner(number) {
+  return number > partner_test_score
+}
+
+$('#less_partner').append(function(e) {
+  var less = scores_list.filter(checkLessPartner);
+   return less.length;
+});
+$('#same_partner').append(function(e) {
+  var same = scores_list.filter(checkSamePartner);
+  return same.length -1;
+});
+$('#more_partner').append(function(e) {
+  var more = scores_list.filter(checkMorePartner);
+  return more.length;
+})
+
+
+</script>
+
+
+{% endblock %}
+
+{% endblock %}
