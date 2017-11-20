@@ -2,7 +2,7 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
 )
-import csv
+import csv, random
 
 author = 'Felix Sebastian Dossing'
 
@@ -31,7 +31,10 @@ class Constants(BaseConstants):
         ideology = list(csv.DictReader(q))
 
 class Subsession(BaseSubsession):
-    pass
+
+    def creating_session(self):
+        for p in self.get_players():
+            p.bomb_placement = random.randint(0,100)
 
 
 class Group(BaseGroup):
@@ -70,6 +73,13 @@ class Player(BasePlayer):
     disgust27 = models.CharField(help_text=Constants.disgust[26]['question'])
 
     boxes_opened = models.IntegerField()
+    bomb_placement = models.IntegerField()
+
+    def set_payoffs(self):
+        if self.boxes_opened < self.bomb_placement:
+            self.payoff = self.boxes_opened
+        else:
+            self.payoff = 0
 
     paternalism_question1 = models.CharField(help_text=Constants.paternalism[0]['question'])
     paternalism_question2 = models.CharField(help_text=Constants.paternalism[1]['question'])
@@ -108,11 +118,6 @@ class Player(BasePlayer):
                                      widget=widgets.RadioSelect())
     wealth = models.CharField(verbose_name=Constants.ideology[6]['introduction'],
                                      widget=widgets.RadioSelect())
-
-    #Ideology
-    #Belief in science
-    #Democracy
-
 
     vote2015 = models.CharField(widget=widgets.RadioSelect())
     votenow = models.CharField(widget=widgets.RadioSelect())

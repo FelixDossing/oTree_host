@@ -17,7 +17,7 @@ class Constants(BaseConstants):
 
     number_of_choices = 4
     point_conversion = 0.2
-    worktime_minutes = 3
+    worktime_minutes = 15
     trial_minutes = 3
 
     with open ('pat_effort/commit_choices.csv') as csvfile:

@@ -12,6 +12,12 @@ class Risk_main(Page):
     form_model = models.Player
     form_fields = ['boxes_opened']
 
+    def before_next_page(self):
+        self.player.set_payoffs()
+
+class Risk_results(Page):
+    pass
+
 class Disgust_survey1(Page):
     form_model = models.Player
     form_fields = ['disgust{}'.format(i) for i in range(1,15)]
@@ -109,7 +115,7 @@ class Voting(Page):
             "Dansk Folkeparti (O)",
             "Venstre - Danmarks liberale parti (V)",
             "Enhedslisten - De Rød-Grønne (Ø)",
-            "Alternativet (Å)"
+            "Alternativet (Å)",
             "I chose not to vote",
             "I am not allowed to vote in the Danish general election"
         ]
@@ -125,7 +131,7 @@ class Voting(Page):
             "Dansk Folkeparti (O)",
             "Venstre - Danmarks liberale parti (V)",
             "Enhedslisten - De Rød-Grønne (Ø)",
-            "Alternativet (Å)"
+            "Alternativet (Å)",
             "I chose not to vote",
             "I am not allowed to vote in the Danish general election"
         ]
@@ -167,9 +173,11 @@ class Demographics(Page):
 
 class Results(Page):
     pass
+
 page_sequence = [
     Risk_instructions,
     Risk_main,
+    Risk_results,
     Disgust_survey1,
     Disgust_survey2,
     Paternalism_questions1,
@@ -177,7 +185,6 @@ page_sequence = [
     Paternalism_questions3,
     Paternalism_questions4,
     Ideology,
-    Results,
     Personality,
     Voting,
     Demographics
