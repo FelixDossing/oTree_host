@@ -4,11 +4,15 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 class WaitForStart(Page):
-    pass
+    def is_displayed(self):
+        return self.player.round_number == 1
 
 class Instructions(Page):
     def is_displayed(self):
         return self.player.round_number == 1
+
+    def vars_for_template(self):
+        return {'points_example': 1000 * Constants.point_conversion}
 
 class TrialPrep(Page):
     def is_displayed(self):
@@ -76,7 +80,7 @@ class RealEffortPage(Page):
     timeout_seconds = Constants.worktime_minutes*60
 
     form_model = models.Player
-    form_fields = ['tasksCompleted', 'surf_timing']
+    form_fields = ['tasksCompleted', 'surf_timing', 'productivity']
 
 
 class ResultsWaitPage(WaitPage):
@@ -89,19 +93,19 @@ class Results(Page):
 
 
 page_sequence = [
-    WaitForStart,
-    Instructions,
-    TrialPrep,
-    TrialPage,
-    TrialResults,
-    CommitDecisionPageFirst,
-    PaternaleeDecisionPage,
-    CommitDecisionPageSecond,
-    PartnerBeliefPage,
-    DecisionForPartner,
-    DecisionWaitPage,
-    ImplementationFeedback,
-    TaskPrep,
+    # WaitForStart,
+    # Instructions,
+    # TrialPrep,
+    # TrialPage,
+    # TrialResults,
+    # CommitDecisionPageFirst,
+    # PaternaleeDecisionPage,
+    # CommitDecisionPageSecond,
+    # PartnerBeliefPage,
+    # DecisionForPartner,
+    # DecisionWaitPage,
+    # ImplementationFeedback,
+    # TaskPrep,
     RealEffortPage,
     ResultsWaitPage,
     Results

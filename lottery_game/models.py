@@ -28,9 +28,10 @@ class Constants(BaseConstants):
     num_questions = len(questions)
 
     quiz_points = 1 # Points for each correct answer in the quiz (if points are given for quiz answers
+    point_conversion = 0.2
 
     # Conversion rate: 1 point = 4 DKK
-    endowment = c(10)
+    endowment = c(50)
 
 
 class Subsession(BaseSubsession):
@@ -164,7 +165,7 @@ class Subsession(BaseSubsession):
         ## set payoff round number
         for p in self.get_players():
             if self.round_number == 1:
-                p.restricted_payoff_round = random.randint(1, self.session.config['number_of_rounds'])
+                p.restricted_payoff_round = random.randint(1, self.session.config['number_of_rounds_lottery'])
             else:
                 p.restricted_payoff_round = p.in_round(1).restricted_payoff_round
 
@@ -358,47 +359,47 @@ class Player(BasePlayer):
     solution19 = models.CharField()
     solution20 = models.CharField()
 
-    # submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
-    # submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
+    submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
 
-    submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
-    submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
-    submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
-    submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
-    submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
-    submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
-    submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
-    submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
-    submitted_answer11 = models.CharField(initial = "20%", widget=widgets.RadioSelect())
-    submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
-    submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
-    submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
-    submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
-    submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
-    submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
-    submitted_answer18 = models.CharField(initial = "1/10000", widget=widgets.RadioSelect())
-    submitted_answer19 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
-    submitted_answer20 = models.CharField(initial = "100%", widget=widgets.RadioSelect())
+    # submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
+    # submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    # submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
+    # submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
+    # submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
+    # submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
+    # submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
+    # submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    # submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
+    # submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
+    # submitted_answer11 = models.CharField(initial = "20%", widget=widgets.RadioSelect())
+    # submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
+    # submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
+    # submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
+    # submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
+    # submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
+    # submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
+    # submitted_answer18 = models.CharField(initial = "1/10000", widget=widgets.RadioSelect())
+    # submitted_answer19 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
+    # submitted_answer20 = models.CharField(initial = "100%", widget=widgets.RadioSelect())
 
     # For testing
     def set_test_values(self):

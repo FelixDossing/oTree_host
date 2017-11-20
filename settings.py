@@ -92,8 +92,8 @@ mturk_hit_settings = {
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 0.500,
-    'participation_fee': 0.00,
+    'real_world_currency_per_point': 0.200,
+    'participation_fee': 50.00,
     'doc': "",
     'mturk_hit_settings': mturk_hit_settings,
 }
@@ -101,28 +101,40 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
      {
+         'name': 'pat_experiments',
+         'display_name': 'Pat Experiments',
+         'num_demo_participants': 4,
+         'app_sequence': ['pat_effort','lottery_game','survey'],
+         'DKK_per_point': 0.20,
+         'number_of_rounds_lottery': 3,
+         'doc': """
+         The appropriate number of rounds depends on the number of participants. Please set the number of rounds so that it is half of the number of participants minus 2. If n is the number
+         of participants, then the number of rounds should thus be (n-2)/2.
+         """
+     },
+     {
          'name': 'pat_effort',
          'display_name': 'Real effort (Pat exps)',
          'num_demo_participants': 4,
          'app_sequence': ['pat_effort'],
-         'DKK_per_point': 0.5,
+         'DKK_per_point': 0.20,
      },
      {
         'name': 'lottery_game',
         'display_name': 'Lottery game (Pat exps)',
         'num_demo_participants': 8,
         'app_sequence': ['lottery_game'],
-        'number_of_rounds': 3,
+        'number_of_rounds_lottery': 3,
         'doc': """
         The appropriate number of rounds depends on the number of participants. Please set the number of rounds so that it is half of the number of participants minus 2. If n is the number
         of participants, then the number of rounds should thus be (n-2)/2.
         """
      },
      {
-         'name': 'lotterygame_survey',
+         'name': 'survey',
          'display_name': 'Survey (Pat exps)',
          'num_demo_participants': 1,
-         'app_sequence': ['lotterygame_survey'],
+         'app_sequence': ['survey'],
      },
 ]
 

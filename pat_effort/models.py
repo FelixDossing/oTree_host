@@ -16,8 +16,8 @@ class Constants(BaseConstants):
     num_rounds = 4
 
     number_of_choices = 4
-    point_conversion = 0.25
-    worktime_minutes = 15
+    point_conversion = 0.2
+    worktime_minutes = 3
     trial_minutes = 3
 
     with open ('pat_effort/commit_choices.csv') as csvfile:
@@ -173,6 +173,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+
     partner_id = models.CharField()
     player_id = models.CharField()
 
@@ -255,3 +256,5 @@ class Player(BasePlayer):
                 return 'paternalee_first'
             elif self.id_in_group == 2:
                 return 'commit_first'
+
+    productivity = models.CharField()

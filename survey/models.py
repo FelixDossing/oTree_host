@@ -18,16 +18,16 @@ class Constants(BaseConstants):
 
     number_of_surveys = 3
 
-    with open('lotterygame_survey/disgust_questions.csv') as q:
+    with open('survey/disgust_questions.csv') as q:
         disgust = list(csv.DictReader(q))
 
-    with open('lotterygame_survey/paternalism_questions.csv') as q:
+    with open('survey/paternalism_questions.csv') as q:
         paternalism = list(csv.DictReader(q))
 
-    with open('lotterygame_survey/personality.csv') as q:
+    with open('survey/personality.csv') as q:
         personality = list(csv.DictReader(q))
 
-    with open('lotterygame_survey/ideology.csv') as q:
+    with open('survey/ideology.csv') as q:
         ideology = list(csv.DictReader(q))
 
 class Subsession(BaseSubsession):

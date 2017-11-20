@@ -6,12 +6,16 @@ from otree.api import safe_json
 
 
 class WaitForStart(Page):
-    pass
+    def is_displayed(self):
+        return self.player.round_number == 1
 
 class Instructions(Page):
 
     def is_displayed(self):
         return self.player.round_number == 1
+
+    def vars_for_template(self):
+        return {'points_example': Constants.point_conversion*300}
 
 class Test(Page):
 
@@ -216,7 +220,6 @@ class Test(Page):
 
 
     def before_next_page(self):
-        self.player.set_test_values()
         self.player.check_correct()
 
 class TestWaitPage(WaitPage):

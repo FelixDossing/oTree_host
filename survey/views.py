@@ -168,17 +168,17 @@ class Demographics(Page):
 class Results(Page):
     pass
 page_sequence = [
-    # Risk_instructions,
-    # Risk_main,
-    # Disgust_survey1,
-    # Disgust_survey2,
-    # Paternalism_questions1,
-    # Paternalism_questions2,
-    # Paternalism_questions3,
-    # Paternalism_questions4,
+    Risk_instructions,
+    Risk_main,
+    Disgust_survey1,
+    Disgust_survey2,
+    Paternalism_questions1,
+    Paternalism_questions2,
+    Paternalism_questions3,
+    Paternalism_questions4,
     Ideology,
-    # Results,
-    # Personality,
-    # Voting,
+    Results,
+    Personality,
+    Voting,
     Demographics
 ]

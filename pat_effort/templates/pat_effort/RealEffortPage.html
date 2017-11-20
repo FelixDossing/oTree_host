@@ -10,6 +10,8 @@
 <input type="hidden" name="tasksCompleted" value="0" id="tasksCompleted"/>
 <input type="hidden" name="surf_timing" id="surf_timing"/>
 
+<input type="hidden" name="productivity" id="productivity"/>
+
 <div id="surf" width="100%">
 <button type="button" id="surf_button" class="btn btn-primary">Surf the web</button><br>
 </div>
@@ -134,6 +136,15 @@
 {% block script %}
 
 <script>
+
+setInterval(timeProductivity, 1000);
+function timeProductivity() {
+  time = $('.otree-timer__time-left').text();
+  if (time.substr(time.length - 2) == "00") {
+    $('#productivity').val($('#productivity').val().concat(tasksCompleted+'.'));
+  }
+}
+
 
 button_present = {{ player.button_present|json }}
 
@@ -284,6 +295,8 @@ $(window).unload(function() {
 });
 
 $('#otree-timeout:first-child').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
+
+// ADD productivity inputs
 
 </script>
 

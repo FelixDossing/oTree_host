@@ -81,7 +81,7 @@
 
 <p>
   Your implemented choice cost: <strong>{{ player.choice_cost }} points</strong><br>
-  This will be substracted from your earnings.<br><br>
+  {% if player.choice_cost > 0 %}This will be substracted from your earnings.<br>{% endif %}<br>
   Press the next button to continue to the slider task.
 </p>
 
