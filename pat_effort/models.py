@@ -13,7 +13,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'egame1'
     players_per_group = 2
-    num_rounds = 4
+    num_rounds = 2
 
     number_of_choices = 4
     point_conversion = 0.2
@@ -166,10 +166,13 @@ class Group(BaseGroup):
 
     def calculatePayoffs(self):
         for p in self.get_players():
-            p.payoff = p.tasksCompleted - p.choice_cost
-            p.accumulated_payoff = sum([q.payoff for q in p.in_all_rounds()])
+            p.payoff = c(p.tasksCompleted - p.choice_cost)
+            p.accumulated_payoff = c(sum([q.payoff for q in p.in_all_rounds()]))
 
-
+    def compensatePayoffs(self):
+        for p in self.get_players():
+            if p.accumulated_payoff < 0:
+                p.participant.payoff = 0
 
 class Player(BasePlayer):
 
@@ -181,7 +184,7 @@ class Player(BasePlayer):
 
     choice_cost = models.IntegerField(initial=0)
 
-    accumulated_payoff = models.IntegerField(initial=0)
+    accumulated_payoff = models.CurrencyField(initial=0)
 
     random1 = models.IntegerField()
     random2 = models.IntegerField()

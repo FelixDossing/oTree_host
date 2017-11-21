@@ -29,7 +29,7 @@
       {{ p.payoff }}
     </td>
     <td>
-      {{ p.accumulated_payoff }} points
+      {{ p.accumulated_payoff }}
     </td>
     <td>
       {% if p.button_present == True %}Yes{% else %}No{% endif %}
@@ -37,6 +37,8 @@
   </tr>
   {% endfor %}
 </table>
+
+ {% if player.round_number == Constants.num_rounds %}<h3>You earned {% if player.accumulated_payoff > 0 %}{{ player.accumulated_payoff }}{% else %}0{% endif %}</h3>{% endif %}
 
 
     {% next_button %}

@@ -103,7 +103,7 @@ SESSION_CONFIGS = [
      {
          'name': 'pat_experiments',
          'display_name': 'Pat Experiments',
-         'num_demo_participants': 4,
+         'num_demo_participants': 8,
          'app_sequence': ['pat_effort','lottery_game','survey'],
          'DKK_per_point': 0.20,
          'number_of_rounds_lottery': 3,
@@ -115,7 +115,7 @@ SESSION_CONFIGS = [
      {
          'name': 'pat_effort',
          'display_name': 'Real effort (Pat exps)',
-         'num_demo_participants': 4,
+         'num_demo_participants': 2,
          'app_sequence': ['pat_effort'],
          'DKK_per_point': 0.20,
      },

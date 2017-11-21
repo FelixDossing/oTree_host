@@ -89,7 +89,11 @@ class ResultsWaitPage(WaitPage):
         self.group.calculatePayoffs()
 
 class Results(Page):
-    pass
+
+    def before_next_page(self):
+        if self.round_number == Constants.num_rounds:
+            self.group.compensatePayoffs()
+
 
 
 page_sequence = [
