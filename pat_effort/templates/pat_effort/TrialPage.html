@@ -147,7 +147,7 @@ var pagesStorage = [sessionStorage.pagesCompletedRound1, sessionStorage.pagesCom
 var surfingStorage = [sessionStorage.surfingTrial, sessionStorage.surfingRound1, sessionStorage.surfingRound2, sessionStorage.surfingRound3, sessionStorage.surfingRound4]
 
 // Set score correctly if page is reloaded
-if ($('#otree-title').html().includes('Trial')) {
+if ($('.otree-title').html().includes('Trial')) {
   if(sessionStorage.pagesCompletedTrial) {
     pagesCompleted = parseInt(sessionStorage.pagesCompletedTrial);
   }
@@ -161,7 +161,7 @@ else {
     }
   }
 }
-if ($('#otree-title').html().includes('Trial') && surfingStorage[0]) {
+if ($('.otree-title').html().includes('Trial') && surfingStorage[0]) {
   $('#slider_task_div').hide();
 }
 else {
@@ -188,7 +188,7 @@ $('#surf_button').click(function() {
   // Close down task
   $('#slider_task_div').hide();
 
-  if ($('#otree-title').html().includes('Trial')) {
+  if ($('.otree-title').html().includes('Trial')) {
     sessionStorage.surfingTrial = true;
   }
   else if(round_number == 1) {
@@ -249,7 +249,7 @@ function setCompletedTasks() {
   }
   $('#taskCount').html(tasksCompleted);
 
-  if($('#otree-title').html().includes('Trial')) {
+  if($('.otree-title').html().includes('Trial')) {
     $('#tasksCompleted_trial').val(tasksCompleted);
   }
   else {
@@ -258,7 +258,7 @@ function setCompletedTasks() {
 }
 
 $(window).unload(function() {
-  if($('#otree-title').html().includes('Trial')) {
+  if($('.otree-title').html().includes('Trial')) {
     sessionStorage.pagesCompletedTrial = pagesCompleted;
   }
   else if (round_number==1) {
