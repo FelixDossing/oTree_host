@@ -15,7 +15,7 @@
 
   {% block style %}
   <style>
-  #otree-timeout {
+  .otree-timer {
     font-size: 1.3em;
   }
   #ready_text {
@@ -28,7 +28,7 @@
   {% block script %}
     <script>
 
-    $('#otree-timeout:first-child').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
+    $('.otree-timer').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
 
     </script>
   {% endblock %}

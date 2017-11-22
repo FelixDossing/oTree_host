@@ -67,10 +67,10 @@
     $('#histogram').prepend('<tr id="row'+i+'"></tr>');
     for (j = 0; j < 21; j++) {
       if (freq_list[j] <= i) {
-        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/blank.png" %}" class="clipart_man"></td>');
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/blank.png" %}" class="clipart_man"></td>');
       }
       else {
-        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lotterygame/clipart_man.png" %}" class="clipart_man"></td>');
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/clipart_man.png" %}" class="clipart_man"></td>');
       }
     }
   }

@@ -27,7 +27,7 @@ class Constants(BaseConstants):
 
     num_questions = len(questions)
 
-    quiz_points = 1 # Points for each correct answer in the quiz (if points are given for quiz answers
+    quiz_points = 8 # Points for each correct answer in the quiz (if points are given for quiz answers
     point_conversion = 0.2
 
     # Conversion rate: 1 point = 4 DKK
@@ -457,8 +457,6 @@ class Player(BasePlayer):
     partner_rectriction_happiness = models.CharField(widget=widgets.RadioSelectHorizontal)
     own_restriction_happiness = models.CharField(widget=widgets.RadioSelectHorizontal)
 
-    payoff_quiz = models.CurrencyField(initial=0)
-
     def check_correct(self):
         self.is_correct1 = self.submitted_answer1 == self.solution1
         self.is_correct2 = self.submitted_answer2 == self.solution2
@@ -588,5 +586,8 @@ class Player(BasePlayer):
 
     def setTotalPayoffs(self):
         self.payoff = c(self.in_round(1).unrestricted_payoff) + c(self.in_round(self.restricted_payoff_round).restricted_payoff)
+
+        if self.quiz_payoff_bool == True:
+            self.payoff = c(self.payoff) + c(Constants.quiz_points*20)
 
     #----# FOR LOTTERY (END) #----#

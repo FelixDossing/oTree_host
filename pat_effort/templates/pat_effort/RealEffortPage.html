@@ -137,13 +137,7 @@
 
 <script>
 
-setInterval(timeProductivity, 1000);
-function timeProductivity() {
-  time = $('.otree-timer__time-left').text();
-  if (time.substr(time.length - 2) == "00") {
-    $('#productivity').val($('#productivity').val().concat(tasksCompleted+'.'));
-  }
-}
+
 
 
 button_present = {{ player.button_present|json }}
@@ -158,6 +152,37 @@ var count = 0;
 
 var pagesStorage = [sessionStorage.pagesCompletedRound1, sessionStorage.pagesCompletedRound2, sessionStorage.pagesCompletedRound3, sessionStorage.pagesCompletedRound4]
 var surfingStorage = [sessionStorage.surfingTrial, sessionStorage.surfingRound1, sessionStorage.surfingRound2, sessionStorage.surfingRound3, sessionStorage.surfingRound4]
+
+
+if (round_number == 1) {
+  if (sessionStorage.productivityRound1) {
+    $('#productivity').val(String(sessionStorage.productivityRound1));
+  }
+}
+else if (round_number == 2) {
+  if (sessionStorage.productivityRound2) {
+    $('#productivity').val(String(sessionStorage.productivityRound2));
+  }
+}
+else if (round_number == 3) {
+  if (sessionStorage.productivityRound3) {
+    $('#productivity').val(String(sessionStorage.productivityRound3));
+  }
+}
+else if (round_number == 4) {
+  if (sessionStorage.productivityRound4) {
+    $('#productivity').val(String(sessionStorage.productivityRound4));
+  }
+}
+
+setInterval(timeProductivity, 1000);
+function timeProductivity() {
+  time = $('.otree-timer__time-left').text();
+  if (time.substr(time.length - 2) == "00") {
+    $('#productivity').val($('#productivity').val().concat(tasksCompleted+'.'));
+  }
+}
+
 
 if (button_present == false) {
   $('#surf_button').css('visibility', 'hidden');
@@ -292,11 +317,22 @@ $(window).unload(function() {
     sessionStorage.pagesCompletedRound4 = pagesCompleted;
   }
 
+  //Track productivity
+  if (round_number==1) {
+    sessionStorage.productivityRound1 = String($('#productivity').val());
+  }
+  else if (round_number==2) {
+    sessionStorage.productivityRound2 = String($('#productivity').val());
+  }
+  else if (round_number==3) {
+    sessionStorage.productivityRound3 = String($('#productivity').val());
+  }
+  else if (round_number==4) {
+    sessionStorage.productivityRound4 = String($('#productivity').val());
+  }
+
 });
 
-$('#otree-timeout:first-child').html('Time left: <span style="font-weight: bold"><span class="glyphicon glyphicon-time"></span>  <span class="otree-timer__time-left"></span></span>');
-
-// ADD productivity inputs
 
 </script>
 

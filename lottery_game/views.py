@@ -345,7 +345,7 @@ class LotteryChoiceOwnRestricted(Page):
     def before_next_page(self):
         self.player.setPayoffs()
 
-        if self.round_number == self.session.config['number_of_rounds']:
+        if self.round_number == self.session.config['number_of_rounds_lottery']:
             self.player.setTotalPayoffs()
 
 class ResultsWaitPage(WaitPage):
@@ -353,11 +353,11 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     def is_displayed(self):
-        return self.round_number == self.session.config['number_of_rounds']
+        return self.round_number == self.session.config['number_of_rounds_lottery']
 
 class Finished(Page):
     def is_displayed(self):
-        return self.round_number == self.session.config['number_of_rounds']
+        return self.round_number == self.session.config['number_of_rounds_lottery']
 
 
 page_sequence = [
