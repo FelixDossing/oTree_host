@@ -15,7 +15,7 @@ class Instructions(Page):
         return self.player.round_number == 1
 
     def vars_for_template(self):
-        return {'points_example': Constants.point_conversion*300}
+        return {'points_example': Constants.point_conversion*300, 'quiz_max': Constants.quiz_points*Constants.num_questions}
 
 class Test(Page):
 
@@ -284,8 +284,11 @@ class LotteryChoiceOwn(Page):
     form_model = models.Player
     form_fields = ['lotteryChoiceOwn']
 
-
 class RestrictionChoice(Page):
+
+    def is_displayed(self):
+        return self.round_number <= self.session.config['number_of_rounds_lottery']
+
     form_model = models.Player
     form_fields = ['restrictionChoiceLottery{}'.format(i) for i in range(1,7)]
 
@@ -319,6 +322,10 @@ class WaitForRestrictions(WaitPage):
         self.subsession.setRestrictions()
 
 class LotteryChoiceOwnRestricted(Page):
+
+    def is_displayed(self):
+        return self.round_number <= self.session.config['number_of_rounds_lottery']
+
     form_model = models.Player
     form_fields = ['restrictedChoice']
 
@@ -354,6 +361,9 @@ class ResultsWaitPage(WaitPage):
 class Results(Page):
     def is_displayed(self):
         return self.round_number == self.session.config['number_of_rounds_lottery']
+
+    def vars_for_template(self):
+        return {'test_return': Constants.quiz_points*self.player.test_score}
 
 class Finished(Page):
     def is_displayed(self):

@@ -33,6 +33,8 @@ class Constants(BaseConstants):
     # Conversion rate: 1 point = 4 DKK
     endowment = c(50)
 
+    minutes_ownChoice = 5
+
 
 class Subsession(BaseSubsession):
 
@@ -588,6 +590,6 @@ class Player(BasePlayer):
         self.payoff = c(self.in_round(1).unrestricted_payoff) + c(self.in_round(self.restricted_payoff_round).restricted_payoff)
 
         if self.quiz_payoff_bool == True:
-            self.payoff = c(self.payoff) + c(Constants.quiz_points*20)
+            self.payoff = c(self.payoff) + c(Constants.quiz_points*self.test_score)
 
     #----# FOR LOTTERY (END) #----#

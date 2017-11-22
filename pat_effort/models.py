@@ -261,3 +261,5 @@ class Player(BasePlayer):
                 return 'commit_first'
 
     productivity = models.CharField()
+
+    textFeedback = models.TextField()

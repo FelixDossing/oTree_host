@@ -93,6 +93,7 @@
 </table>
 
 <p>The highlighted rows are those that have been selected to be paid out. The highlighted row in the second table was randomly selected.<br><br></p>
+{% if player.quiz_payoff_bool == True %}You recieved {{ test_return }} from the test{% endif %}
 
 <h3>Your total payoff is {{ player.payoff }}<br><br></h3>
 

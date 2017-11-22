@@ -94,7 +94,14 @@ class Results(Page):
         if self.round_number == Constants.num_rounds:
             self.group.compensatePayoffs()
 
+class textFeedback(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
+    timeout_seconds = 60*3
+
+    form_model = models.Player
+    form_fields = ['textFeedback']
 
 page_sequence = [
     WaitForStart,
@@ -112,5 +119,6 @@ page_sequence = [
     TaskPrep,
     RealEffortPage,
     ResultsWaitPage,
-    Results
+    Results,
+    textFeedback
 ]

@@ -122,7 +122,7 @@ SESSION_CONFIGS = [
      {
         'name': 'lottery_game',
         'display_name': 'Lottery game (Pat exps)',
-        'num_demo_participants': 4,
+        'num_demo_participants': 8,
         'app_sequence': ['lottery_game'],
         'number_of_rounds_lottery': 3,
         'doc': """
