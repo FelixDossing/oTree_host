@@ -5,9 +5,8 @@ from .models import Constants
 from otree.api import safe_json
 
 
-class WaitForStart(Page):
-    def is_displayed(self):
-        return self.player.round_number == 1
+class WaitForStart(WaitPage):
+    wait_for_all_groups = True
 
 class Instructions(Page):
 
@@ -261,28 +260,40 @@ class LotteryChoiceOwn(Page):
         return self.round_number == 1
 
     def vars_for_template(self):
-        return {'lottery1_condition':Constants.lotteries[0]['condition'],
-                'lottery1_return':Constants.lotteries[0]['return per point invested'],
-                'lottery1_description':Constants.lotteries[0]['description'],
-                'lottery2_condition':Constants.lotteries[1]['condition'],
-                'lottery2_return':Constants.lotteries[1]['return per point invested'],
-                'lottery2_description':Constants.lotteries[1]['description'],
-                'lottery3_condition':Constants.lotteries[2]['condition'],
-                'lottery3_return':Constants.lotteries[2]['return per point invested'],
-                'lottery3_description':Constants.lotteries[2]['description'],
-                'lottery4_condition':Constants.lotteries[3]['condition'],
-                'lottery4_return':Constants.lotteries[3]['return per point invested'],
-                'lottery4_description':Constants.lotteries[3]['description'],
-                'lottery5_condition':Constants.lotteries[4]['condition'],
-                'lottery5_return':Constants.lotteries[4]['return per point invested'],
-                'lottery5_description':Constants.lotteries[4]['description'],
-                'lottery6_condition':Constants.lotteries[5]['condition'],
-                'lottery6_return':Constants.lotteries[5]['return per point invested'],
-                'lottery6_description':Constants.lotteries[5]['description'],
+        return {'lottery11_condition':Constants.lotteries[0]['condition'],
+                'lottery11_return':Constants.lotteries[0]['return per point invested'],
+                'lottery11_description':Constants.lotteries[0]['description'],
+                'lottery12_condition':Constants.lotteries[1]['condition'],
+                'lottery12_return':Constants.lotteries[1]['return per point invested'],
+                'lottery12_description':Constants.lotteries[1]['description'],
+                'lottery21_condition':Constants.lotteries[2]['condition'],
+                'lottery21_return':Constants.lotteries[2]['return per point invested'],
+                'lottery21_description':Constants.lotteries[2]['description'],
+                'lottery22_condition':Constants.lotteries[3]['condition'],
+                'lottery22_return':Constants.lotteries[3]['return per point invested'],
+                'lottery22_description':Constants.lotteries[3]['description'],
+                'lottery23_condition':Constants.lotteries[4]['condition'],
+                'lottery23_return':Constants.lotteries[4]['return per point invested'],
+                'lottery23_description':Constants.lotteries[4]['description'],
+                'lottery31_condition':Constants.lotteries[5]['condition'],
+                'lottery31_return':Constants.lotteries[5]['return per point invested'],
+                'lottery31_description':Constants.lotteries[5]['description'],
+                'lottery32_condition':Constants.lotteries[6]['condition'],
+                'lottery32_return':Constants.lotteries[6]['return per point invested'],
+                'lottery32_description':Constants.lotteries[6]['description'],
+                'lottery41_condition':Constants.lotteries[7]['condition'],
+                'lottery41_return':Constants.lotteries[7]['return per point invested'],
+                'lottery41_description':Constants.lotteries[7]['description'],
+                'lottery42_condition':Constants.lotteries[8]['condition'],
+                'lottery42_return':Constants.lotteries[8]['return per point invested'],
+                'lottery42_description':Constants.lotteries[8]['description'],
+                'lottery43_condition':Constants.lotteries[9]['condition'],
+                'lottery43_return':Constants.lotteries[9]['return per point invested'],
+                'lottery43_description':Constants.lotteries[9]['description'],
                 }
 
     form_model = models.Player
-    form_fields = ['lotteryChoiceOwn']
+    form_fields = ['unrestrictedChoiceLoseMoney', 'unrestrictedChoiceFirstOrderDominance', 'unrestrictedChoiceSecondOrderDominance', 'unrestrictedChoiceVariableRisk']
 
 class RestrictionChoice(Page):
 
@@ -290,27 +301,39 @@ class RestrictionChoice(Page):
         return self.round_number <= self.session.config['number_of_rounds_lottery']
 
     form_model = models.Player
-    form_fields = ['restrictionChoiceLottery{}'.format(i) for i in range(1,7)]
+    form_fields = ['restrictionChoiceLoseMoney','restrictionChoiceFirstOrderDominance','restrictionChoiceSecondOrderDominance','restrictionChoiceVariableRisk']
 
     def vars_for_template(self):
-        return {'lottery1_condition':Constants.lotteries[0]['condition'],
-                'lottery1_return':Constants.lotteries[0]['return per point invested'],
-                'lottery1_description':Constants.lotteries[0]['description'],
-                'lottery2_condition':Constants.lotteries[1]['condition'],
-                'lottery2_return':Constants.lotteries[1]['return per point invested'],
-                'lottery2_description':Constants.lotteries[1]['description'],
-                'lottery3_condition':Constants.lotteries[2]['condition'],
-                'lottery3_return':Constants.lotteries[2]['return per point invested'],
-                'lottery3_description':Constants.lotteries[2]['description'],
-                'lottery4_condition':Constants.lotteries[3]['condition'],
-                'lottery4_return':Constants.lotteries[3]['return per point invested'],
-                'lottery4_description':Constants.lotteries[3]['description'],
-                'lottery5_condition':Constants.lotteries[4]['condition'],
-                'lottery5_return':Constants.lotteries[4]['return per point invested'],
-                'lottery5_description':Constants.lotteries[4]['description'],
-                'lottery6_condition':Constants.lotteries[5]['condition'],
-                'lottery6_return':Constants.lotteries[5]['return per point invested'],
-                'lottery6_description':Constants.lotteries[5]['description'],
+        return {'lottery11_condition':Constants.lotteries[0]['condition'],
+                'lottery11_return':Constants.lotteries[0]['return per point invested'],
+                'lottery11_description':Constants.lotteries[0]['description'],
+                'lottery12_condition':Constants.lotteries[1]['condition'],
+                'lottery12_return':Constants.lotteries[1]['return per point invested'],
+                'lottery12_description':Constants.lotteries[1]['description'],
+                'lottery21_condition':Constants.lotteries[2]['condition'],
+                'lottery21_return':Constants.lotteries[2]['return per point invested'],
+                'lottery21_description':Constants.lotteries[2]['description'],
+                'lottery22_condition':Constants.lotteries[3]['condition'],
+                'lottery22_return':Constants.lotteries[3]['return per point invested'],
+                'lottery22_description':Constants.lotteries[3]['description'],
+                'lottery23_condition':Constants.lotteries[4]['condition'],
+                'lottery23_return':Constants.lotteries[4]['return per point invested'],
+                'lottery23_description':Constants.lotteries[4]['description'],
+                'lottery31_condition':Constants.lotteries[5]['condition'],
+                'lottery31_return':Constants.lotteries[5]['return per point invested'],
+                'lottery31_description':Constants.lotteries[5]['description'],
+                'lottery32_condition':Constants.lotteries[6]['condition'],
+                'lottery32_return':Constants.lotteries[6]['return per point invested'],
+                'lottery32_description':Constants.lotteries[6]['description'],
+                'lottery41_condition':Constants.lotteries[7]['condition'],
+                'lottery41_return':Constants.lotteries[7]['return per point invested'],
+                'lottery41_description':Constants.lotteries[7]['description'],
+                'lottery42_condition':Constants.lotteries[8]['condition'],
+                'lottery42_return':Constants.lotteries[8]['return per point invested'],
+                'lottery42_description':Constants.lotteries[8]['description'],
+                'lottery43_condition':Constants.lotteries[9]['condition'],
+                'lottery43_return':Constants.lotteries[9]['return per point invested'],
+                'lottery43_description':Constants.lotteries[9]['description'],
                 "player_scores": safe_json(self.session.vars['player_scores']),
                 "player_rank": safe_json(self.player.rank)
                 }
@@ -327,28 +350,41 @@ class LotteryChoiceOwnRestricted(Page):
         return self.round_number <= self.session.config['number_of_rounds_lottery']
 
     form_model = models.Player
-    form_fields = ['restrictedChoice']
+    form_fields = ['restrictedChoiceLoseMoney','restrictedChoiceFirstOrderDominance','restrictedChoiceSecondOrderDominance','restrictedChoiceVariableRisk']
 
     def vars_for_template(self):
-        return {'lottery1_condition':Constants.lotteries[0]['condition'],
-                'lottery1_return':Constants.lotteries[0]['return per point invested'],
-                'lottery1_description':Constants.lotteries[0]['description'],
-                'lottery2_condition':Constants.lotteries[1]['condition'],
-                'lottery2_return':Constants.lotteries[1]['return per point invested'],
-                'lottery2_description':Constants.lotteries[1]['description'],
-                'lottery3_condition':Constants.lotteries[2]['condition'],
-                'lottery3_return':Constants.lotteries[2]['return per point invested'],
-                'lottery3_description':Constants.lotteries[2]['description'],
-                'lottery4_condition':Constants.lotteries[3]['condition'],
-                'lottery4_return':Constants.lotteries[3]['return per point invested'],
-                'lottery4_description':Constants.lotteries[3]['description'],
-                'lottery5_condition':Constants.lotteries[4]['condition'],
-                'lottery5_return':Constants.lotteries[4]['return per point invested'],
-                'lottery5_description':Constants.lotteries[4]['description'],
-                'lottery6_condition':Constants.lotteries[5]['condition'],
-                'lottery6_return':Constants.lotteries[5]['return per point invested'],
-                'lottery6_description':Constants.lotteries[5]['description'],
+        return {'lottery11_condition':Constants.lotteries[0]['condition'],
+                'lottery11_return':Constants.lotteries[0]['return per point invested'],
+                'lottery11_description':Constants.lotteries[0]['description'],
+                'lottery12_condition':Constants.lotteries[1]['condition'],
+                'lottery12_return':Constants.lotteries[1]['return per point invested'],
+                'lottery12_description':Constants.lotteries[1]['description'],
+                'lottery21_condition':Constants.lotteries[2]['condition'],
+                'lottery21_return':Constants.lotteries[2]['return per point invested'],
+                'lottery21_description':Constants.lotteries[2]['description'],
+                'lottery22_condition':Constants.lotteries[3]['condition'],
+                'lottery22_return':Constants.lotteries[3]['return per point invested'],
+                'lottery22_description':Constants.lotteries[3]['description'],
+                'lottery23_condition':Constants.lotteries[4]['condition'],
+                'lottery23_return':Constants.lotteries[4]['return per point invested'],
+                'lottery23_description':Constants.lotteries[4]['description'],
+                'lottery31_condition':Constants.lotteries[5]['condition'],
+                'lottery31_return':Constants.lotteries[5]['return per point invested'],
+                'lottery31_description':Constants.lotteries[5]['description'],
+                'lottery32_condition':Constants.lotteries[6]['condition'],
+                'lottery32_return':Constants.lotteries[6]['return per point invested'],
+                'lottery32_description':Constants.lotteries[6]['description'],
+                'lottery41_condition':Constants.lotteries[7]['condition'],
+                'lottery41_return':Constants.lotteries[7]['return per point invested'],
+                'lottery41_description':Constants.lotteries[7]['description'],
+                'lottery42_condition':Constants.lotteries[8]['condition'],
+                'lottery42_return':Constants.lotteries[8]['return per point invested'],
+                'lottery42_description':Constants.lotteries[8]['description'],
+                'lottery43_condition':Constants.lotteries[9]['condition'],
+                'lottery43_return':Constants.lotteries[9]['return per point invested'],
+                'lottery43_description':Constants.lotteries[9]['description'],
                 }
+
     def before_next_page(self):
         self.player.setPayoffs()
 

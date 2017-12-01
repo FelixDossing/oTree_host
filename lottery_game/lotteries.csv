@@ -1,7 +1,11 @@
 lottery_number,condition,return per point invested,description,return_for_calc
-1,No condition,"1 * investment","You keep your all of your points regardless of the outcome of the dice",1
-2,One die shows a number above 3,"sum * 0.5 * investment","If one of the two dice shows a number above 3, then you get the sum of the two dice times one half of the amount of points invested",0.5
-3,One die shows an even number,"sum * investment","If one of the dice shows an even number, then you get the sum of the dice times the amount of points invested points",1
-4,Both dice show an even number,"sum * 1.5 * investment","If both dice show an even number, then you get the sum of the dice times 1.5 times the amount of points invested",1.5
-5,Both dice show an even number,"sum * 0.5 * investement","If both dice show an even number, then you get the sum of the dice times half of the amount of points invested",0.5
-6,Both dice show an uneven number,"highest * 0.5 * investment","If both dice show an uneven number, then you get the highest number shown times half of the amount of points invested",0.5
+11,Both dice show a number below 3,"SUM x INVESTMENT","If both dice show a number below (not including) 3, then you get the sum of the dice times your investement.",1 
+12,One die shows a number above 4,"LARGEST x INVESTMENT","If one of the two dice shows a number above (not including) 4, then you get the number shown by the largest of the dice times your investment.",1
+21,One die shows a number above 3,"SUM x INVESTMENT","If one of the two dice shows a number above (not including) 3, then you get the sum of the dice times your investment.",1
+22,Both dice show a number above 2,"SUM x INVESTMENT","If both dice show a number above (not including) 2, then you get the sum of the dice times your investment.",1
+23,Both dice show a number below 5,"SUM x INVESTMENT","If both dice show a number below (not including) 5, then you get the sum of the dice times your investment.",1
+31,One die shows a number below 3,"SUM x INVESTMENT","If one of the two dice shows a number below (not including) 3, then you get the sum of the dice times your investment.",1
+32,One die shows a number below 3,"SUM x INVESTMENT - DIE1 + DIE2","If one of the two dice shows a number below (not including) 3, then you get the sum subtracted by the number shown by die 1 and added by the number shown by die 2 times your investment.",1
+41,No condition,"1.25 x INVESTMENT","You get 1.25 times your investment regardless of the outcome of the dice."
+42,One die shows a number below 3,"SUM x INVESTMENT","If one of the two dice shows a number below (not including) 3, then you get the sum of the dice times your investment",1
+43,Both dice show a number above 2,"SUM x INVESTMENT","If both dice show a number above (not including) 2, then you get the sum of the dice times your investment,1

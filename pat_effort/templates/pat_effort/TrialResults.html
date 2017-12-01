@@ -9,9 +9,9 @@
 
   <p>You completed <strong>{{ player.tasksCompleted_trial }}</strong> tasks</p>
   <p>
-    You where allowed to work for {{ Constants.trial_minutes }} minutes in the trial. In the following rounds, you will be allowed to work for {{ Constants.worktime_minutes }} minutes each round.
-    There are {{ Constants.num_rounds }} rounds.<br><br>
-    The follwoing rounds will not include a count-down clock and you will not be given feedback about the amount of completed tasks before after the time runs out.<br><br>
+    You were allowed to work for {{ Constants.trial_minutes }} minutes in the trial. In the following rounds, you will be allowed to work for {{ Constants.worktime_minutes }} minutes each round for
+    {{ Constants.num_rounds }} rounds.<br><br>
+    The following rounds will not include a count-down clock and you will not be given feedback about the amount of completed tasks before the time has run out.<br><br>
   </p>
 
     {% next_button %}

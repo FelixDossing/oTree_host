@@ -208,7 +208,7 @@ $('#surf_button').click(function() {
 //Slider creation and action
 for(i=1; i<4; i++) {
   for(j=1; j<17; j++) {
-    $('#slider_row'+i).append("<input type='range' min='0' max='100' step='1' class='slider slider"+j+"' id='slider"+i+"-"+j+"'>");
+    $('#slider_row'+i).append("<input type='range' min='0' max='100' step='1' onkeydown='return false;' class='slider slider"+j+"' id='slider"+i+"-"+j+"'>");
     $('#slider_row'+i).append('<label id="value'+i+'-'+j+'" class="value">0</label><br>');
   }
 }

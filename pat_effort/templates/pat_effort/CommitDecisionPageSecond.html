@@ -1,6 +1,9 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
+{% block title %}
+Round {{ player.round_number }} out of {{ Constants.num_rounds }}
+{% endblock %}
 
 {% block content %}
 
@@ -23,7 +26,7 @@
 <div id="choice1_div">
 {% formfield player.commit_decision1 label="Please choose a probability with which you wish for the button to be removed:" %}
 </div>
-<p>The button will appear with a probability of: <strong><span id="choice1_prob"></span></strong></p>
+<p>The button will be removed with a probability of: <strong><span id="choice1_prob"></span></strong></p>
 <br><button type="button" id="continue1">Continue</button>
 
 <br><br><br><br>
@@ -32,12 +35,12 @@
 <h2>Choice <strong>2B</strong></h2>
 <p>If this choice (<strong>2B</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is
   removed from the task screen. This choice is similar to the previous choice except for the fact that it involves potential costs.
-  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover over the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice2_div">
 {% formfield player.commit_decision2 label="Please choose a probability with which you wish for the button to be removed:" %}
 </div>
-<p>The button will appear with a probability of: <strong><span id="choice2_prob"></span></strong></p>
+<p>The button will be removed with a probability of: <strong><span id="choice2_prob"></span></strong></p>
 <p>You will pay: <strong><span id="choice2_cost"></span></strong></p>
 <br><button type="button" id="continue2">Continue</button>
 </div>
@@ -48,12 +51,12 @@
 <h2>Choice <strong>2C</strong></h2>
 <p>If this choice (<strong>2C</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed
   from the task screen. This choice is similar to the previous choice except for the fact that the size of the potential costs has changed.
-  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover over the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice3_div">
 {% formfield player.commit_decision3 label="Please choose a probability with which you wish for the button to be removed:" %}
 </div>
-<p>The button will appear with a probability of: <strong><span id="choice3_prob"></span></strong></p>
+<p>The button will be removed with a probability of: <strong><span id="choice3_prob"></span></strong></p>
 <p>You will pay: <strong><span id="choice3_cost"></span></strong></p>
 <br><button type="button" id="continue3">Continue</button>
 </div>
@@ -64,15 +67,16 @@
 <h2>Choice <strong>2D</strong></h2>
 <p>If this choice (<strong>2D</strong>) is implemented, you may choose to pay a cost in order to determine the probability with which the <span class="btn btn-primary">surf the web</span>-button is removed from
   the task screen. This choice is similar to the previous choice except for the fact that the size of the potential costs has changed.
-  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover of the bar with the mouse to see the exact cost).</p>
+  The relation between your chosen percentage and the cost you pay (if this choice is implemented) is shown in the graph beneath (you can hover over the bar with the mouse to see the exact cost).</p>
 <br>
 <div id="choice4_div">
 {% formfield player.commit_decision4 label="Please choose a probability with which you wish for the button to be removed:" %}
 </div>
-<p>The button will appear with a probability of: <strong><span id="choice4_prob"></span></strong></p>
+<p>The button will be removed with a probability of: <strong><span id="choice4_prob"></span></strong></p>
 <p>You will pay: <strong><span id="choice4_cost"></span></strong></p>
-</div>
 <br>
+<p>Scroll up if you want to change the choices on this page. You will not be able to change the choices once you have pressed the next-button.<p>
+</div>
 
 {% next_button %}
 

@@ -176,6 +176,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    button_present_happiness = models.BooleanField()
 
     partner_id = models.CharField()
     player_id = models.CharField()

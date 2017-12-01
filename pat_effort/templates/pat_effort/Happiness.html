@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Decision for partner
+{% endblock %}
+
+{% block content %}
+    <div id="instructions_div" class="instructions well well-1g">
+      {% if player.button_present == True %}
+      The <span class="btn btn-primary">surf the web</span>-button was present on your slider task screen in this round.
+      {% else %}
+      The <span class="btn btn-primary">surf the web</span>-button was not present on your slider task screen in this round.
+      {% endif %}
+    </div>
+
+    {% if player.button_present == True %}
+    {% formfield player.button_present_happiness with label="Do you wish that the button had not been present?" %}
+    {% else %}
+    {% formfield player.button_present_happiness with label="Do you wish that the button had been present?" %}
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

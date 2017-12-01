@@ -10,221 +10,262 @@
 
   {% include 'lottery_game/Calculator.html' %}
 
+  <input type='hidden' name='unrestrictedChoiceLoseMoney' id="unrestrictedChoiceLoseMoney">
+  <input type='hidden' name='unrestrictedChoiceFirstOrderDominance' id="unrestrictedChoiceFirstOrderDominance">
+  <input type='hidden' name='unrestrictedChoiceSecondOrderDominance' id="unrestrictedChoiceSecondOrderDominance">
+  <input type='hidden' name='unrestrictedChoiceVariableRisk' id="unrestrictedChoiceVariableRisk">
+
   <div class="instructions well well-1g">
     <p>
-      On this screen you will only make choices that affect yourself.
-      You have been given <strong>{{ Constants.endowment }}</strong> to invest in one of the lotteries in the table below. All of you points will be invested in the lottery that you choose.
-      At the end of the round, <strong>two regular six-sided dice will be thrown</strong>. Your earnings from the chosen lottery will depend on what these two dice show.<br>
+      On this screen you will only make choices that affect yourself.<br><br>
+
+      You will make four choices over lotteries <strong>(Choice 1, Choice 2, Choice 3, Choice 4)</strong>. One of these choices will be randomly selected to be your actual lottery choice. You have been given
+      <strong>{{ Constants.endowment }}</strong> to invest in each lottery that you choose. At the end of the round, <strong>two regular six-sided dice (die 1 and die 2) will be thrown</strong>.
+      Your payoff will depend on what these two dice show.<br> This means that if <strong>choice B</strong> is randomly chosen to be your actual lottery choice and you choose <strong>Lottery 2</strong>
+      in <strong>choice B</strong> then lottery B will specify how your payoff depends on the dice.<br><br>
+      When you have made a choice the description will disappear and only leave the title. If you wish to change a choice before proceeding, simply click on the title.
     </p>
   </div>
 
-  <table class="table">
-    <tr>
-      <th>Lottery</th>
-      <th>Condition</th>
-      <th>Return per point invested</th>
-      <th>Full description</th>
-    </tr>
-    <tr id="tr1">
-      <td>A</td>
-      {% if player.lotteryA == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryA == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryA == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryA == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryA == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryA == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-      </td>
-    </tr>
-    <tr id="tr2">
-      <td>B</td>
-      {% if player.lotteryB == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryB == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryB == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryB == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryB == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryB == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-    </tr>
-    <tr id="tr3">
-      <td>C</td>
-      {% if player.lotteryC == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryC == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryC == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryC == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryC == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryC == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-    </tr>
-    <tr id="tr4">
-      <td>D</td>
-      {% if player.lotteryD == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryD == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryD == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryD == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryD == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryD == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-    </tr>
-    <tr id="tr5">
-      <td>E</td>
-      {% if player.lotteryE == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryE == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryE == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryE == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryE == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryE == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-    </tr>
-    <tr id="tr6">
-      <td>F</td>
-      {% if player.lotteryF == 'Lottery 1' %}
-      <td>{{ lottery1_condition }}</td>
-      <td>{{ lottery1_return}}</td>
-      <td>{{ lottery1_description }}</td>
-      {% elif player.lotteryF == 'Lottery 2' %}
-      <td>{{ lottery2_condition }}</td>
-      <td>{{ lottery2_return}}</td>
-      <td>{{ lottery2_description }}</td>
-      {% elif player.lotteryF == 'Lottery 3' %}
-      <td>{{ lottery3_condition }}</td>
-      <td>{{ lottery3_return}}</td>
-      <td>{{ lottery3_description }}</td>
-      {% elif player.lotteryF == 'Lottery 4' %}
-      <td>{{ lottery4_condition }}</td>
-      <td>{{ lottery4_return}}</td>
-      <td>{{ lottery4_description }}</td>
-      {% elif player.lotteryF == 'Lottery 5' %}
-      <td>{{ lottery5_condition }}</td>
-      <td>{{ lottery5_return}}</td>
-      <td>{{ lottery5_description }}</td>
-      {% elif player.lotteryF == 'Lottery 6' %}
-      <td>{{ lottery6_condition }}</td>
-      <td>{{ lottery6_return}}</td>
-      <td>{{ lottery6_description }}</td>
-      {% endif %}
-    </tr>
-  </table>
-  <br><br>
+  <div class="choicebox" id="firstChoiceDiv">
+    <h1>Choice 1</h1><br>
+  </div>
+  <div class="choicebox" id="secondChoiceDiv">
+    <h1>Choice 2</h1><br>
+  </div>
+  <div class="choicebox" id="thirdChoiceDiv">
+    <h1>Choice 3</h1><br>
+  </div>
+  <div class="choicebox" id="fourthChoiceDiv">
+    <h1>Choice 4</h1><br>
+  </div>
 
-  <p><strong>Which lottery would you like to choose?</strong></p>
-  <div id="radio_div">
-  <form id="form_radio">
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceA">Lottery A<br>
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceB">Lottery B<br>
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceC">Lottery C<br>
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceD">Lottery D<br>
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceE">Lottery E<br>
-    <input type="radio" name="lotteryChoice" value="" class="radio_choice" id="lotteryChoiceF">Lottery F<br>
+  <form>
   </form>
-</div>
-<br>
 
-<input type='hidden' name='lotteryChoiceOwn' id="lotteryChoiceOwn">
+  <div id="loseMoneyDiv">
+    <table class="table" id="loseMoneyTable">
+      <tr>
+        <th>Lottery</th>
+        <th>Condition</th>
+        <th>Return</th>
+        <th>Full description</th>
+      </tr>
+      <tr id="loseMoneyRowA">
+        <td>A</td>
+        {% if player.lottery11_placement == 1 %}
+        <td>{{ lottery11_condition }}</td>
+        <td>{{ lottery11_return }}</td>
+        <td>{{ lottery11_description }}</td>
+        {% else %}
+        <td>{{ lottery12_condition }}</td>
+        <td>{{ lottery12_return }}</td>
+        <td>{{ lottery12_description }}</td>
+        {% endif %}
+      </tr>
+      <tr id="loseMoneyRowB">
+        <td>B</td>
+        {% if player.lottery12_placement == 2 %}
+        <td>{{ lottery12_condition }}</td>
+        <td>{{ lottery12_return }}</td>
+        <td>{{ lottery12_description }}</td>
+        {% else %}
+        <td>{{ lottery11_condition }}</td>
+        <td>{{ lottery11_return }}</td>
+        <td>{{ lottery11_description }}</td>
+        {% endif %}
+      </tr>
+    </table>
 
-<div id="next_button_div">
-  {% next_button %}
-</div>
+    <p><strong>Which lottery would you like to choose?</strong></p>
+    <div class="radio_div" id="loseInput">
+      <form>
+        <input type="radio" name="unrestrictedChoiceLoseMoney" value="" class="radio_choice" id="loseInputA">Lottery A<br>
+        <input type="radio" name="unrestrictedChoiceLoseMoney" value="" class="radio_choice" id="loseInputB">Lottery B
+      </form>
+    </div>
 
-<p id="please_text"><strong>Please select a lottery before proceeding.</strong></p>
+  </div>
+
+
+  <div id="firstOrderDominanceDiv">
+    <table class="table" id="firstOrderDominanceTable">
+      <tr>
+        <th>Lottery</th>
+        <th>Condition</th>
+        <th>Return</th>
+        <th>Full description</th>
+      </tr>
+      <tr id="firstOrderDominanceRowA">
+        <td>A</td>
+        {% if player.lottery21_placement == 1 %}
+        <td>{{ lottery21_condition }}</td>
+        <td>{{ lottery21_return }}</td>
+        <td>{{ lottery21_description }}</td>
+        {% elif player.lottery22_placement == 1 %}
+        <td>{{ lottery22_condition }}</td>
+        <td>{{ lottery22_return }}</td>
+        <td>{{ lottery22_description }}</td>
+        {% elif player.lottery23_placement == 1 %}
+        <td>{{ lottery23_condition }}</td>
+        <td>{{ lottery23_return }}</td>
+        <td>{{ lottery23_description }}</td>
+        {% endif %}
+      </tr>
+      <tr id="firstOrderDominanceRowB">
+        <td>B</td>
+        {% if player.lottery21_placement == 2 %}
+        <td>{{ lottery21_condition }}</td>
+        <td>{{ lottery21_return }}</td>
+        <td>{{ lottery21_description }}</td>
+        {% elif player.lottery22_placement == 2 %}
+        <td>{{ lottery22_condition }}</td>
+        <td>{{ lottery22_return }}</td>
+        <td>{{ lottery22_description }}</td>
+        {% elif player.lottery23_placement == 2 %}
+        <td>{{ lottery23_condition }}</td>
+        <td>{{ lottery23_return }}</td>
+        <td>{{ lottery23_description }}</td>
+        {% endif %}
+      </tr>
+    </table>
+
+    <p><strong>Which lottery would you like to choose?</strong></p>
+    <div class="radio_div" id="firstInput">
+      <form>
+        <input type="radio" name="unrestrictedChoiceFirstOrderDominance" value="" class="radio_choice" id="firstInputA">Lottery A<br>
+        <input type="radio" name="unrestrictedChoiceFirstOrderDominance" value="" class="radio_choice" id="firstInputB">Lottery B
+      </form>
+    </div>
+  </div>
+
+  <div id="secondOrderDominanceDiv">
+    <table class="table" id="secondOrderDominanceTable">
+      <tr>
+        <th>Lottery</th>
+        <th>Condition</th>
+        <th>Return</th>
+        <th>Full description</th>
+      </tr>
+      <tr id="secondOrderDominanceRowA">
+        <td>A</td>
+        {% if player.lottery31_placement == 1 %}
+        <td>{{ lottery31_condition }}</td>
+        <td>{{ lottery31_return }}</td>
+        <td>{{ lottery31_description }}</td>
+        {% else %}
+        <td>{{ lottery32_condition }}</td>
+        <td>{{ lottery32_return }}</td>
+        <td>{{ lottery32_description }}</td>
+        {% endif %}
+      </tr>
+      <tr id="secondOrderDominanceRowB">
+        <td>B</td>
+        {% if player.lottery31_placement == 2 %}
+        <td>{{ lottery31_condition }}</td>
+        <td>{{ lottery31_return }}</td>
+        <td>{{ lottery31_description }}</td>
+        {% else %}
+        <td>{{ lottery32_condition }}</td>
+        <td>{{ lottery32_return }}</td>
+        <td>{{ lottery32_description }}</td>
+        {% endif %}
+      </tr>
+    </table>
+
+    <p><strong>Which lottery would you like to choose?</strong></p>
+    <div class="radio_div" id="secondInput">
+      <form>
+        <input type="radio" name="unrestrictedChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputA">Lottery A<br>
+        <input type="radio" name="unrestrictedChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputB">Lottery B
+      </form>
+    </div>
+  </div>
+
+
+  <div id="variableRiskDiv">
+    <table class="table" id="variableRiskTable">
+      <tr>
+        <th>Lottery</th>
+        <th>Condition</th>
+        <th>Return</th>
+        <th>Full description</th>
+      </tr>
+      <tr id="variableRiskRowA">
+        <td>A</td>
+        {% if player.lottery41_placement == 1 %}
+        <td>{{ lottery41_condition }}</td>
+        <td>{{ lottery41_return }}</td>
+        <td>{{ lottery41_description }}</td>
+        {% elif player.lottery42_placement == 1 %}
+        <td>{{ lottery42_condition }}</td>
+        <td>{{ lottery42_return }}</td>
+        <td>{{ lottery42_description }}</td>
+        {% elif player.lottery43_placement == 1 %}
+        <td>{{ lottery43_condition }}</td>
+        <td>{{ lottery43_return }}</td>
+        <td>{{ lottery43_description }}</td>
+        {% endif %}
+      </tr>
+      <tr id="variableRiskRowB">
+        <td>B</td>
+        {% if player.lottery41_placement == 2 %}
+        <td>{{ lottery41_condition }}</td>
+        <td>{{ lottery41_return }}</td>
+        <td>{{ lottery41_description }}</td>
+        {% elif player.lottery42_placement == 2 %}
+        <td>{{ lottery42_condition }}</td>
+        <td>{{ lottery42_return }}</td>
+        <td>{{ lottery42_description }}</td>
+        {% elif player.lottery43_placement == 2 %}
+        <td>{{ lottery43_condition }}</td>
+        <td>{{ lottery43_return }}</td>
+        <td>{{ lottery43_description }}</td>
+        {% endif %}
+      </tr>
+    </table>
+
+    <p><strong>Which lottery would you like to choose?</strong></p>
+    <div class="radio_div" id="variableInput">
+      <form>
+        <input type="radio" name="unrestrictedChoiceVariableRisk" value="" class="radio_choice" id="variableInputA">Lottery A<br>
+        <input type="radio" name="unrestrictedChoiceVariableRisk" value="" class="radio_choice" id="variableInputB">Lottery B
+      </form>
+    </div>
+  </div>
+
+  <div id="next_button_div"
+    {% next_button %}
+  </div>
+
+<p id="please_text">Please make a selection for each of the above choices.</p>
+
 
 {% block style %}
+
 <style type="text/css">
 
-  #radio_div {
+
+  .radio_div {
     font-weight: bold;
     line-height: 25px;
     margin-left: 30px;
+  }
+
+  .title_button {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  .choicebox {
+    background-color: #FAF2AD;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-style: outset;
+    border-width: thin;
   }
 
 </style>
@@ -236,81 +277,153 @@
 
 <script>
 
-  var lotteryA = {{ player.lotteryA|json }}
-  var lotteryB = {{ player.lotteryB|json }}
-  var lotteryC = {{ player.lotteryC|json }}
-  var lotteryD = {{ player.lotteryD|json }}
-  var lotteryE = {{ player.lotteryE|json }}
-  var lotteryF = {{ player.lotteryF|json }}
+  var lottery11_placement = {{ player.lottery11_placement|json }}
+  var lottery12_placement = {{ player.lottery12_placement|json }}
+  var lottery21_placement = {{ player.lottery21_placement|json }}
+  var lottery22_placement = {{ player.lottery22_placement|json }}
+  var lottery23_placement = {{ player.lottery23_placement|json }}
+  var lottery31_placement = {{ player.lottery31_placement|json }}
+  var lottery32_placement = {{ player.lottery32_placement|json }}
+  var lottery41_placement = {{ player.lottery41_placement|json }}
+  var lottery42_placement = {{ player.lottery42_placement|json }}
+  var lottery43_placement = {{ player.lottery43_placement|json }}
+
+  var first_choice = {{ player.first_choice|json }}
+  var second_choice = {{ player.second_choice|json }}
+  var third_choice = {{ player.third_choice|json }}
+  var fourth_choice = {{ player.fourth_choice|json }}
+
+  var choice_types = ['loseMoney', 'firstOrderDominance', 'secondOrderDominance', 'variableRisk']
+
 
   $('#next_button_div').hide();
 
-  $('#lotteryChoiceA').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryA)
-    $('#tr1').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 1) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+  // Set placement of lotteries
+  for (i = 0; i < 4; i++) {
+    if (choice_types[i] == first_choice) {
+      $('#'+choice_types[i]+'Div').appendTo('#firstChoiceDiv');
+    }
+    if (choice_types[i] == second_choice) {
+      $('#'+choice_types[i]+'Div').appendTo('#secondChoiceDiv');
+    }
+    if (choice_types[i] == third_choice) {
+      $('#'+choice_types[i]+'Div').appendTo('#thirdChoiceDiv');
+    }
+    if (choice_types[i] == fourth_choice) {
+      $('#'+choice_types[i]+'Div').appendTo('#fourthChoiceDiv');
+    }
+  }
+
+  $('#loseInputA').on('change', function() {
+    $('#loseMoneyRowA').css('font-weight', 'bold');
+    $('#loseMoneyRowB').css('font-weight', 'normal');
+    if (lottery11_placement == 1) {
+      $('#unrestrictedChoiceLoseMoney').val('Lottery 1.1');
+    }
+    else if (lottery12_placement == 1) {
+      $('#unrestrictedChoiceLoseMoney').val('Lottery 1.2')
     }
   });
-  $('#lotteryChoiceB').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryB)
-    $('#tr2').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 2) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+  $('#loseInputB').on('change', function() {
+    $('#loseMoneyRowB').css('font-weight', 'bold');
+    $('#loseMoneyRowA').css('font-weight', 'normal');
+    if (lottery11_placement == 2) {
+      $('#unrestrictedChoiceLoseMoney').val('Lottery 1.1');
+    }
+    else if (lottery12_placement == 2) {
+      $('#unrestrictedChoiceLoseMoney').val('Lottery 1.2')
     }
   });
-  $('#lotteryChoiceC').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryC)
-    $('#tr3').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 3) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+
+  $('#firstInputA').on('change', function() {
+    $('#firstOrderDominanceRowA').css('font-weight', 'bold');
+    $('#firstOrderDominanceRowB').css('font-weight', 'normal');
+    if (lottery21_placement == 1) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.1');
+    }
+    else if (lottery22_placement == 1) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.2')
+    }
+    else if (lottery23_placement == 1) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.3')
     }
   });
-  $('#lotteryChoiceD').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryD)
-    $('#tr4').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 4) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+  $('#firstInputB').on('change', function() {
+    $('#firstOrderDominanceRowB').css('font-weight', 'bold');
+    $('#firstOrderDominanceRowA').css('font-weight', 'normal');
+    if (lottery21_placement == 2) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.1');
+    }
+    else if (lottery22_placement == 2) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.2')
+    }
+    else if (lottery23_placement == 2) {
+      $('#unrestrictedChoiceFirstOrderDominance').val('Lottery 2.3')
     }
   });
-  $('#lotteryChoiceE').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryE)
-    $('#tr5').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 5) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+
+  $('#secondInputA').on('change', function() {
+    $('#secondOrderDominanceRowA').css('font-weight', 'bold');
+    $('#secondOrderDominanceRowB').css('font-weight', 'normal');
+    if (lottery31_placement == 1) {
+      $('#unrestrictedChoiceSecondOrderDominance').val('Lottery 3.1');
+    }
+    else if (lottery32_placement == 1) {
+      $('#unrestrictedChoiceSecondOrderDominance').val('Lottery 3.2')
     }
   });
-  $('#lotteryChoiceF').click(function() {
-    $('#next_button_div').show();
-    $('#please_text').hide();
-    $('#lotteryChoiceOwn').val(lotteryF)
-    $('#tr6').css('font-weight', 'bold');
-    for (i=0; i<7; i++) {
-      if (i != 6) {
-        $('#tr'+i).css('font-weight', 'normal')
-      }
+  $('#secondInputB').on('change', function() {
+    $('#secondOrderDominanceRowB').css('font-weight', 'bold');
+    $('#secondOrderDominanceRowA').css('font-weight', 'normal');
+    if (lottery31_placement == 2) {
+      $('#unrestrictedChoiceSecondOrderDominance').val('Lottery 3.1');
+    }
+    else if (lottery32_placement == 2) {
+      $('#unrestrictedChoiceSecondOrderDominance').val('Lottery 3.2')
     }
   });
+
+  $('#variableInputA').on('change', function() {
+    $('#variableRiskRowA').css('font-weight', 'bold');
+    $('#variableRiskRowB').css('font-weight', 'normal');
+    if (lottery41_placement == 1) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.1');
+    }
+    else if (lottery42_placement == 1) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.2')
+    }
+    else if (lottery43_placement == 1) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.3')
+    }
+  });
+  $('#variableInputB').on('change', function() {
+    $('#variableRiskRowB').css('font-weight', 'bold');
+    $('#variableRiskRowA').css('font-weight', 'normal');
+    if (lottery41_placement == 2) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.1');
+    }
+    else if (lottery42_placement == 2) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.2')
+    }
+    else if (lottery43_placement == 2) {
+      $('#unrestrictedChoiceVariableRisk').val('Lottery 4.3')
+    }
+  });
+
+  $('.radio_choice').on('change', function() {
+    var count = 0;
+    var inputList = ['#unrestrictedChoiceLoseMoney', '#unrestrictedChoiceFirstOrderDominance', '#unrestrictedChoiceSecondOrderDominance', '#unrestrictedChoiceVariableRisk']
+    for (i = 0; i < 4; i++) {
+      if ($(inputList[i]).val() != "") {
+        count += 1;
+      }
+    }
+    if (count == 4) {
+      $('#next_button_div').show();
+      $('#please_text').hide();
+    }
+  });
+
 
 
 </script>

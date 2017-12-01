@@ -2,7 +2,7 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Decision for partner
+Round {{ player.round_number }} out of {{ Constants.num_rounds }}
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
       from his or her own screen. In that case, whether or not the button will appear is completely up to you.
     </div>
 
-    {% formfield player.decisionForPartner with label="Do you wish to remove the 'surf the web'-button from your partner's screen?" %}
+    {% formfield player.decisionForPartner with label="Do you wish to remove the 'surf the web'-button from your partner's screen if given this possibility?" %}
 
     {% next_button %}
 

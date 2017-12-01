@@ -16,6 +16,8 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
 
+    points_per_box = 5
+
     number_of_surveys = 3
 
     with open('survey/disgust_questions.csv') as q:
@@ -77,7 +79,7 @@ class Player(BasePlayer):
 
     def set_payoffs(self):
         if self.boxes_opened < self.bomb_placement:
-            self.payoff = self.boxes_opened
+            self.payoff = self.boxes_opened * Constants.points_per_box
         else:
             self.payoff = 0
 

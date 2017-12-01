@@ -175,7 +175,6 @@ class Results(Page):
     pass
 
 page_sequence = [
-    Risk_instructions,
     Risk_main,
     Risk_results,
     Disgust_survey1,

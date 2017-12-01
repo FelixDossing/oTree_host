@@ -94,7 +94,12 @@ class Results(Page):
         if self.round_number == Constants.num_rounds:
             self.group.compensatePayoffs()
 
-class textFeedback(Page):
+class Happiness(Page):
+
+    form_model = models.Player
+    form_fields = ['button_present_happiness']
+
+class TextFeedback(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
@@ -120,5 +125,6 @@ page_sequence = [
     RealEffortPage,
     ResultsWaitPage,
     Results,
-    textFeedback
+    Happiness,
+    TextFeedback
 ]

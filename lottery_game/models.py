@@ -15,7 +15,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'lotterygame'
     players_per_group = None
-    num_rounds = 10
+    num_rounds = 11
 
     minutes_for_quiz = 30
 
@@ -31,7 +31,7 @@ class Constants(BaseConstants):
     point_conversion = 0.2
 
     # Conversion rate: 1 point = 4 DKK
-    endowment = c(50)
+    endowment = c(150)
 
     minutes_ownChoice = 5
 
@@ -65,7 +65,15 @@ class Subsession(BaseSubsession):
     die1round10 = models.IntegerField()
     die2round10 = models.IntegerField()
 
+    firstOrderDraw = models.IntegerField()
+    variableRiskDraw = models.IntegerField()
+
+
     def creating_session(self):
+
+        for p in self.get_players():
+            p.restrictedLottery_draw = random.randint(1,4)
+            p.unrestrictedLottery_draw = random.randint(1,4)
 
         #Die1Round1, Die2Round1, Die1Round2, Die2Round2 ...
         if self.round_number == 1:
@@ -221,24 +229,82 @@ class Subsession(BaseSubsession):
         for p in self.get_players():
             p.quiz_payoff_bool = True if p.participant.id_in_session == self.quiz_payoff_draw else False
 
-        ## Determining lottery order
+        ## Determining choice order
         for p in self.get_players():
-            if self.round_number == 1:
-                p.participant.vars['lottery_order'] = ['Lottery 1', 'Lottery 2', 'Lottery 3', 'Lottery 4', 'Lottery 5', 'Lottery 6']
-                random.shuffle(p.participant.vars['lottery_order'])
-                p.lotteryA = p.participant.vars['lottery_order'][0]
-                p.lotteryB = p.participant.vars['lottery_order'][1]
-                p.lotteryC = p.participant.vars['lottery_order'][2]
-                p.lotteryD = p.participant.vars['lottery_order'][3]
-                p.lotteryE = p.participant.vars['lottery_order'][4]
-                p.lotteryF = p.participant.vars['lottery_order'][5]
+            if p.round_number == 1:
+                p.participant.vars['choicelist'] = ['loseMoney', 'firstOrderDominance', 'secondOrderDominance', 'variableRisk']
+                random.shuffle(p.participant.vars['choicelist'])
+                p.first_choice = p.participant.vars['choicelist'][0]
+                p.second_choice = p.participant.vars['choicelist'][1]
+                p.third_choice = p.participant.vars['choicelist'][2]
+                p.fourth_choice = p.participant.vars['choicelist'][3]
             else:
-                p.lotteryA = p.in_round(1).lotteryA
-                p.lotteryB = p.in_round(1).lotteryB
-                p.lotteryC = p.in_round(1).lotteryC
-                p.lotteryD = p.in_round(1).lotteryD
-                p.lotteryE = p.in_round(1).lotteryE
-                p.lotteryF = p.in_round(1).lotteryF
+                p.first_choice = p.in_round(1).first_choice
+                p.second_choice = p.in_round(1).second_choice
+                p.third_choice = p.in_round(1).third_choice
+                p.fourth_choice = p.in_round(1).fourth_choice
+
+
+        ## Determining lottery order
+        if self.round_number == 1:
+            self.firstOrderDraw = random.randint(1,2)
+            self.variableRiskDraw = random.randint(1,3)
+
+        for p in self.get_players():
+            if p.round_number == 1:
+
+                p.participant.vars['twonumberlist'] = [1,2]
+
+                random.shuffle(p.participant.vars['twonumberlist'])
+                p.lottery11_placement = p.participant.vars['twonumberlist'][0]
+                p.lottery12_placement = p.participant.vars['twonumberlist'][1]
+
+                random.shuffle(p.participant.vars['twonumberlist'])
+
+                if self.firstOrderDraw == 1:
+                    ### Lotter 21 and 23
+                    p.lottery21_placement = p.participant.vars['twonumberlist'][0]
+                    p.lottery23_placement = p.participant.vars['twonumberlist'][1]
+                    p.lottery22_placement = 0
+                elif self.firstOrderDraw == 2:
+                    ### Lottery 22 and 23
+                    p.lottery22_placement = p.participant.vars['twonumberlist'][0]
+                    p.lottery23_placement = p.participant.vars['twonumberlist'][1]
+                    p.lottery21_placement = 0
+
+                random.shuffle(p.participant.vars['twonumberlist'])
+                p.lottery31_placement = p.participant.vars['twonumberlist'][0]
+                p.lottery32_placement = p.participant.vars['twonumberlist'][1]
+
+                random.shuffle(p.participant.vars['twonumberlist'])
+                if self.variableRiskDraw == 1:
+                    ### 41 and 42
+                    p.lottery41_placement = p.participant.vars['twonumberlist'][0]
+                    p.lottery42_placement = p.participant.vars['twonumberlist'][1]
+                    p.lottery43_placement = 0
+                elif self.variableRiskDraw == 2:
+                    ### 41 and 43
+                    p.lottery41_placement = p.participant.vars['twonumberlist'][0]
+                    p.lottery43_placement = p.participant.vars['twonumberlist'][1]
+                    p.lottery42_placement = 0
+                elif self.variableRiskDraw == 3:
+                    #¤¤ 42 and 43
+                    p.lottery43_placement = p.participant.vars['twonumberlist'][0]
+                    p.lottery42_placement = p.participant.vars['twonumberlist'][1]
+                    p.lottery41_placement = 0
+
+            else:
+                p.lottery11_placement = p.in_round(1).lottery11_placement
+                p.lottery12_placement = p.in_round(1).lottery12_placement
+                p.lottery21_placement = p.in_round(1).lottery21_placement
+                p.lottery22_placement = p.in_round(1).lottery22_placement
+                p.lottery23_placement = p.in_round(1).lottery23_placement
+                p.lottery31_placement = p.in_round(1).lottery31_placement
+                p.lottery32_placement = p.in_round(1).lottery32_placement
+                p.lottery41_placement = p.in_round(1).lottery41_placement
+                p.lottery42_placement = p.in_round(1).lottery42_placement
+                p.lottery43_placement = p.in_round(1).lottery43_placement
+
 
     def calc_stats(self):
         self.total_score = sum(p.test_score for p in self.get_players())
@@ -261,19 +327,17 @@ class Subsession(BaseSubsession):
                     p.partner_test_score = q.test_score
 
     def setRestrictions(self):
+
+
+
+
         for p in self.get_players():
             for q in self.get_players():
                 if p.partner_id == q.player_id:
-                    p.partner_restriction_lottery1 = q.restrictionChoiceLottery1
-                    p.partner_restriction_lottery2 = q.restrictionChoiceLottery2
-                    p.partner_restriction_lottery3 = q.restrictionChoiceLottery3
-                    p.partner_restriction_lottery4 = q.restrictionChoiceLottery4
-                    p.partner_restriction_lottery5 = q.restrictionChoiceLottery5
-                    p.partner_restriction_lottery6 = q.restrictionChoiceLottery6
-            if p.partner_restriction_lottery1 == "True" or p.partner_restriction_lottery2 == "True" or p.partner_restriction_lottery3 == "True" or p.partner_restriction_lottery4 == "True" or p.partner_restriction_lottery5 == "True" or p.partner_restriction_lottery6 == "True":
-                p.partner_restricted = True
-            else:
-                p.partner_restricted = False
+                    p.partnerRestrictionLoseMoney = q.restrictionChoiceLoseMoney
+                    p.partnerRestrictionFirstOrderDominance = q.restrictionChoiceFirstOrderDominance
+                    p.partnerRestrictionSecondOrderDominance = q.restrictionChoiceSecondOrderDominance
+                    p.partnerRestrictionVariableRisk = q.restrictionChoiceVariableRisk
 
     def set_scores_after_round1(self):
         if self.round_number > 1:
@@ -361,47 +425,47 @@ class Player(BasePlayer):
     solution19 = models.CharField()
     solution20 = models.CharField()
 
-    submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
 
-    # submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
-    # submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    # submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
-    # submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
-    # submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
-    # submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
-    # submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
-    # submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    # submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
-    # submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
-    # submitted_answer11 = models.CharField(initial = "20%", widget=widgets.RadioSelect())
-    # submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
-    # submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
-    # submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
-    # submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
-    # submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
-    # submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
-    # submitted_answer18 = models.CharField(initial = "1/10000", widget=widgets.RadioSelect())
-    # submitted_answer19 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
-    # submitted_answer20 = models.CharField(initial = "100%", widget=widgets.RadioSelect())
+    submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
+    submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
+    submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
+    submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
+    submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
+    submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
+    submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
+    submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
+    submitted_answer11 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
+    submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
+    submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
+    submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
+    submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
+    submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
+    submitted_answer18 = models.CharField(initial = "About 35%", widget=widgets.RadioSelect())
+    submitted_answer19 = models.CharField(initial = "84", widget=widgets.RadioSelect())
+    submitted_answer20 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
 
     # For testing
     def set_test_values(self):
@@ -490,101 +554,163 @@ class Player(BasePlayer):
 
 
     #----# FOR LOTTERY & Restriction #----#
+    first_choice = models.CharField()
+    second_choice = models.CharField()
+    third_choice = models.CharField()
+    fourth_choice = models.CharField()
 
-    lotteryChoiceOwn = models.CharField()
+    lottery11_placement = models.IntegerField()
+    lottery12_placement = models.IntegerField()
+    lottery21_placement = models.IntegerField()
+    lottery22_placement = models.IntegerField()
+    lottery23_placement = models.IntegerField()
+    lottery31_placement = models.IntegerField()
+    lottery32_placement = models.IntegerField()
+    lottery41_placement = models.IntegerField()
+    lottery42_placement = models.IntegerField()
+    lottery43_placement = models.IntegerField()
 
-    lotteryA = models.CharField()
-    lotteryB = models.CharField()
-    lotteryC = models.CharField()
-    lotteryD = models.CharField()
-    lotteryE = models.CharField()
-    lotteryF = models.CharField()
+    unrestrictedChoiceLoseMoney = models.CharField()
+    unrestrictedChoiceFirstOrderDominance = models.CharField()
+    unrestrictedChoiceSecondOrderDominance = models.CharField()
+    unrestrictedChoiceVariableRisk = models.CharField()
 
-    restrictionChoiceLottery1 = models.CharField(initial="False")
-    restrictionChoiceLottery2 = models.CharField(initial="False")
-    restrictionChoiceLottery3 = models.CharField(initial="False")
-    restrictionChoiceLottery4 = models.CharField(initial="False")
-    restrictionChoiceLottery5 = models.CharField(initial="False")
-    restrictionChoiceLottery6 = models.CharField(initial="False")
+    restrictionChoiceLoseMoney = models.CharField()
+    restrictionChoiceFirstOrderDominance = models.CharField()
+    restrictionChoiceSecondOrderDominance = models.CharField()
+    restrictionChoiceVariableRisk = models.CharField()
 
-    partner_restriction_lottery1 = models.CharField(initial="False")
-    partner_restriction_lottery2 = models.CharField(initial="False")
-    partner_restriction_lottery3 = models.CharField(initial="False")
-    partner_restriction_lottery4 = models.CharField(initial="False")
-    partner_restriction_lottery5 = models.CharField(initial="False")
-    partner_restriction_lottery6 = models.CharField(initial="False")
+    partnerRestrictionLoseMoney = models.CharField()
+    partnerRestrictionFirstOrderDominance = models.CharField()
+    partnerRestrictionSecondOrderDominance = models.CharField()
+    partnerRestrictionVariableRisk = models.CharField()
 
-    partner_restricted = models.BooleanField()
-
-    restrictedChoice = models.CharField(widget=widgets.RadioSelect())
+    restrictedChoiceLoseMoney = models.CharField()
+    restrictedChoiceFirstOrderDominance = models.CharField()
+    restrictedChoiceSecondOrderDominance = models.CharField()
+    restrictedChoiceVariableRisk = models.CharField()
 
     unrestricted_payoff = models.CurrencyField()
     restricted_payoff = models.CurrencyField()
+
+    unrestrictedLottery_draw = models.IntegerField()
+    restrictedLottery_draw = models.IntegerField()
 
     def setPayoffs(self):
         die1 = self.session.vars['dicerolls'][self.round_number-1][0]
         die2 = self.session.vars['dicerolls'][self.round_number-1][1]
         dice_sum = die1 + die2
 
+
         ## Unrestricted
         if self.round_number == 1:
-            if self.lotteryChoiceOwn == 'Lottery 1':
-                self.unrestricted_payoff = Constants.endowment
-            elif self.lotteryChoiceOwn == 'Lottery 2':
+            self.unrestrictedLottery_draw = random.randint(1,4) # 1=losemoney, 2=firstorder, 3=secondorder, 4=variableRisk
+            if self.unrestrictedLottery_draw == 1:
+                if self.unrestrictedChoiceLoseMoney == "Lottery 1.1":
+                    if die1 < 3 and die2 < 3:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+                elif self.unrestrictedChoiceLoseMoney == "Lottery 1.2":
+                    if die1 > 4 or die2 > 4:
+                        self.unrestricted_payoff = Constants.endowment * max(die1, die2)
+                    else:
+                        self.unrestricted_payoff = 0
+            elif self.unrestrictedLottery_draw == 2:
+                if self.unrestrictedChoiceFirstOrderDominance == "Lottery 2.1":
+                    if die1 > 3 or die2 > 3:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+                elif self.unrestrictedChoiceFirstOrderDominance == "Lottery 2.2":
+                    if die1 > 2 and die2 > 2:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+                elif self.unrestrictedChoiceSecondOrderDominance == "Lottery 2.3":
+                    if die1 < 5 and die2 < 5:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+            elif self.unrestrictedLottery_draw == 3:
+                if self.unrestrictedChoiceSecondOrderDominance == "Lottery 3.1":
+                    if die1 < 3 or die2 < 3:
+                        self.unrestricted_payoff = dice_sum * Constants.endowment
+                    else:
+                        self.unrestricted_payoff = dice_sum * Constants.endowment
+                elif self.unrestrictedChoiceSecondOrderDominance == "Lottery 3.2":
+                    if die1 < 3 or die2 < 3:
+                        self.unrestricted_payoff = (dice_sum - die1 + die2) * Constants.endowment
+                    else:
+                        self.unrestricted_payoff = 0
+            elif self.unrestrictedLottery_draw == 4:
+                if self.unrestrictedChoiceVariableRisk == "Lottery 4.1":
+                    self.unrestricted_payoff = Constants.endowment * 1.25
+                elif self.unrestrictedChoiceVariableRisk == "Lottery 4.2":
+                    if die1 < 3 or die2 < 3:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+                elif self.unrestrictedChoiceVariableRisk == "Lottery 4.3":
+                    if die1 > 2 and die2 > 2:
+                        self.unrestricted_payoff = Constants.endowment * dice_sum
+                    else:
+                        self.unrestricted_payoff = 0
+
+        ### restricted
+
+        if self.restrictedLottery_draw == 1:
+            if self.restrictedChoiceLoseMoney == "Lottery 1.1":
+                if die1 < 3 and die2 < 3:
+                    self.restricted_payoff = Constants.endowment * dice_sum
+                else:
+                    self.restricted_payoff = 0
+            elif self.restrictedChoiceLoseMoney == "Lottery 1.2":
+                if die1 > 4 or die2 > 4:
+                    self.restricted_payoff = Constants.endowment * max(die1, die2)
+                else:
+                    self.restricted_payoff = 0
+        elif self.restrictedLottery_draw == 2:
+            if self.restrictedChoiceFirstOrderDominance == "Lottery 2.1":
                 if die1 > 3 or die2 > 3:
-                    self.unrestricted_payoff = Constants.endowment * Constants.lotteries[1]['return_for_calc'] * dice_sum
+                    self.restricted_payoff = Constants.endowment * dice_sum
                 else:
-                    self.unrestricted_payoff = 0
-            elif self.lotteryChoiceOwn == 'Lottery 3':
-                if die1%2 == 0 or die2%2 == 0:
-                    self.unrestricted_payoff = Constants.endowment * Constants.lotteries[2]['return_for_calc'] * dice_sum
+                    self.restricted_payoff = 0
+            elif self.restrictedChoiceFirstOrderDominance == "Lottery 2.2":
+                if die1 > 2 and die2 > 2:
+                    self.restricted_payoff = Constants.endowment * dice_sum
                 else:
-                    self.unrestricted_payoff = 0
-            elif self.lotteryChoiceOwn == 'Lottery 4':
-                if die1%2 == 0 and die2%2 == 0:
-                    self.unrestricted_payoff = Constants.endowment * Constants.lotteries[3]['return_for_calc'] * dice_sum
+                    self.restricted_payoff = 0
+            elif self.restrictedChoiceSecondOrderDominance == "Lottery 2.3":
+                if die1 < 5 and die2 < 5:
+                    self.restricted_payoff = Constants.endowment * dice_sum
                 else:
-                    self.unrestricted_payoff = 0
-            elif self.lotteryChoiceOwn == 'Lottery 5':
-                if die1%2 == 0 and die2%2 == 0:
-                    self.unrestricted_payoff = Constants.endowment * Constants.lotteries[4]['return_for_calc'] * dice_sum
+                    self.restricted_payoff = 0
+        elif self.restrictedLottery_draw == 3:
+            if self.restrictedChoiceSecondOrderDominance == "Lottery 3.1":
+                if die1 < 3 or die2 < 3:
+                    self.restricted_payoff = dice_sum * Constants.endowment
                 else:
-                    self.unrestricted_payoff = 0
-            elif self.lotteryChoiceOwn == 'Lottery 6':
-                if die1%2 != 0 and die2%2 != 0:
-                    self.unrestricted_payoff = Constants.endowment * max(die1,die2) * Constants.lotteries[5]['return_for_calc']
+                    self.restricted_payoff = dice_sum * Constants.endowment
+            elif self.restrictedChoiceSecondOrderDominance == "Lottery 3.2":
+                if die1 < 3 or die2 < 3:
+                    self.restricted_payoff = (dice_sum - die1 + die2) * Constants.endowment
                 else:
-                    self.unrestricted_payoff = 0
+                    self.restricted_payoff = 0
+        elif self.restrictedLottery_draw == 4:
+            if self.restrictedChoiceVariableRisk == "Lottery 4.1":
+                self.restricted_payoff = Constants.endowment * 1.25
+            elif self.restrictedChoiceVariableRisk == "Lottery 4.2":
+                if die1 < 3 or die2 < 3:
+                    self.restricted_payoff = Constants.endowment * dice_sum
+                else:
+                    self.restricted_payoff = 0
+            elif self.restrictedChoiceVariableRisk == "Lottery 4.3":
+                if die1 > 2 and die2 > 2:
+                    self.restricted_payoff = Constants.endowment * dice_sum
+                else:
+                    self.restricted_payoff = 0
 
-
-        ## Restricted
-        if self.restrictedChoice == 'Lottery 1':
-            self.restricted_payoff = Constants.endowment
-        elif self.restrictedChoice == 'Lottery 2':
-            if die1 > 3 or die2 > 3:
-                self.restricted_payoff = Constants.endowment * Constants.lotteries[1]['return_for_calc'] * dice_sum
-            else:
-                self.restricted_payoff = 0
-        elif self.restrictedChoice == 'Lottery 3':
-            if die1%2 == 0 or die2%2 == 0:
-                self.restricted_payoff = Constants.endowment * Constants.lotteries[2]['return_for_calc'] * dice_sum
-            else:
-                self.restricted_payoff = 0
-        elif self.restrictedChoice == 'Lottery 4':
-            if die1%2 == 0 and die2%2 == 0:
-                self.restricted_payoff = Constants.endowment * Constants.lotteries[3]['return_for_calc'] * dice_sum
-            else:
-                self.restricted_payoff = 0
-        elif self.restrictedChoice == 'Lottery 5':
-            if die1%2 == 0 and die2%2 == 0:
-                self.restricted_payoff = Constants.endowment * Constants.lotteries[4]['return_for_calc'] * dice_sum
-            else:
-                self.restricted_payoff = 0
-        elif self.restrictedChoice == 'Lottery 6':
-            if die1%2 != 0 and die2%2 != 0:
-                self.restricted_payoff = Constants.endowment * max(die1,die2) * Constants.lotteries[5]['return_for_calc']
-            else:
-                self.restricted_payoff = 0
 
     def setTotalPayoffs(self):
         self.payoff = c(self.in_round(1).unrestricted_payoff) + c(self.in_round(self.restricted_payoff_round).restricted_payoff)
