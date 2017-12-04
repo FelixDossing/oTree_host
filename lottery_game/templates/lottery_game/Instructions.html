@@ -7,70 +7,77 @@
 
 {% block content %}
 
-<div id="instructions">
+<div id="instructions_div" class="instructions well well-1g">
+  <h3>Introduction</h3>
   <p>
-    Welcome and thank you for participating in our experiment on social preferences and choice.<br>
-    Please take your time to read the following instructions carefully.
+    In the following experiment, you will have the chance to earn money through investment in different lotteries. The experiment has two parts. First, there will be a test on your
+    ability to calculate probabilities. Afterwards, there will be a number of choices over lotteries.<br><br>
+    Some choices will affect yourself, while other choices will affect other participants in the experiment. The participants, which you affect with your choices, will not make choices
+    that affect you. Each participant in the experiment is given an anonymous ID such as "Player 5". So if you make choices that affect Player 5, then Player 5 will not make choices that
+    affect you.
   </p>
-  <h4>
-    <br>Introduction
-  </h4>
+  <h3>The test</h3>
   <p>
-    The following experiment involes two parts. Part one consists of a test of your understanding of
-    probabilities. Part two involves choices relating to different lotteries. Both are explained in more detail
-    below.
-  <h4>
-    <br>The probability test
-  </h4>
-  <p>
-    The first part of the experiment involves a test of your ability to understand and calculate
-    probabilities. After the test, one random participant will be choosen to recieve {{ Constants.quiz_points }} points for
-    each correct answer. There are 20 questions in the test, so you have the potential to earn {{ quiz_max }} points
-    from the test. During the test there will be a calculator available, which can be accessed by pressing the
-    <span class="btn btn-primary">Hide/show calculator</span>-button located in the bottom right corner of the screen.
-    The calculator can perform addition (+), substraction (-), multiplication (*) and division (/). Exponents are done with
-    double stars, so that 2**3 is 2 raised to the power of 3. The caluclator can also return factorials. This is done by
-    typing fact(x) to get the factorial of x (which is commonly written as x!).
+    The first part of the experiment is a test of your ability to calculate probabilities. The test will take 30 minutes and features 20 questions. The test will not generally be
+    what earns participants money in the experiment. However, one participant will be randomly selected to get 20 points for each correct answer on the test. This means that you
+    have the potential to earn 400 points from the quiz.
   </p>
-
-  <h4>
-    <br>The test feedback screen
-  </h4>
+  <h4>Test feedback</h4>
   <p>
-    During the experiment, you will be shown screens with information about the scores attained by different players.
-    This screen will involve a representation of the distribution of scores similar to that shown in the image
-    below. In the picture it is shown how many individuals got a particular score for each score from 0 to
-    20. The number of persons stacked on top of each other represents the amount of persons in the
-    experiment who got that excact score. In the picture below 0 players got a score of 0-5, 2 players
-    got a score of 6, 2 players got at score of 7, 6 players got a score of 8 and so on.
+    Through the experiment, you will be shown with information about the scores attained by different participants. This information will be presented in a graph such as the one in the
+    picture below. The graph shows for each possible score, how many individuals got that score. Persons stacked on top of each other, represent individuals who got the same score. In
+    the picture below, 0 participants got a score of 0-5, 2 participants got a score of 6, 2 participants got a score of 7, 6 participants got a score of 8 and so on.
   </p>
-
   <img src="{% static 'lottery_game/histogram_instr.png' %}"/ class="hist_img">
 
-  <h4>
-    <br>The lottery choice
-  </h4>
+  <h3>The calculator</h3>
   <p>
-    In the second part of the experiment, you will make choices over lotteries. Some choices will affect only yourself and some choices will affect other participants. The choices you make
-    will be explained in more detail on the choice screens. Note that the particpants who are affect by the choices you make, will not make choices in the experiment that affect you. So if you make choices
-    that affect Player 1 and 3, then Player 1 and 3 will not make choices that affect you.<br>
-    The <span class="btn btn-primary">Hide/show calculator</span>-button will also be present on some of the choice screens.<br><br>
+    The test as well as some of the choice screens will feature a calculator. You can access the calculator by pressing the Hide/show calculator-button in the bottom right corner of the screen.
+    The calculator can perform addition (+), subtraction (-), multiplication (*) and division (/). Exponents are done with double stars (**), so “2**3” will give you 2 raised to the power of 3.
+    The calculator can also return factorials. This is done by typing “fact()”, so that “fact(x)” returns the factorial of x (commonly written as x!). If you do not know what a factorial is,
+    then you will not need to use it.
   </p>
-  <h4>
-    <br>Points and money
-  </h4>
+  <h3>Points and money</h3>
   <p>
-    This experiment will involve points. At the end of the experiment points will be
-    translated into money with the following conversion rate:<br><br>
+    After the trial round, the experiment will consist of four rounds where real money can be earned. Each completed task earns you one point and points are converted into money according
+    to the following conversion:<br><br>
+    1 point = {{ Constants.point_conversion }} DKK<br>
+  </p>
 
-    1 point = {{ Constants.point_conversion }} DKK<br><br>
-
-    So if you earn 300 points, then you get {{ points_example }} DKK.
-  </p>
+  <h3>Help from assistants</h3>
   <p>
-    Please make sure that you understand the instructions. If you have any questions, raise your hand to get help from one of the experiment assistants. When you are ready, click the next-button
-    to proceed to the probability test.
+    If you at any point during the experiment have questions, please raise your hand and a lab assistant will be there to assist you. Assistants can help with comprehension of the instructions and
+    such. They are not allowed to help you with performing calculations.
   </p>
+
+  <h3>Ready to begin?</h3>
+  <p>
+    When you are confident that you understand the instructions, answer the control questions and press the next-button.
+  </p>
+</div>
+<h3>Control questions</h3>
+<p>
+  Please answer the following questions. Each question is linked to the image shown above the question.
+  You must answer each question correctly in order to continue. If you cannot answer the question
+  please take an extra moment to think about it. If you still are not able to proceed, put up your hand and
+  an lab assistant will come by to assist you.
+</p>
+<p class="above_text" class="above_text">
+  Below you see a distribution of test scores.
+</p>
+<img src="{% static 'lottery_game/histogram1.png' %}" class="hist_img"/>
+{% formfield player.control1 with label="How many participants got a higher score than the orange participant?" %}
+{% formfield player.control2 with label="How many participants got a lower score than the orange participant?" %}
+{% formfield player.control3 with label="How many participants got the same score as the orange participant?" %}
+{% formfield player.control4 with label="The orange participant's score was above average" %}
+
+
+<p class="above_text">
+  Below you see a distribution of test scores.
+</p>
+<img src="{% static 'lottery_game/histogram2.png' %}" class="hist_img"/>
+{% formfield player.control5 with label="The orange participant got a higher score than the blue participant" %}
+{% formfield player.control6 with label="The orange participant did worse than all other participants" %}
 
 
 {% next_button %}

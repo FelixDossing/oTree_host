@@ -18,13 +18,13 @@
 
   <div class="instructions well well-1g">
     <p>
-      On this screen you will only make choices that affect yourself.<br>
-      <strong>Player {{ player.paternalist_id }}</strong> was given the chance to restrict your lottery choices on this screen.
-      {% if player.partner_restricted == False %}Player {{ player.paternalist_id }} chose not to remove any lotteries from your screen.
-      {% else %}Player {{ player.paternalist_id }} chose to remove some of the lotteries from your screen.{% endif %}<br><br>
-
-      You have been given <strong>{{ Constants.endowment }}</strong> to invest in one of the lotteries in the table below. All of you points will be invested in the lottery that you choose.
-      At the end of the round, <strong>two regular six-sided dice (die 1 and die 2) will be thrown</strong>. Your earnings from the chosen lottery will depend on what these two dice show.<br>
+      On this screen you will only make choices <strong style="text-decoration:underline; text-decoration-color:#30b3ff;">that affect yourself.</strong><br><br>
+      <strong>Player {{ player.paternalist_id }}</strong> was given the chance to restrict your lottery choices on this screen. If {{ player.paternalist_id }} chose to remove lotteries, then
+      they will not appear as a possible choice.<br><br>
+      You will make four choices over lotteries <strong>(Choice 1, Choice 2, Choice 3, Choice 4)</strong>. One of these choices will be randomly selected to be your actual lottery choice. You have been given
+      <strong>{{ Constants.endowment }}</strong> to invest in each lottery that you choose. At the end of the round, <strong>two regular six-sided dice (die 1 and die 2) will be thrown</strong>.
+      Your payoff will depend on what these two dice show.<br> This means that if <strong>choice B</strong> is randomly chosen to be your actual lottery choice and you choose <strong>Lottery 2</strong>
+      in <strong>choice B</strong> then lottery B will specify how your payoff depends on the dice.
     </p>
   </div>
 
@@ -298,14 +298,16 @@
   }
 
   .choicebox {
-    background-color: #FAF2AD;
-    border-radius: 5px;
     padding-left: 20px;
     padding-right: 20px;
     margin-bottom: 50px;
     padding-bottom: 20px;
-    border-style: outset;
-    border-width: thin;
+    border-color: #30b3ff;
+    border-style: solid;
+    border-width: thick;
+    border-right-style: hidden;
+    border-bottom-style: hidden;
+    border-top-style: hidden;
   }
 
 </style>
@@ -464,7 +466,63 @@
     }
   });
 
-
+  // Change side colors of choiceboxes
+  $('#firstChoiceDiv').on('change', function() {
+    if (first_choice == "loseMoney" & $('#restrictedChoiceLoseMoney').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "firstOrderDominance" & $('#restrictedChoiceFirstOrderDominance').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "secondOrderDominance" & $('#restrictedChoiceSecondOrderDominance').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "variableRisk" & $('#restrictedChoiceVariableRisk').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#secondChoiceDiv').on('change', function() {
+    if (second_choice == "loseMoney" & $('#restrictedChoiceLoseMoney').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "firstOrderDominance" & $('#restrictedChoiceFirstOrderDominance').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "secondOrderDominance" & $('#restrictedChoiceSecondOrderDominance').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "variableRisk" & $('#restrictedChoiceVariableRisk').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#thirdChoiceDiv').on('change', function() {
+    if (third_choice == "loseMoney" & $('#restrictedChoiceLoseMoney').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "firstOrderDominance" & $('#restrictedChoiceFirstOrderDominance').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "secondOrderDominance" & $('#restrictedChoiceSecondOrderDominance').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "variableRisk" & $('#restrictedChoiceVariableRisk').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#fourthChoiceDiv').on('change', function() {
+    if (fourth_choice == "loseMoney" & $('#restrictedChoiceLoseMoney').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "firstOrderDominance" & $('#restrictedChoiceFirstOrderDominance').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "secondOrderDominance" & $('#restrictedChoiceSecondOrderDominance').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "variableRisk" & $('#restrictedChoiceVariableRisk').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+  });
 
 </script>
 

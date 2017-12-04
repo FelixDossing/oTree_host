@@ -13,7 +13,7 @@
     <td>Round #</td>
     <td>Die 1</td>
     <td>Die 2</td>
-    <td>Unrestricted lottery choice</td>
+    <td>Implemented choice</td>
     <td>Payoff</td>
   </tr>
   <tr style="font-weight:bold;">
@@ -22,7 +22,12 @@
     <td>{{ subsession.die2round1 }}</td>
     {% for p in player.in_all_rounds %}
     {% if p.round_number == 1 %}
-    <td>{{ p.lotteryChoiceOwn }}</td>
+    <td>
+      {% if p.restrictedLottery_draw == 1 %}{% if p.first_choice == "loseMoney" %}Choice 1{% elif p.second_choice == "loseMoney" %}Choice 2{% elif p.third_choice == "loseMoney" %}Choice 3{% elif p.fourth_choice == "loseMoney" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 2 %}{% if p.first_choice == "firstOrderDominance" %}Choice 1{% elif p.second_choice == "firstOrderDominance" %}Choice 2{% elif p.third_choice == "firstOrderDominance" %}Choice 3{% elif p.fourth_choice == "firstOrderDominance" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 3 %}{% if p.first_choice == "secondOrderDominance" %}Choice 1{% elif p.second_choice == "secondOrderDominance" %}Choice 2{% elif p.third_choice == "secondOrderDominance" %}Choice 3{% elif p.fourth_choice == "secondOrderDominance" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 4 %}{% if p.first_choice == "variableRisk" %}Choice 1{% elif p.second_choice == "variableRisk" %}Choice 2{% elif p.third_choice == "variableRisk" %}Choice 3{% elif p.fourth_choice == "variableRisk" %}Choice 4{% endif %}{% endif %}
+    </td>
     <td>{{ p.unrestricted_payoff }}</td>
     {% endif %}
     {% endfor %}
@@ -34,7 +39,7 @@
     <td>Round #</td>
     <td>Die 1</td>
     <td>Die 2</td>
-    <td>Restricted lottery choice</td>
+    <td>Implemented choice</td>
     <td>Payoff</td>
   </tr>
   {% for p in player.in_all_rounds %}
@@ -86,7 +91,12 @@
       {{ subsession.die2round10 }}
       {% endif %}
     </td>
-    <td>{{ p.restrictedChoice }}</td>
+    <td>
+      {% if p.restrictedLottery_draw == 1 %}{% if p.first_choice == "loseMoney" %}Choice 1{% elif p.second_choice == "loseMoney" %}Choice 2{% elif p.third_choice == "loseMoney" %}Choice 3{% elif p.fourth_choice == "loseMoney" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 2 %}{% if p.first_choice == "firstOrderDominance" %}Choice 1{% elif p.second_choice == "firstOrderDominance" %}Choice 2{% elif p.third_choice == "firstOrderDominance" %}Choice 3{% elif p.fourth_choice == "firstOrderDominance" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 3 %}{% if p.first_choice == "secondOrderDominance" %}Choice 1{% elif p.second_choice == "secondOrderDominance" %}Choice 2{% elif p.third_choice == "secondOrderDominance" %}Choice 3{% elif p.fourth_choice == "secondOrderDominance" %}Choice 4{% endif %}{% endif %}
+      {% if p.restrictedLottery_draw == 4 %}{% if p.first_choice == "variableRisk" %}Choice 1{% elif p.second_choice == "variableRisk" %}Choice 2{% elif p.third_choice == "variableRisk" %}Choice 3{% elif p.fourth_choice == "variableRisk" %}Choice 4{% endif %}{% endif %}
+    </td>
     <td>{{ p.restricted_payoff }}</td>
   </tr>
   {% endfor %}

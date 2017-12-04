@@ -17,14 +17,44 @@
 
   <div class="instructions well well-1g">
     <p>
-      On this screen you will only make choices that affect yourself.<br><br>
+      On this screen you will make choices <strong style="text-decoration:underline; text-decoration-color:#30b3ff;">that affect yourself.</strong><br><br>
 
       You will make four choices over lotteries <strong>(Choice 1, Choice 2, Choice 3, Choice 4)</strong>. One of these choices will be randomly selected to be your actual lottery choice. You have been given
       <strong>{{ Constants.endowment }}</strong> to invest in each lottery that you choose. At the end of the round, <strong>two regular six-sided dice (die 1 and die 2) will be thrown</strong>.
-      Your payoff will depend on what these two dice show.<br> This means that if <strong>choice B</strong> is randomly chosen to be your actual lottery choice and you choose <strong>Lottery 2</strong>
-      in <strong>choice B</strong> then lottery B will specify how your payoff depends on the dice.<br><br>
-      When you have made a choice the description will disappear and only leave the title. If you wish to change a choice before proceeding, simply click on the title.
+      Your payoff will depend on what these two dice show. This means that if <strong>choice B</strong> is randomly chosen to be your actual lottery choice and you choose <strong>Lottery 2</strong>
+      in <strong>choice B</strong> then lottery B will specify how your payoff depends on the dice.
     </p>
+
+    {% if player.treatment == "full" %}
+    Below you see information regarding your own score in the test.<br><br>
+  </p>
+  <table id="feedback_table">
+    <tr>
+      <td>Number of questions</td>
+      <td class="number">{{ Constants.num_questions }}</td>
+    </tr>
+    {% if player.treatment == "full" %}
+    <tr>
+      <td><strong>Your score</strong></td>
+      <td class="number"><strong>{{ player.test_score }}</strong></td>
+    </tr>
+    {% endif %}
+    <tr>
+      <td><strong>Player {{ player.partner_id }}'s score</strong></td>
+      <td class="number"><strong>{{ player.partner_test_score }}</strong></td>
+    </tr>
+  </table>
+
+  <p>
+    <br>In the picture below it is shown for each possible score, how many participants got that score. Individuals on top of each other got the same score. The
+    <span style="color:#148eff; font-weight: bold;">blue participant is you</span>.
+  </p>
+  <table id="histogram">
+  </table>
+
+
+    {% endif %}
+
   </div>
 
   <div class="choicebox" id="firstChoiceDiv">
@@ -246,6 +276,34 @@
 <style type="text/css">
 
 
+#feedback_table {
+  width: 40%;
+  margin-left: 30%;
+  font-size: 20px;
+  border-collapse: separate;
+  border-spacing: 10px;
+  border: 1px solid black;
+}
+.number {
+  text-align: right;
+}
+
+#histogram {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid black;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background-color: white;
+}
+.clipart_man {
+  width: 100%;
+  height: 90px;
+  padding: 2px;
+}
+
   .radio_div {
     font-weight: bold;
     line-height: 25px;
@@ -258,14 +316,16 @@
   }
 
   .choicebox {
-    background-color: #FAF2AD;
-    border-radius: 5px;
     padding-left: 20px;
     padding-right: 20px;
     margin-bottom: 50px;
     padding-bottom: 20px;
-    border-style: outset;
-    border-width: thin;
+    border-color: #30b3ff;
+    border-style: solid;
+    border-width: thick;
+    border-right-style: hidden;
+    border-bottom-style: hidden;
+    border-top-style: hidden;
   }
 
 </style>
@@ -424,6 +484,162 @@
     }
   });
 
+  // Change side colors of choiceboxes
+  $('#firstChoiceDiv').on('change', function() {
+    if (first_choice == "loseMoney" & $('#unrestrictedChoiceLoseMoney').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "firstOrderDominance" & $('#unrestrictedChoiceFirstOrderDominance').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "secondOrderDominance" & $('#unrestrictedChoiceSecondOrderDominance').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+    else if (first_choice == "variableRisk" & $('#unrestrictedChoiceVariableRisk').val() != "") {
+      $('#firstChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#secondChoiceDiv').on('change', function() {
+    if (second_choice == "loseMoney" & $('#unrestrictedChoiceLoseMoney').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "firstOrderDominance" & $('#unrestrictedChoiceFirstOrderDominance').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "secondOrderDominance" & $('#unrestrictedChoiceSecondOrderDominance').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+    else if (second_choice == "variableRisk" & $('#unrestrictedChoiceVariableRisk').val() != "") {
+      $('#secondChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#thirdChoiceDiv').on('change', function() {
+    if (third_choice == "loseMoney" & $('#unrestrictedChoiceLoseMoney').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "firstOrderDominance" & $('#unrestrictedChoiceFirstOrderDominance').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "secondOrderDominance" & $('#unrestrictedChoiceSecondOrderDominance').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+    else if (third_choice == "variableRisk" & $('#unrestrictedChoiceVariableRisk').val() != "") {
+      $('#thirdChoiceDiv').css('border-color', 'grey');
+    }
+  });
+  $('#fourthChoiceDiv').on('change', function() {
+    if (fourth_choice == "loseMoney" & $('#unrestrictedChoiceLoseMoney').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "firstOrderDominance" & $('#unrestrictedChoiceFirstOrderDominance').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "secondOrderDominance" & $('#unrestrictedChoiceSecondOrderDominance').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+    else if (fourth_choice == "variableRisk" & $('#unrestrictedChoiceVariableRisk').val() != "") {
+      $('#fourthChoiceDiv').css('border-color', 'grey');
+    }
+  });
+
+
+  // HISTOGRAM
+  var group_avg = {{ subsession.average_score|json }}.toFixed(2);
+
+  var scores_list = {{ player_scores }}
+  var partner_score = {{ player.partner_test_score|json }}
+  var treatment = {{ player.treatment|json }}
+
+  var player_score = {{ player.test_score|json }}
+  var num_questions = {{ Constants.num_questions|json }}+1
+
+  var freq_list = []
+
+  $('#avg').text(group_avg)
+
+  for (i = 0; i < 21; i++) {
+    numOccur = $.grep(scores_list, function (elem) {
+      return elem == i
+    }).length;
+    freq_list.push(numOccur)
+  }
+  var highest_freq = Math.max.apply(Math, freq_list);
+
+  for (i = 0; i < highest_freq; i++) {
+    $('#histogram').prepend('<tr id="row'+i+'"></tr>');
+    for (j = 0; j < 21; j++) {
+      if (freq_list[j] <= i) {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/blank.png" %}" class="clipart_man"></td>');
+      }
+      else {
+        $('#row'+i).append('<td id="cell'+i+'-'+j+'"><img src="{% static "lottery_game/clipart_man.png" %}" class="clipart_man"></td>');
+      }
+    }
+  }
+
+  if (treatment == "full") {
+    for (i = 0; i < 21; i++) {
+      if (i == player_score) {
+        $('#cell0-'+i+' img').attr('src', '{% static "lottery_game/clipart_man_blue.png" %}');
+      }
+    }
+  }
+
+  $('#histogram').append('<tr id="axis"></tr>');
+  for (i = 0; i < 21; i++) {
+    $('#axis').append('<td>'+i+'</td>');
+  }
+  $('#histogram').append('<tr id="axis_title"></tr>');
+  $('#axis_title').append('<td colspan="21">Number of correct answers</td>');
+
+  //Set points info
+
+
+  function checkLessPlayer(number) {
+    return number < player_score
+  }
+  function checkSamePlayer(number) {
+    return number == player_score
+  }
+  function checkMorePlayer(number) {
+    return number > player_score
+  }
+
+  $('#less_self').append(function(e) {
+    var less = scores_list.filter(checkLessPlayer);
+     return less.length;
+  });
+  $('#same_self').append(function(e) {
+    var same = scores_list.filter(checkSamePlayer);
+    return same.length -1;
+  });
+  $('#more_self').append(function(e) {
+    var more = scores_list.filter(checkMorePlayer);
+    return more.length;
+  })
+
+  function checkLessPartner(number) {
+    return number < partner_test_score
+  }
+  function checkSamePartner(number) {
+    return number == partner_test_score
+  }
+  function checkMorePartner(number) {
+    return number > partner_test_score
+  }
+
+  $('#less_partner').append(function(e) {
+    var less = scores_list.filter(checkLessPartner);
+     return less.length;
+  });
+  $('#same_partner').append(function(e) {
+    var same = scores_list.filter(checkSamePartner);
+    return same.length -1;
+  });
+  $('#more_partner').append(function(e) {
+    var more = scores_list.filter(checkMorePartner);
+    return more.length;
+  })
 
 
 </script>

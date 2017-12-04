@@ -17,12 +17,19 @@
 
   <div class="instructions well well-1g">
     <p>
-      On this screen you will make choices that affect <strong>Player {{ player.partner_id }}</strong>.
-      Player {{ player.partner_id }} has been given <strong>{{ Constants.endowment }}</strong> to invest in one of the lotteries in the table below. The lotteries are the same as those you have seen
-      on the previous screen{% if player.round_number != 1 %}s{% endif %}. If you wish, you may remove lotteries, so that Player {{ player.partner_id }} will be unable to choose those lotteries.
+      On this screen you will make choices <strong style="text-decoration:underline; text-decoration-color:orange;"> that affect Player {{ player.partner_id }}</strong>.<br><br>
+      Player {{ player.partner_id }} will make four choices over lotteries. These are the same choices as those {% if player.round_number == 1 %}you made on the previous screen
+      (and the same lotteries){% else %} you have seen on previous screens{% endif %}. One the choices will
+      be randomly selected to be his/her actual lottery choice. Player {{ player.partner_id }} has been given <strong>{{ Constants.endowment }}</strong> to invest in each lottery.<br><br>
+
+      If you wish, you may remove lotteries, so that Player {{ player.partner_id }} will be unable to choose those lotteries.
       Note that Player {{ player.partner_id }} will not make any choices that affect you in this experiment.<br><br>
 
-      Below you see information regarding {% if player.treatment == 'full' %}your own score, as well as {% endif %}Player {{ player.partner_id }}'s score.<br><br>
+      Below you see information regarding {% if player.treatment == 'full' %}your own score, as well as {% endif %}Player {{ player.partner_id }}'s score in the test.<br><br>
+    </p>
+
+
+
     </p>
     <table id="feedback_table">
       <tr>
@@ -43,7 +50,7 @@
 
     <p>
       <br>In the picture below it is shown for each possible score, how many participants got that score. Individuals on top of each other got the same score.
-      {% if player.treatment == "full" %}<span style="color:blue; font-weight: bold;">blue player is you</span>. {% endif %}The <span style="color:orange; font-weight: bold;">orange player
+      {% if player.treatment == "full" %}<span style="color:#148eff; font-weight: bold;">blue participant is you</span>. {% endif %}The <span style="color:orange; font-weight: bold;">orange participant
       is Player {{ player.partner_id }}</span>.
     </p>
     <table id="histogram">
@@ -101,11 +108,11 @@
         </tr>
       </table>
 
-      <p><strong>Would you like to remove any of the lotteries?</strong></p>
+      <p><strong>Would you like to remove any of the lotteries as possible choices for Player {{ player.partner_id }}?</strong></p>
       <div class="radio_div" id="loseInput">
         <form>
-          <input type="radio" name="restrictionChoiceLoseMoney" value="" class="radio_choice" id="loseInputA">Lottery A<br>
-          <input type="radio" name="restrictionChoiceLoseMoney" value="" class="radio_choice" id="loseInputB">Lottery B<br>
+          <input type="radio" name="restrictionChoiceLoseMoney" value="" class="radio_choice" id="loseInputA">Remove Lottery A<br>
+          <input type="radio" name="restrictionChoiceLoseMoney" value="" class="radio_choice" id="loseInputB">Remove Lottery B<br>
           <input type="radio" name="restrictionChoiceLoseMoney" value="" class="radio_choice" id="loseInputNon">Don't remove any lotteries
         </form>
       </div>
@@ -155,7 +162,7 @@
         </tr>
       </table>
 
-      <p><strong>Would you like ot remove any of the lotteries?</strong></p>
+      <p><strong>Would you like to remove any of the lotteries as possible choices for Player {{ player.partner_id }}?</strong></p>
       <div class="radio_div" id="firstInput">
         <form>
           <input type="radio" name="restrictionChoiceFirstOrderDominance" value="" class="radio_choice" id="firstInputA">Remove Lottery A<br>
@@ -199,11 +206,11 @@
         </tr>
       </table>
 
-      <p><strong>Would you like to remove any of the lotteries?</strong></p>
+      <p><strong>Would you like to remove any of the lotteries as possible choices for Player {{ player.partner_id }}?</strong></p>
       <div class="radio_div" id="secondInput">
         <form>
-          <input type="radio" name="restrictionChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputA">Lottery A<br>
-          <input type="radio" name="restrictionChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputB">Lottery B<br>
+          <input type="radio" name="restrictionChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputA">Remove Lottery A<br>
+          <input type="radio" name="restrictionChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputB">Remove Lottery B<br>
           <input type="radio" name="restrictionChoiceSecondOrderDominance" value="" class="radio_choice" id="secondInputNon">Don't remove any lotteries<br>
         </form>
       </div>
@@ -252,11 +259,11 @@
         </tr>
       </table>
 
-      <p><strong>Would you like to remove any of the lotteries?</strong></p>
+      <p><strong>Would you like to remove any of the lotteries as possible choices for Player {{ player.partner_id }}?</strong></p>
       <div class="radio_div" id="variableInput">
         <form>
-          <input type="radio" name="restrictionChoiceVariableRisk" value="" class="radio_choice" id="variableInputA">Lottery A<br>
-          <input type="radio" name="restrictionChoiceVariableRisk" value="" class="radio_choice" id="variableInputB">Lottery B<br>
+          <input type="radio" name="restrictionChoiceVariableRisk" value="" class="radio_choice" id="variableInputA">Remove Lottery A<br>
+          <input type="radio" name="restrictionChoiceVariableRisk" value="" class="radio_choice" id="variableInputB">Remove Lottery B<br>
           <input type="radio" name="restrictionChoiceVariableRisk" value="" class="radio_choice" id="variableInputNon">Don't remove any lotteries
         </form>
       </div>
@@ -319,14 +326,16 @@
   }
 
   .choicebox {
-    background-color: #FAF2AD;
-    border-radius: 5px;
     padding-left: 20px;
     padding-right: 20px;
     margin-bottom: 50px;
     padding-bottom: 20px;
-    border-style: outset;
-    border-width: thin;
+    border-color: orange;
+    border-style: solid;
+    border-width: thick;
+    border-right-style: hidden;
+    border-bottom-style: hidden;
+    border-top-style: hidden;
   }
 
 </style>
@@ -620,6 +629,64 @@ $('.radio_choice').on('change', function() {
   }
 });
 
+
+// Change side colors of choiceboxes
+$('#firstChoiceDiv').on('change', function() {
+  if (first_choice == "loseMoney" & $('#restrictionChoiceLoseMoney').val() != "") {
+    $('#firstChoiceDiv').css('border-color', 'grey');
+  }
+  else if (first_choice == "firstOrderDominance" & $('#restrictionChoiceFirstOrderDominance').val() != "") {
+    $('#firstChoiceDiv').css('border-color', 'grey');
+  }
+  else if (first_choice == "secondOrderDominance" & $('#restrictionChoiceSecondOrderDominance').val() != "") {
+    $('#firstChoiceDiv').css('border-color', 'grey');
+  }
+  else if (first_choice == "variableRisk" & $('#restrictionChoiceVariableRisk').val() != "") {
+    $('#firstChoiceDiv').css('border-color', 'grey');
+  }
+});
+$('#secondChoiceDiv').on('change', function() {
+  if (second_choice == "loseMoney" & $('#restrictionChoiceLoseMoney').val() != "") {
+    $('#secondChoiceDiv').css('border-color', 'grey');
+  }
+  else if (second_choice == "firstOrderDominance" & $('#restrictionChoiceFirstOrderDominance').val() != "") {
+    $('#secondChoiceDiv').css('border-color', 'grey');
+  }
+  else if (second_choice == "secondOrderDominance" & $('#restrictionChoiceSecondOrderDominance').val() != "") {
+    $('#secondChoiceDiv').css('border-color', 'grey');
+  }
+  else if (second_choice == "variableRisk" & $('#restrictionChoiceVariableRisk').val() != "") {
+    $('#secondChoiceDiv').css('border-color', 'grey');
+  }
+});
+$('#thirdChoiceDiv').on('change', function() {
+  if (third_choice == "loseMoney" & $('#restrictionChoiceLoseMoney').val() != "") {
+    $('#thirdChoiceDiv').css('border-color', 'grey');
+  }
+  else if (third_choice == "firstOrderDominance" & $('#restrictionChoiceFirstOrderDominance').val() != "") {
+    $('#thirdChoiceDiv').css('border-color', 'grey');
+  }
+  else if (third_choice == "secondOrderDominance" & $('#restrictionChoiceSecondOrderDominance').val() != "") {
+    $('#thirdChoiceDiv').css('border-color', 'grey');
+  }
+  else if (third_choice == "variableRisk" & $('#restrictionChoiceVariableRisk').val() != "") {
+    $('#thirdChoiceDiv').css('border-color', 'grey');
+  }
+});
+$('#fourthChoiceDiv').on('change', function() {
+  if (fourth_choice == "loseMoney" & $('#restrictionChoiceLoseMoney').val() != "") {
+    $('#fourthChoiceDiv').css('border-color', 'grey');
+  }
+  else if (fourth_choice == "firstOrderDominance" & $('#restrictionChoiceFirstOrderDominance').val() != "") {
+    $('#fourthChoiceDiv').css('border-color', 'grey');
+  }
+  else if (fourth_choice == "secondOrderDominance" & $('#restrictionChoiceSecondOrderDominance').val() != "") {
+    $('#fourthChoiceDiv').css('border-color', 'grey');
+  }
+  else if (fourth_choice == "variableRisk" & $('#restrictionChoiceVariableRisk').val() != "") {
+    $('#fourthChoiceDiv').css('border-color', 'grey');
+  }
+});
 
 
 </script>

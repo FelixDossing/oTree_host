@@ -16,6 +16,29 @@ class Instructions(Page):
     def vars_for_template(self):
         return {'points_example': Constants.point_conversion*300, 'quiz_max': Constants.quiz_points*Constants.num_questions}
 
+    form_model = models.Player
+    form_fields = ['control{}'.format(i) for i in range(1,7)]
+
+    def control1_error_message(self, value):
+        if not (value == 10):
+            return 'This is not correct'
+    def control2_error_message(self, value):
+        if not (value == 14):
+            return 'This is not correct'
+    def control3_error_message(self, value):
+        if not (value == 5):
+            return 'This is not correct'
+    def control4_error_message(self, value):
+        if not (value == True):
+            return 'This is not correct'
+    def control5_error_message(self, value):
+        if not (value == False):
+            return 'This is not correct'
+    def control6_error_message(self, value):
+        if not (value == False):
+            return 'This is not correct'
+
+
 class Test(Page):
 
     def is_displayed(self):
@@ -290,6 +313,8 @@ class LotteryChoiceOwn(Page):
                 'lottery43_condition':Constants.lotteries[9]['condition'],
                 'lottery43_return':Constants.lotteries[9]['return per point invested'],
                 'lottery43_description':Constants.lotteries[9]['description'],
+                "player_scores": safe_json(self.session.vars['player_scores']),
+                "player_rank": safe_json(self.player.rank)
                 }
 
     form_model = models.Player
@@ -412,12 +437,10 @@ page_sequence = [
     Test,
     TestWaitPage,
     TestGuessPage,
-    TestFeedback,
     LotteryChoiceOwn,
     RestrictionChoice,
     WaitForRestrictions,
     LotteryChoiceOwnRestricted,
     ResultsWaitPage,
-    Results,
-    Finished,
+    Results
     ]
