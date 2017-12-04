@@ -419,47 +419,47 @@ class Player(BasePlayer):
     solution19 = models.CharField()
     solution20 = models.CharField()
 
-    submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
-    submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer1 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer2 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer3 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer4 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer5 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer6 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer7 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer8 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer9 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer10 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer11 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer12 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer13 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer14 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer15 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer16 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer17 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer18 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer19 = models.CharField(widget=widgets.RadioSelect())
+    # submitted_answer20 = models.CharField(widget=widgets.RadioSelect())
 
-    # submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
-    # submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    # submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
-    # submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
-    # submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
-    # submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
-    # submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
-    # submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    # submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
-    # submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
-    # submitted_answer11 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
-    # submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
-    # submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
-    # submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
-    # submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
-    # submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
-    # submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
-    # submitted_answer18 = models.CharField(initial = "About 35%", widget=widgets.RadioSelect())
-    # submitted_answer19 = models.CharField(initial = "84", widget=widgets.RadioSelect())
-    # submitted_answer20 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
+    submitted_answer1 = models.CharField(initial = "1/5", widget=widgets.RadioSelect())
+    submitted_answer2 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer3 = models.CharField(initial = "4", widget=widgets.RadioSelect())
+    submitted_answer4 = models.CharField(initial = "3/13", widget=widgets.RadioSelect())
+    submitted_answer5 = models.CharField(initial = "Lisa (20%), Jim (40%), Andreas (-10%), Caroline (50%)", widget=widgets.RadioSelect())
+    submitted_answer6 = models.CharField(initial = "35%", widget=widgets.RadioSelect())
+    submitted_answer7 = models.CharField(initial = "12/15", widget=widgets.RadioSelect())
+    submitted_answer8 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer9 = models.CharField(initial = "10", widget=widgets.RadioSelect())
+    submitted_answer10 = models.CharField(initial = "10%", widget=widgets.RadioSelect())
+    submitted_answer11 = models.CharField(initial = "1/3", widget=widgets.RadioSelect())
+    submitted_answer12 = models.CharField(initial = "12.8%", widget=widgets.RadioSelect())
+    submitted_answer13 = models.CharField(initial = "1/4", widget=widgets.RadioSelect())
+    submitted_answer14 = models.CharField(initial = "About 15%", widget=widgets.RadioSelect())
+    submitted_answer15 = models.CharField(initial = "65%", widget=widgets.RadioSelect())
+    submitted_answer16 = models.CharField(initial = "17.25 points", widget=widgets.RadioSelect())
+    submitted_answer17 = models.CharField(initial = "25%", widget=widgets.RadioSelect())
+    submitted_answer18 = models.CharField(initial = "About 35%", widget=widgets.RadioSelect())
+    submitted_answer19 = models.CharField(initial = "84", widget=widgets.RadioSelect())
+    submitted_answer20 = models.CharField(initial = "About 22.5%", widget=widgets.RadioSelect())
 
     # For testing
     def set_test_values(self):
@@ -621,7 +621,7 @@ class Player(BasePlayer):
                         self.unrestricted_payoff = Constants.endowment * dice_sum
                     else:
                         self.unrestricted_payoff = 0
-                elif self.unrestrictedChoiceSecondOrderDominance == "Lottery 2.3":
+                elif self.unrestrictedChoiceFirstOrderDominance == "Lottery 2.3":
                     if die1 < 5 and die2 < 5:
                         self.unrestricted_payoff = Constants.endowment * dice_sum
                     else:
@@ -631,7 +631,7 @@ class Player(BasePlayer):
                     if die1 < 3 or die2 < 3:
                         self.unrestricted_payoff = dice_sum * Constants.endowment
                     else:
-                        self.unrestricted_payoff = dice_sum * Constants.endowment
+                        self.unrestricted_payoff = 0
                 elif self.unrestrictedChoiceSecondOrderDominance == "Lottery 3.2":
                     if die1 < 3 or die2 < 3:
                         self.unrestricted_payoff = (dice_sum - die1 + die2) * Constants.endowment
@@ -685,7 +685,7 @@ class Player(BasePlayer):
                 if die1 < 3 or die2 < 3:
                     self.restricted_payoff = dice_sum * Constants.endowment
                 else:
-                    self.restricted_payoff = dice_sum * Constants.endowment
+                    self.restricted_payoff = 0
             elif self.restrictedChoiceSecondOrderDominance == "Lottery 3.2":
                 if die1 < 3 or die2 < 3:
                     self.restricted_payoff = (dice_sum - die1 + die2) * Constants.endowment

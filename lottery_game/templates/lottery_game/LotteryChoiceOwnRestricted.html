@@ -454,7 +454,7 @@
 
   $('.radio_choice').on('change', function() {
     var count = 0;
-    var inputList = ['#unrestrictedChoiceLoseMoney', '#unrestrictedChoiceFirstOrderDominance', '#unrestrictedChoiceSecondOrderDominance', '#unrestrictedChoiceVariableRisk']
+    var inputList = ['#restrictedChoiceLoseMoney', '#restrictedChoiceFirstOrderDominance', '#restrictedChoiceSecondOrderDominance', '#restrictedChoiceVariableRisk']
     for (i = 0; i < 4; i++) {
       if ($(inputList[i]).val() != "") {
         count += 1;
