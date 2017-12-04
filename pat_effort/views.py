@@ -103,10 +103,11 @@ class TextFeedback(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
-    timeout_seconds = 60*3
+    timeout_seconds = 180
 
     form_model = models.Player
     form_fields = ['textFeedback']
+
 
 page_sequence = [
     WaitForStart,
