@@ -89,6 +89,9 @@ Round {{ player.round_number }} out of {{ Constants.num_rounds }}
 
 {% next_button %}
 
+<div id="whitebox">
+</div>
+
 {% block styles %}
   <style type="text/css">
 
@@ -103,6 +106,11 @@ Round {{ player.round_number }} out of {{ Constants.num_rounds }}
 
   #choice2, #choice3, #choice4, .otree-btn-next {
     display: none;
+  }
+
+  #whitebox {
+    width: 100%;
+    height: 600px;
   }
 
   </style>

@@ -13,12 +13,12 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'egame1'
     players_per_group = 2
-    num_rounds = 4
+    num_rounds = 2
 
     number_of_choices = 4
     point_conversion = 0.2
-    worktime_minutes = 15
-    trial_minutes = 3
+    worktime_minutes = 1
+    trial_minutes = 1
 
     with open ('pat_effort/commit_choices.csv') as csvfile:
         commitChoices = list(csv.DictReader(csvfile))
