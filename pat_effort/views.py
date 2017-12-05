@@ -3,9 +3,8 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 
-class WaitForStart(Page):
-    def is_displayed(self):
-        return self.player.round_number == 1
+class WaitForStart(WaitPage):
+    wait_for_all_groups = True
 
 class Instructions(Page):
     def is_displayed(self):
@@ -89,6 +88,9 @@ class ResultsWaitPage(WaitPage):
         self.group.calculatePayoffs()
 
 class Results(Page):
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
     def before_next_page(self):
         if self.round_number == Constants.num_rounds:

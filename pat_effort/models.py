@@ -13,7 +13,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'egame1'
     players_per_group = 2
-    num_rounds = 4
+    num_rounds = 3
 
     number_of_choices = 4
     point_conversion = 0.2

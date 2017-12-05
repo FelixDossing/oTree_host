@@ -13,7 +13,7 @@ Round {{ player.round_number }} out of {{ Constants.num_rounds }}
   <h3>Instructions</h3>
   <p>
     {% if player.role == 'paternalee_first' %}
-    {% if player.round_number == 1 %}In the following 4 rounds you will be able to earn real money through effort in the slider task.<br><br>{% endif %}
+    {% if player.round_number == 1 %}In the following {{ Constants.num_rounds }} rounds you will be able to earn real money through effort in the slider task.<br><br>{% endif %}
     Before entering the slider task, you will be asked to
     make a number of choices, which will influence whether the <span class="btn btn-primary">surf the web</span>-button will be removed from your slider task-screen in
     the following round. Having the button present on the screen may be seen as an advantage, since it allows one to substitute the task for something more
