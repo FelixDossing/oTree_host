@@ -3,8 +3,11 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 
-class WaitForStart(WaitPage):
+class WaitForArrival(WaitPage):
     wait_for_all_groups = True
+
+class WaitForStart(Page):
+    pass
 
 class Instructions(Page):
     def is_displayed(self):
@@ -112,6 +115,7 @@ class TextFeedback(Page):
 
 
 page_sequence = [
+    WaitForArrival,
     WaitForStart,
     Instructions,
     TrialPrep,

@@ -5,8 +5,12 @@ from .models import Constants
 from otree.api import safe_json
 
 
-class WaitForStart(WaitPage):
+
+class WaitForArrival(WaitPage):
     wait_for_all_groups = True
+
+class WaitForStart(Page):
+    pass
 
 class Instructions(Page):
 
@@ -432,7 +436,7 @@ class Finished(Page):
 
 
 page_sequence = [
-    WaitForStart,
+    WaitForArrival,
     Instructions,
     Test,
     TestWaitPage,
