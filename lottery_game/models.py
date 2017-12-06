@@ -31,7 +31,7 @@ class Constants(BaseConstants):
     point_conversion = 0.2
 
     # Conversion rate: 1 point = 4 DKK
-    endowment = c(50)
+    endowment = c(80)
 
     minutes_ownChoice = 5
 

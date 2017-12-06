@@ -13,7 +13,7 @@
       Thank you for participating in our experiment!<br><br>
       In the following experiment, you will have the chance to earn money through effort in a simple task, which we call <strong>the slider task</strong>. Apart from working in
       the slider task, you will make choices, which affect both yourself and other participants. There are {{ Constants.num_rounds }} rounds in this experiment and you will have the chance to work on the
-      slider task for 15 minutes each round.<br><br>
+      slider task for {{ Constants.worktime_minutes }} minutes each round.<br><br>
       Please read the following instructions carefully and make sure that you understand everything before you proceed. Similar instructions are supplied in paper on your desk. If something is
       unclear, please raise your hand to receive help from one of the lab assistants.<br><br>
     </p>
@@ -29,14 +29,14 @@
       earn the participant any points yet.<br><br>
       Each slider is called a “task” and moving a slider from 0 to 50 is called “completing a task”. There are 48 tasks on the slider task screen. However, this does not mean that you can only complete
       48 tasks per round. When all of the sliders have been set to 50, the sliders will simply reset to 0 and you will thus be able to continue completing tasks and earn more points.<br><br>
-      After reading these instructions, you will get to try the task for 3 minutes in a trial. The points that you earn in the trial will not be added to your total payoff. The point of the trail
+      After reading these instructions, you will get to try the task for {{ constants.trial_minutes }} minutes in a trial. The points that you earn in the trial will not be added to your total payoff. The point of the trail
       is simply to allow you to become acquainted with the slider task.<br><br>
     </p>
     <h3>Surfing the web</h3>
     <p>
-      As mentioned above, you will have the opportunity to work for 15 minutes on the slider task in {{ Constants.num_rounds }} rounds. It is not possible to continue in the experiment before the time has passed. The slider task
+      As mentioned above, you will have the opportunity to work for {{ Constants.worktime_minutes }} minutes on the slider task in {{ Constants.num_rounds }} rounds. It is not possible to continue in the experiment before the time has passed. The slider task
       screen may however feature a button with the words “Surf the web” on it. If this is the case, then you may choose to click this button and browse the internet instead of earning points through
-      the slider task. Completing tasks earns money but completing tasks for 15 minutes may be boring. The “Surf the web”-button offers an opportunity to substitute the task for something more entertaining.
+      the slider task. Completing tasks earns money but completing tasks for {{ Constants.worktime_minutes }} minutes may be boring. The “Surf the web”-button offers an opportunity to substitute the task for something more entertaining.
       You can see what the slider task looks like when the button is present in the picture below.
     </p>
     <img src="{% static 'pat_effort/sliderscreenwithbutton.png' %}" id="picture"><br>
