@@ -104,7 +104,7 @@ SESSION_CONFIGS = [
          'name': 'pat_experiments',
          'display_name': 'Pat Experiments',
          'num_demo_participants': 8,
-         'app_sequence': ['lottery_game','pat_effort','survey'],
+         'app_sequence': ['lottery_game','survey'],
          'DKK_per_point': 0.20,
          'number_of_rounds_lottery': 3,
          'doc': """
