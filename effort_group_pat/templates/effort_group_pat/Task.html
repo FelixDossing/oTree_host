@@ -1,0 +1,711 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+
+{% block content %}
+
+{{ form.tasks_completed.errors }}
+{{ form.play_choice1.errors }}
+{{ form.play_choice2.errors }}
+{{ form.play_choice3.errors }}
+{{ form.play_choice4.errors }}
+{{ form.play_choice5.errors }}
+{{ form.play_choice6.errors }}
+
+<input type="hidden" name="tasksCompleted" value="0" id="tasks_completed"/>
+<input type="hidden" name="play_choice1" value="0" id="play_choice1"/>
+<input type="hidden" name="play_choice2" value="0" id="play_choice2"/>
+<input type="hidden" name="play_choice3" value="0" id="play_choice3"/>
+<input type="hidden" name="play_choice4" value="0" id="play_choice4"/>
+<input type="hidden" name="play_choice5" value="0" id="play_choice5"/>
+<input type="hidden" name="play_choice6" value="0" id="play_choice6"/>
+
+<div id="slider_task_div">
+  <div id="slider_div">
+    <input type='range' min='0' max='100' step='1' onkeydown='return false;' class='slider slider' id='slider'>
+    <label id="value" class="value">0</label><br>
+  </div>
+  <div id="question_box" class="boxFrame">
+    <p class="blockText">You may now choose whether you wish to continue with the task or play tetris for the next <strong>{{ Constants.temptation_interval_minutes }} minutes</strong></p>
+    <button type="button" class="btn btn-primary" id="playButton">Play tetris</button><br>
+    <button type="button" class="btn btn-primary" id="continueButton">Continue with the task</button>
+  </div>
+  <div id="tetris_box" class="boxFrame">
+    <div id="tetris_frame">
+    </div>
+    <p class="score_text">SCORE<br><span id="score">0</span></p>
+  </div>
+</div>
+
+
+{% block styles %}
+  <style type="text/css">
+
+  .score_text {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+
+  .btn {
+    font-size: 1.2em;
+    margin-top: 70px;
+  }
+  #tetris_box {
+    /*display: none;*/
+    padding-top: 50px;
+  }
+  #tetris_frame {
+    /*display:none;*/
+    width: 330px;
+    height: 650px;
+    border-style: groove;
+    border-width: 5px;
+    margin: 0 auto;
+    padding: 0;
+    text-align:left;
+    background-color:grey;
+    line-height: 0;
+  }
+  .tetrisGrid {
+    background-color: lightgrey;
+    margin-right: 1px;
+    margin-left: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    width: 30px;
+    height: 30px;
+    display:inline-block;
+  }
+
+
+  #question_box {
+    display: none;
+  }
+  .boxFrame {
+    border-radius: 15px;
+    width: 90%;
+    margin-left: 5%;
+    height: 800px;
+    background-color: lightgrey;
+    text-align: center;
+  }
+  .blockText {
+    font-size: 1.5em;
+    padding-top: 10%;
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  #slider_task_div {
+    width: 100%;
+    height: 900px;
+  }
+  #slider {
+    width: 250px;
+    margin-left: 35%;
+    margin-top: 100px;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 7px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: teal;
+    margin-top: -4px;
+  }
+  .value {
+    font-size: 1.4em;
+  }
+  #unit19-0 {
+    background
+  }
+
+  </style>
+
+{% endblock %}
+
+{% block script %}
+
+  <script>
+
+  var start_tetris = true;
+
+  var periode = 0;
+
+  $('#slider_div').hide();
+
+  window.setInterval(function() {
+    var time = $('.otree-timer__time-left').text();
+    if (time.substr(0,2) == "29") {
+      if (periode != 1) {
+        $('#slider_div').show();
+      }
+      periode = 1;
+    }
+    else if (time.substr(0,2) == "27") {
+      if (periode != 2) {
+        $('#question_box').show();
+      }
+      periode = 2;
+    }
+    else if (time.substr(0,2) == "25") {
+      if (periode != 3) {
+        $('#slider_div').show();
+      }
+      periode = 3;
+    }
+    else if (time.substr(0,2) == "23") {
+      if (periode != 4) {
+        $('#slider_div').show();
+      }
+      periode = 4;
+    }
+    else if (time.substr(0,2) == "21") {
+      if (periode != 5) {
+        $('#slider_div').show();
+      }
+      periode = 5;
+    }
+    else if (time.substr(0,2) == "19") {
+      if (periode != 6) {
+        $('#slider_div').show();
+      }
+      periode = 6;
+    }
+  },1000);
+
+  $('.slider').val(0);
+
+  $(document).on('input', '#slider', function() {
+    $('#value'+this.id.substring(6,10)).text($(this).val());
+
+    if ($(this).val() == 50) {
+      $('#slider_div').hide();
+      $('#tasks_completed').val( parseInt($('#tasks_completed').val())+1 );
+      $('#slider').val(0);
+    }
+  })
+
+  $('#continueButton').click(function() {
+    $('#question_box').fadeOut('fast');
+  });
+  $('#playButton').click(function() {
+    $('#question_box').hide();
+    $('#tetris_box').show();
+  })
+
+  if (start_tetris) {
+    $('#tetris_frame').show(1000);
+    runTetris(300,1);
+  }
+
+  function runTetris(speed,score_break) {
+
+    for (i=0; i<20; i++) {
+      for (j=0; j<10; j++) {
+        $('#tetris_frame').append('<div class="tetrisGrid" id="unit'+i+'-'+j+'"></div>')
+      }
+    }
+
+    var landed = [[0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0],
+                 [0,0,0,0,0,0,0,0,0,0]]
+
+    var shapes = ['J','L','I','O','S','T','Z'];
+    var shape = shapes[Math.floor(Math.random() * shapes.length)];
+    var jShapes = [[[0,1,0,0],[0,1,0,0],[1,1,0,0],[0,0,0,0]],
+                  [[1,0,0,0],[1,1,1,0],[0,0,0,0],[0,0,0,0]],
+                  [[0,1,1,0],[0,1,0,0],[0,1,0,0],[0,0,0,0]],
+                  [[0,0,0,0],[1,1,1,0],[0,0,1,0],[0,0,0,0]]]
+
+    var lShapes = [[[0,2,0,0],[0,2,0,0],[0,2,2,0],[0,0,0,0]],
+                  [[0,0,0,0],[2,2,2,0],[2,0,0,0],[0,0,0,0]],
+                  [[2,2,0,0],[0,2,0,0],[0,2,0,0],[0,0,0,0]],
+                  [[0,0,2,0],[2,2,2,0],[0,0,0,0],[0,0,0,0]]]
+
+    var iShapes = [[[0,3,0,0],[0,3,0,0],[0,3,0,0],[0,3,0,0]],
+                  [[0,0,0,0],[3,3,3,3],[0,0,0,0],[0,0,0,0]],
+                  [[0,0,3,0],[0,0,3,0],[0,0,3,0],[0,0,3,0]],
+                  [[0,0,0,0],[0,0,0,0],[3,3,3,3],[0,0,0,0]]]
+
+    var oShapes = [[[4,4,0,0],[4,4,0,0],[0,0,0,0],[0,0,0,0]],
+                  [[4,4,0,0],[4,4,0,0],[0,0,0,0],[0,0,0,0]],
+                  [[4,4,0,0],[4,4,0,0],[0,0,0,0],[0,0,0,0]],
+                   [[4,4,0,0],[4,4,0,0],[0,0,0,0],[0,0,0,0]]]
+
+    var sShapes = [[[0,0,0,0],[0,5,5,0],[5,5,0,0],[0,0,0,0]],
+                  [[5,0,0,0],[5,5,0,0],[0,5,0,0],[0,0,0,0]],
+                  [[0,5,5,0],[5,5,0,0],[0,0,0,0],[0,0,0,0]],
+                   [[0,5,0,0],[0,5,5,0],[0,0,5,0],[0,0,0,0]]]
+
+    var tShapes = [[[0,0,0,0],[6,6,6,0],[0,6,0,0],[0,0,0,0]],
+                   [[0,6,0,0],[6,6,0,0],[0,6,0,0],[0,0,0,0]],
+                   [[0,6,0,0],[6,6,6,0],[0,0,0,0],[0,0,0,0]],
+                    [[0,6,0,0],[0,6,6,0],[0,6,0,0],[0,0,0,0]]]
+
+    var zShapes = [[[0,0,0,0],[7,7,0,0],[0,7,7,0],[0,0,0,0]],
+                   [[0,7,0,0],[7,7,0,0],[7,0,0,0],[0,0,0,0]],
+                   [[7,7,0,0],[0,7,7,0],[0,0,0,0],[0,0,0,0]],
+                    [[0,0,7,0],[0,7,7,0],[0,7,0,0],[0,0,0,0]]]
+
+
+    var shape_number = Math.floor(Math.random() * 4)
+    var active_shape;
+    var potential_shape;
+    var potential_shape_number;
+
+    if (shape == 'J') {
+      active_shape = jShapes[shape_number];
+    }
+    else if (shape == 'L') {
+      active_shape = lShapes[shape_number];
+    }
+    else if (shape == 'I') {
+      active_shape = iShapes[shape_number];
+    }
+    else if (shape == 'O') {
+      active_shape = oShapes[shape_number];
+    }
+    else if (shape == 'S') {
+      active_shape = sShapes[shape_number];
+    }
+    else if (shape == 'T') {
+      active_shape = tShapes[shape_number];
+    }
+    else if (shape == 'Z') {
+      active_shape = zShapes[shape_number];
+    }
+
+    active_shape_topLeft = {row:0, col:4}
+
+    //Draw landed ones
+    for (row=0; row< 20; row++) {
+      for (col=0; col< 10; col++) {
+        if (landed[row][col] == 1) {
+          var color = landed[row][col]
+          switch(color) {
+            case 1:
+              $('#unit'+row+'-'+col).css('background-color','cyan');
+              break;
+              case 2:
+                $('#unit'+row+'-'+col).css('background-color','yellow');
+                break;
+              case 3:
+                $('#unit'+row+'-'+col).css('background-color','orange');
+                break;
+              case 4:
+                $('#unit'+row+'-'+col).css('background-color','#ff00bf');
+                break;
+              case 5:
+                $('#unit'+row+'-'+col).css('background-color','green');
+                break;
+              case 6:
+                $('#unit'+row+'-'+col).css('background-color','blue');
+                break;
+              case 7:
+                $('#unit'+row+'-'+col).css('background-color','red');
+                break;
+          }
+        }
+      }
+    }
+
+    //Draw active shape
+    for (row=0; row<active_shape.length; row++) {
+      for (col=0; col<active_shape[row].length; col++) {
+        if(active_shape[row][col] != 0) {
+          var color = active_shape[row][col];
+          switch(color) {
+            case 1:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'cyan');
+              break;
+            case 2:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'yellow');
+              break;
+            case 3:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'orange');
+              break;
+            case 4:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', '#ff00bf');
+              break;
+            case 5:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'green');
+              break;
+            case 6:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'blue');
+              break;
+            case 7:
+              $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'red');
+              break;
+          }
+        }
+      }
+    }
+
+    function drawGame() {
+      //Color fill
+      for (row=0; row < 20; row++) {
+        for (col=0; col<10; col++) {
+          $('#unit'+row+'-'+col).css('background-color', 'lightgrey');
+        }
+      }
+
+      //Draw landed ones
+      for (row=0; row< 20; row++) {
+        for (col=0; col< 10; col++) {
+          if (landed[row][col] != 0) {
+            var color = landed[row][col]
+            switch(color) {
+              case 1:
+                $('#unit'+row+'-'+col).css('background-color','cyan');
+                break;
+                case 2:
+                  $('#unit'+row+'-'+col).css('background-color','yellow');
+                  break;
+                case 3:
+                  $('#unit'+row+'-'+col).css('background-color','orange');
+                  break;
+                case 4:
+                  $('#unit'+row+'-'+col).css('background-color','#ff00bf');
+                  break;
+                case 5:
+                  $('#unit'+row+'-'+col).css('background-color','green');
+                  break;
+                case 6:
+                  $('#unit'+row+'-'+col).css('background-color','blue');
+                  break;
+                case 7:
+                  $('#unit'+row+'-'+col).css('background-color','red');
+                  break;
+            }
+          }
+        }
+      }
+
+      //Draw active shape
+      for (row=0; row<active_shape.length; row++) {
+        for (col=0; col<active_shape[row].length; col++) {
+          if(active_shape[row][col] != 0) {
+            var color = active_shape[row][col];
+            switch(color) {
+              case 1:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'cyan');
+                break;
+              case 2:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'yellow');
+                break;
+              case 3:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'orange');
+                break;
+              case 4:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', '#ff00bf');
+                break;
+              case 5:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'green');
+                break;
+              case 6:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'blue');
+                break;
+              case 7:
+                $('#unit'+(row+active_shape_topLeft.row)+'-'+(col+active_shape_topLeft.col)).css('background-color', 'red');
+                break;
+            }
+          }
+        }
+      }
+    }
+
+    function checkMove(i) {
+      active_shape_potentialTopLeft = {row: active_shape_topLeft.row + i, col: active_shape_topLeft.col};
+      var possible = true;
+      for (row = 0; row < active_shape.length; row++) {
+        for (col = 0; col < active_shape[row].length; col++) {
+          if (active_shape[row][col] != 0) {
+            //Check walls
+            if(col + active_shape_topLeft.col + i < 0 || col + active_shape_topLeft.col + i >= landed[0].length) {
+              possible = false;
+            }
+            // Chock occupied spots
+            if(landed[row + active_shape_topLeft.row][col + active_shape_topLeft.col + i] != 0) {
+              possible = false;
+            }
+          }
+        }
+      }
+      return possible;
+    }
+
+    $(document).keydown(function(e) {
+      if (e.keyCode == 38) {
+        e.preventDefault();
+        //Rotation
+        //Check if okay
+        var okay = true;
+
+        if (shape_number < 3) {
+          potential_shape_number = shape_number + 1;
+        }
+        else {
+          potential_shape_number = 0;
+        }
+        switch(shape) {
+          case 'J':
+            potential_shape = jShapes[potential_shape_number];
+            break;
+          case 'I':
+            potential_shape = iShapes[potential_shape_number];
+            break;
+          case 'L':
+            potential_shape = lShapes[potential_shape_number];
+            break;
+          case 'O':
+            potential_shape = oShapes[potential_shape_number];
+            break;
+          case 'S':
+            potential_shape = sShapes[potential_shape_number];
+            break;
+          case 'T':
+            potential_shape = tShapes[potential_shape_number];
+            break;
+          case 'Z':
+            potential_shape = zShapes[potential_shape_number];
+        }
+
+        for (var row = 0; row < potential_shape.length; row++) {
+          for (var col = 0; col < potential_shape[row].length; col++) {
+            if (potential_shape[row][col] != 0) {
+              if (col + active_shape_topLeft.col < 0) {
+                okay = false;
+              }
+              if (col + active_shape_topLeft.col >= landed[0].length) {
+                okay = false;
+              }
+              if (row + active_shape_topLeft.row >= landed.length) {
+                okay = false;
+              }
+              if (landed[row + active_shape_topLeft.row][col + active_shape_topLeft.col] != 0) {
+                okay = false;
+              }
+            }
+          }
+        }
+
+        if (okay) {
+          if (shape_number < 3) {
+            shape_number += 1;
+          }
+          else {
+            shape_number = 0;
+          }
+          switch(shape) {
+            case 'J':
+              active_shape = jShapes[shape_number];
+              break;
+            case 'I':
+              active_shape = iShapes[shape_number];
+              break;
+            case 'L':
+              active_shape = lShapes[shape_number];
+              break;
+            case 'O':
+              active_shape = oShapes[shape_number];
+              break;
+            case 'S':
+              active_shape = sShapes[shape_number];
+              break;
+            case 'T':
+              active_shape = tShapes[shape_number];
+              break;
+            case 'Z':
+              active_shape = zShapes[shape_number];
+          }
+        }
+      drawGame();
+      }
+      else if (e.keyCode == 40) {
+        e.preventDefault();
+        checkMoveDown();
+
+      }
+      else if (e.keyCode == 37) {
+        //check if possible
+        if (checkMove(-1)) {
+          active_shape_topLeft.col -= 1;
+
+          //Color fill
+          for (row=0; row < 20; row++) {
+            for (col=0; col<10; col++) {
+              $('#unit'+row+'-'+col).css('background-color', 'lightgrey');
+            }
+          }
+        drawGame();
+        }
+      }
+      else if (e.keyCode == 39) {
+        if (checkMove(1)) {
+          active_shape_topLeft.col += 1;
+
+          for (row=0; row < 20; row++) {
+            for (col=0; col<10; col++) {
+              $('#unit'+row+'-'+col).css('background-color', 'lightgrey');
+            }
+          }
+        drawGame();
+        }
+      }
+    });
+
+    function checkMoveDown() {
+      active_shape_potentialTopLeft = {row: active_shape_topLeft.row + 1, col: active_shape_topLeft.col};
+
+      possible = true;
+      //Check whether we land on other blocks
+      for (row = 0; row < active_shape.length; row++) {
+        for (col = 0; col < active_shape[row].length; col++) {
+          if (active_shape[row][col] != 0) {
+            if (row + active_shape_potentialTopLeft.row >= landed.length) {
+              possible = false;
+            }
+            else if(landed[row + active_shape_potentialTopLeft.row][col + active_shape_potentialTopLeft.col] != 0) {
+              possible = false;
+            }
+          }
+        }
+      }
+      if (possible) {
+        active_shape_topLeft = active_shape_potentialTopLeft;
+      }
+      else {
+        // Make part of laneded
+        for (row = 0; row < active_shape.length; row++) {
+          for (col = 0; col < active_shape[row].length; col++) {
+            if (active_shape[row][col] != 0) {
+              landed[row + active_shape_topLeft.row][col + active_shape_topLeft.col] = active_shape[row][col];
+            }
+          }
+        }
+
+        //check if dead
+        for (i=0; i<landed[0].length; i++) {
+          var dead = false;
+          if (landed[0][i] != 0) {
+            dead = true;
+          }
+          if (dead) {
+            $('#score').text(0);
+            landed = [[0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0],
+                         [0,0,0,0,0,0,0,0,0,0]]
+
+          }
+        }
+
+
+        //Send new
+        active_shape_topLeft = {row:0, col: 4};
+        shape = shapes[Math.floor(Math.random() * shapes.length)];
+        var shape_number = Math.floor(Math.random() * 4)
+        switch(shape) {
+          case 'J':
+            active_shape = jShapes[shape_number];
+            break;
+          case 'I':
+            active_shape = iShapes[shape_number];
+            break;
+          case 'L':
+            active_shape = lShapes[shape_number];
+            break;
+          case 'O':
+            active_shape = oShapes[shape_number];
+            break;
+          case 'S':
+            active_shape = sShapes[shape_number];
+            break;
+          case 'T':
+            active_shape = tShapes[shape_number];
+            break;
+          case 'Z':
+            active_shape = zShapes[shape_number];
+        }
+
+        //Remove row if needed
+        for (row=0; row < landed.length; row++) {
+          count = 0;
+          for (j=0; j<10; j++) {
+            if (landed[row][j] != 0) {
+              count += 1;
+            }
+          }
+          if (count == 10) {
+            var new_landed = landed.slice(0,landed.length);
+            for (i=1; i<=row; i++) {
+              new_landed[i] = landed[i-1];
+            }
+            landed = new_landed;
+            $('#score').text(parseInt($('#score').text())+1);
+          }
+        }
+      }
+
+    drawGame();
+
+    }
+
+    setInterval(function() {
+      checkMoveDown();
+
+  },speed);
+  };
+
+  </script>
+
+{% endblock %}
+
+
+{% endblock %}

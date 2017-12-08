@@ -113,6 +113,13 @@ SESSION_CONFIGS = [
          """
      },
      {
+         'name': 'effort_group_pat',
+         'display_name': 'Effort Group Pat',
+         'num_demo_participants': 4,
+         'app_sequence': ['effort_group_pat'],
+         'DKK_per_point': 0.20,
+     },
+     {
          'name': 'pat_effort',
          'display_name': 'Real effort (Pat exps)',
          'num_demo_participants': 2,

@@ -1,0 +1,20 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Please elaborate...
+{% endblock %}
+
+{% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+<p>In this experiment you made choices, which affected the probability of the <span class="btn btn-primary">surf the web</span>-button being present on your slider task screen. You also
+  made choices, which affected the probability that another participant would be allowed to remove the button from your screen. Please elaborate on why you made the choices that you did.
+</p>
+</div>
+
+{% formfield player.textFeedback with label="" %}
+
+<p>Please wait for the time to run out</p>
+
+{% endblock %}
