@@ -14,7 +14,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'effort_group_pat'
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 3
 
     points_per_task = c(50)
     point_conversion = 0.2
