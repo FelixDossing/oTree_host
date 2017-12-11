@@ -1,0 +1,20 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Please elaborate...
+{% endblock %}
+
+{% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+<p>In this experiment you made choices, which affected whether the <span class="btn btn-primary">Play Tetris</span>-button was present on your choice screen and perhaps in some cases whether the
+  button was present on the screen of other participants. Please elaborate on why you made the choices that you did.
+</p>
+</div>
+
+{% formfield player.textFeedback with label="" %}
+
+<p>Please wait for the time to run out</p>
+
+{% endblock %}

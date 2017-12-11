@@ -2,10 +2,19 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Choice Page 1
+    Private commit choice
 {% endblock %}
 
 {% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+  <p>
+    On this screen you are asked to choose whether you wish to remove the <span class="btn btn-primary">Play Tetris</span>-button from your own choice screen in this round, if you are
+    not randomly placed in the group.
+  </p>
+</div>
+
+{% formfield player.remove_option_own with label="I wish to remove the button from my choice screen" %}
 
 {% next_button %}
 

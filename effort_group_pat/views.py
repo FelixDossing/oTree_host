@@ -28,41 +28,51 @@ class TrialPage(Page):
 
 class CommitChoiceFirst(Page):
     def is_displayed(self):
-        return commit_choice_first
+        return self.player.commit_choice_first
 
     form_model = models.Player
     form_fields = ['remove_option_own']
 
-class MemberShipChoice(Page):
+class MembershipChoice(Page):
 
     form_model = models.Player
     form_fields = ['leave_group_choice']
 
 class CommitChoiceSecond(Page):
     def is_displayed(self):
-        return commit_choice_first == False
+        return self.player.commit_choice_first == False
 
     form_model = models.Player
     form_fields = ['remove_option_own']
 
 class Vote(Page):
+
+    def is_displayed(self):
+        return self.player.placed_in_group == True and self.player.leave_group_choice == False
+
     form_model = models.Player
     form_fields = ['vote_to_remove']
+
+class VoteWait(WaitPage):
+    wait_for_all_groups = True
 
 class GroupBelief(Page):
     form_model = models.Player
     form_fields = ['group_decision_belief']
 
-class TaskPrep(Page):
+    def before_next_page(self):
+        self.subsession.determineVote()
+        self.player.setOption()
 
-    timeout_seconds = 5
+class ImplementationFeedback(Page):
+    pass
 
 class Task(Page):
 
-    # timeout_seconds = Constants.worktime_minutes * 60
+    timeout_seconds = Constants.worktime_minutes * 60
 
     form_model = models.Player
-    form_fields = ['tasks_completed','play_choice1','play_choice2','play_choice3','play_choice4','play_choice5','play_choice6']
+    form_fields = ['tasks_completed','play_choice1','play_choice2','play_choice3','play_choice4','play_choice5']
 
 class Happiness(Page):
 
@@ -76,6 +86,8 @@ class TextFeedback(Page):
     form_model = models.Player
     form_fields = ['text_feedback']
 
+    timeout_seconds = 180
+
 class ResultsWaitPage(WaitPage):
 
     def after_all_players_arrive(self):
@@ -88,17 +100,17 @@ class Results(Page):
 
 
 page_sequence = [
-    # WaitForArrival,
-    # WaitForStart,
-    # Instructions,
-    # TrialPrep,
-    # TrialPage,
-    # CommitChoiceFirst,
-    # MembershipChoice,
-    # CommitChoiceSecond,
-    # Vote,
-    # GroupBelief,
-    # TaskPrep,
+    WaitForArrival,
+    WaitForStart,
+    Instructions,
+    TrialPage,
+    CommitChoiceFirst,
+    MembershipChoice,
+    CommitChoiceSecond,
+    Vote,
+    VoteWait,
+    GroupBelief,
+    ImplementationFeedback,
     Task,
     Happiness,
     TextFeedback,

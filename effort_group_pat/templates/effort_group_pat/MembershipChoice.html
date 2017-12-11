@@ -2,10 +2,19 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Choice Page 1
+    Group membership choice
 {% endblock %}
 
 {% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+  <p>
+    On this screen you are asked to choose whether you wish to leave the group if you are placed in the group. The group will have a vote on whether to remove the <span class="btn btn-primary">Play Tetris</span>-button
+    from the screen of every group member. If you leave the group, the group decision will not affect you. Note that you will not be able to remove the from your own screen if you leave the group.
+  </p>
+</div>
+
+{% formfield player.leave_group_choice with label="I wish to leave the group" %}
 
 {% next_button %}
 

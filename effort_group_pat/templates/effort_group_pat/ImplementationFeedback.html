@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Implementation
+{% endblock %}
+
+
+{% block content %}
+<div id="instructions_div" class="instructions well well-1g">
+<p>
+  {% if player.placed_in_group == True %}You were placed in the group and chose {% if player.leave_group_choice == False %}not {% endif %} to leave it.<br>
+  {% if player.placed_in_group == True and player.leave_group_choice == False %}The group decided {% if session.group_voted_remove == False %}<strong>not </strong>{% endif %} to remove the  <span class="btn btn-primary">Play Tetris</span>-button
+  from the screen of every group member.{% endif %}
+  {% else %}
+  You were not placed in the group and chose {% if player.remove_option_own == False %}not {% endif %}to remove the <span class="btn btn-primary">Play Tetris</span>-button from your screen.<br>
+  {% endif %}
+  {% if player.placed_in_group == True %}
+  The <span class="btn btn-primary">Play Tetris</span>-button was {% if player.option_available == True %}<strong>not </strong>{% endif %}removed from your choice screen.
+  {% endif %}
+</p>
+</div>
+
+
+    {% next_button %}
+{% endblock %}

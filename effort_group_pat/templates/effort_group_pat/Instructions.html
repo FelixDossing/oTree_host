@@ -11,67 +11,68 @@
     <h3>Introduction</h3>
     <p>
       Thank you for participating in our experiment!<br><br>
-      In the following experiment, you will have the chance to earn money through effort in a simple task, which we call <strong>the slider task</strong>. Apart from working in
-      the slider task, you will make choices, which affect both yourself and other participants. There are {{ Constants.num_rounds }} rounds in this experiment and you will have the chance to work on the
-      slider task for {{ Constants.worktime_minutes }} minutes each round.<br><br>
+      In the following experiment, you will have the chance to earn money through effort in a simple task, which we call the slider task. Apart from working in the slider task,
+      you will make choices, which affect both yourself and other participants. There are three rounds in this experiment and you will have the chance to work on the slider task
+      for 15 minutes each round.<br><br>
       Please read the following instructions carefully and make sure that you understand everything before you proceed. Similar instructions are supplied in paper on your desk. If something is
       unclear, please raise your hand to receive help from one of the lab assistants.<br><br>
     </p>
 
     <h3>The slider task</h3>
     <p>
-      This experiment revolves around the slider task, where you can earn points by moving sliders. The point of the slider task is to move sliders from 0 to 50. Sliders are initially
-      set at 0 and moved to 50 by clicking and dragging with the mouse. You will earn 1 point for each slider you place at 50. You can see what the slider task looks like in the picture below.
+      This experiment revolves around the slider task, where you can earn points by moving a slider such as the one below. The slider task is divided into 5 periods
+      of equal length (3 minutes). Each period a slider will appear on the screen at a random time and you then have 30 seconds to move the slider from 0 to 50. If you complete this
+      task then you will get {{ Constants.points_per_task }}. This means that you each round have 5 periods where you can earn {{ Constants.points_per_task }}. Once the slider task is completed, the screen will go back to being white
+      until the next period.
     </p>
-    <img src="{% static 'pat_effort/sliderscreen.png' %}" id="picture"><br>
+    <div id="slider_div">
+      <input type='range' min='0' max='100' step='1' onkeydown='return false;' class='slider slider' id='slider'>
+      <label id="value" class="value">0</label><br>
+    </div>
+
     <p>
-      In the picture above, the participant has moved the first two sliders to 50 and has therefore earned 2 points. The participant has only moved the third slider to 46 and it does therefore not
-      earn the participant any points yet.<br><br>
-      Each slider is called a “task” and moving a slider from 0 to 50 is called “completing a task”. There are 48 tasks on the slider task screen. However, this does not mean that you can only complete
-      48 tasks per round. When all of the sliders have been set to 50, the sliders will simply reset to 0 and you will thus be able to continue completing tasks and earn more points.<br><br>
-      After reading these instructions, you will get to try the task for {{ constants.trial_minutes }} minutes in a trial. The points that you earn in the trial will not be added to your total payoff. The point of the trail
-      is simply to allow you to become acquainted with the slider task.<br><br>
+      The slider task earns you points, but may be boring. Each period, you will therefore be asked to choose whether you wish to continue with the task, or whether you wish to play the game of Tetris
+      (the game is explained later in the instructions). This choice is shown in the picture below.
     </p>
-    <h3>Surfing the web</h3>
+    <img src="{% static 'effort_group_pat/choice_with_tetris.png' %}" class="picture"}>
     <p>
-      As mentioned above, you will have the opportunity to work for {{ Constants.worktime_minutes }} minutes on the slider task in {{ Constants.num_rounds }} rounds. It is not possible to continue in the experiment before the time has passed. The slider task
-      screen may however feature a button with the words “Surf the web” on it. If this is the case, then you may choose to click this button and browse the internet instead of earning points through
-      the slider task. Completing tasks earns money but completing tasks for {{ Constants.worktime_minutes }} minutes may be boring. The “Surf the web”-button offers an opportunity to substitute the task for something more entertaining.
-      You can see what the slider task looks like when the button is present in the picture below.
-    </p>
-    <img src="{% static 'pat_effort/sliderscreenwithbutton.png' %}" id="picture"><br>
-    <p>
-      If you decide to press the “Surf the web”-button, then the slider task will close down and a new screen will open up, where you can use the internet. This means that you will not be able to complete any
-      more tasks in that round, if you choose to press the button. The points that you have earned before pressing the button will still count.<br><br>
+      If you choose to press the “Continue with the task”-button, then you simply continue with the slider task. If you instead press the “Play Tetris”-button, then you will instead
+      get to play Tetris in the 3 minutes the period takes. You will not be able to complete the slider task in the period where you play Tetris, which means that playing Tetris
+      costs you {{ Constants.points_per_task}} each period you choose to play.
     </p>
 
-    <h4>Navigating the internet</h4>
+    <h3>The commitment choice</h3>
     <p>
-      If you press the “Surf the web” button, a new screen will open up, where you can spend the remaining time browsing online. Once the time runs out, this screen will close down automatically. The screen
-      opens up on Google.com and you should use google to access the sites that you want. Therefore, if you want to visit youtube.com then you type “youtube” into the google search bar and access the site
-      through the link. If you need to go forward or backward between sites, you can use the following commands:<br><br>
-      Backward: <strong>ALT + left arrow key</strong><br>
-      Forward: <strong>ALT + right arrow key</strong><br><br>
-      Do not exit full screen mode or try to access sites through the URL.<br><br>
+      In the experiment, you will make choices that affect whether the “Play Tetris”-button will be present on the choice screen. If the button is not present, the
+      screen will look like the one in the picture below.
+    </p>
+    <img src="{% static 'effort_group_pat/choice_without_tetris.png' %}" class="picture"}>
+    <p>
+      Having the “Play Tetris”-button present may be seen as an advantage if one wishes to have the possibility of substituting the task for something more interesting. On the other hand
+      not having the button present may be seen as an advantage if one wishes to commit to carrying out the task.
     </p>
 
-    <h3>Decision screens</h3>
+    <h4>Group choice and private choice</h4>
     <p>
-      Each round will feature a number of decision screens followed by the slider task. On the decision screens you will make choices that affect whether the “Surf the web”-button will be present on your
-      own screen as well as on the screen of other participants. You make eight choices concerning your own slider task-screen. These are named <strong>1A, 1B, 1C, 1D, 2A, 2B, 2C, 2D</strong>. Each of these choices is
-      implemented with an equal probability, which means there is an equal probability that each choice will have consequences for you. It is not necessary to think too much about this – it is simply in
-      your interest to answer in accordance with your preferences/choose the options that you prefer.<br><br>
-      Each participant in the experiment will be given an anonymous ID such as “Player 5”. You will be randomly partnered with another participant in each round. Some of the choices that you make may affect
-      your partner and some of the choices that your partner makes, may affect you. You will not interact with any of the other participants for more than one round.<br><br>
+      Each round, every participant has a 50 percent chance of being placed in a group with other participants. If you are not placed in the group, then you will simply choose whether
+      you wish to have the “Play Tetris”-button present on your own screen.<br><br>
+      If you are placed in the group, then you will participate in a vote, where the group decides whether to remove the button from the screen of all group members.
+      This vote is done by simple majority vote and if an equal number of group members vote for and against, then the outcome will be randomly drawn. If you are placed
+      in the group, then you may choose to leave the group.  If you choose to leave the group, then the button will simply be present on your screen regardless of what the group decides.
     </p>
+
 
     <h3>Points and money</h3>
-    <p>
-      After the trial round, the experiment will consist of {{ Constants.num_rounds }} rounds where real money can be earned. Each completed task earns you one point and points are converted into money according to the following conversion:<br><br>
-      1 point = {{ Constants.point_conversion }} DKK<br><br>
-      This means that if you complete 1000 tasks throughout the {{ Constants.num_rounds }} rounds, then you will earn 200 DKK from this experiment.<br><br>
 
+    <p>
+      Each completed task earns you X points and points are converted into money according to the following conversion:<br><br>
+      1 point = {{ Constants.point_conversion }} DKK<br><br>
+      So for each task you complete, you earn {{ Constants.points_per_task }} * 0.2 = 10 DKK.<br><br>
     </p>
+
+    <h3>Tetris</h3>
+    The aim in the game of Tetris is to move and rotate the falling blocks to create one or more horizontal lines with ten units. If you manage to do this, then you will earn game points. Please note, that game points will not have any effect in you payoff in the experiment. You move the blocks by using the left and right arrow keys and you rotate the blocks by placing the up arrow key. Pressing the down arrow key will speed up the decent of the block. When you press the “Next button”, you will get to try the game for {{ Constants.trial_minutes }} minutes.
+    <img src="{% static 'effort_group_pat/tetris.png' %}" class="picture">
 
     <h3>Ready to begin?</h3>
     <p>
@@ -87,14 +88,62 @@
 
 <style type="text/css">
 
-#picture {
+.picture {
   padding-top: 20px;
   padding-bottom: 60px;
   margin-left: 10%;
   width: 80%;
 }
+#slider_task_div {
+  width: 100%;
+  height: 900px;
+}
+#slider {
+  width: 250px;
+  margin-left: 35%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 7px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: teal;
+  margin-top: -4px;
+}
+.value {
+  font-size: 1.4em;
+}
+
 
 </style>
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+$('#value').text(0);
+$('#slider').val(0);
+$(document).on('input', '#slider', function() {
+  $('#value').text($(this).val());
+});
+
+</script>
+
 
 {% endblock %}
 

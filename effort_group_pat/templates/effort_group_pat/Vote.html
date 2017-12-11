@@ -2,10 +2,18 @@
 {% load staticfiles otree %}
 
 {% block title %}
-    Choice Page 1
+    Group commitment vote
 {% endblock %}
 
 {% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+  <p>
+    You have been placed in the group and have not chosen to leave. You will therefore now be asked to vote on whether you think the <<span class="btn btn-primary">Play Tetris</span>-button
+    shoud be removed from the choice screen all members of the group.
+  </p>
+</div>
+{% formfield player.vote_to_remove with label="I vote to remove the button from the choice screen of all group members" %}
 
 {% next_button %}
 

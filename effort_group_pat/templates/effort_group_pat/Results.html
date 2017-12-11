@@ -1,13 +1,34 @@
 {% extends "global/Page.html" %}
 {% load staticfiles otree %}
 
+
+
 {% block title %}
-    Page title
+    Results
 {% endblock %}
 
 {% block content %}
 
+
+<table class="table">
+  <tr>
+    <th>Round</th>
+    <th>Tasks completed</th>
+    <th>Earnings</th>
+  </tr>
+  {% for p in player.in_all_rounds %}
+  <tr>
+    <td>{{ p.round_number }}</td>
+    <td>
+      {{ p.tasks_completed }}
+    </td>
+    <td>
+      {{ p.payoff }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+
     {% next_button %}
 {% endblock %}
-
-

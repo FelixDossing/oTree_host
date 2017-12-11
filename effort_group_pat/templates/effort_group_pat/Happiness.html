@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Evaluation
+{% endblock %}
+
+{% block content %}
+
+<div id="instructions_div" class="instructions well well-1g">
+  <p>
+    The <span class="btn btn-primary">Play Tetris</span>-button was {% if player.option_available == True %}not{% endif %} removed from your choice screen in this round.
+  </p>
+</div>
+{% if player.option_available == True %}
+{% formfield player.restrospective_preference with label="Do you wish that the button had been removed from the screen?" %}
+{% else %}
+{% formfield player.restrospective_preference with label="Do you wish that the button had been not removed from the screen?" %}
+{% endif %}
+
+{% next_button %}
+
+
+{% endblock %}
