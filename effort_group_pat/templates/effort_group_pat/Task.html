@@ -168,7 +168,8 @@
 
   function showQuestion() {
     working = true;
-    $('#tetris_frame').hide(1000);
+    clearInterval(questionsInterval);
+    $('#tetris_frame').hide();
     $('#tetris_box').hide();
     $('#slider_div').hide();
     $('#question_box').show();
@@ -254,7 +255,7 @@
       }
       period = 2;
     }
-    else if (time.substr(0,2) == "8") {
+    else if (time.substr(0,1) == "8") {
       if (period != 3) {
         showQuestion();
         showSlider();
@@ -720,6 +721,10 @@
       }
     },speed);
   };
+
+  window.onbeforeunload = function() {
+    return "Please do not refresh the page. Please cancel or your score may be lost."
+  }
 
   </script>
 

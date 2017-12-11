@@ -14,6 +14,9 @@ class Instructions(Page):
     def is_displayed(self):
         return self.player.round_number == 1
 
+    def vars_for_template(self):
+        return {'dkk': Constants.points_per_task_number * Constants.point_conversion}
+
 class TrialPrep(Page):
     def is_displayed(self):
         return self.player.round_number == 1
@@ -78,6 +81,9 @@ class Happiness(Page):
 
     form_model = models.Player
     form_fields = ['restrospective_preference']
+
+    def before_next_page(self):
+        self.player.setPayoffs()
 
 class TextFeedback(Page):
     def is_displayed(self):

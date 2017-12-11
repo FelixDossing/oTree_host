@@ -101,18 +101,6 @@ SESSION_CONFIG_DEFAULTS = {
 
 SESSION_CONFIGS = [
      {
-         'name': 'pat_experiments',
-         'display_name': 'Pat Experiments',
-         'num_demo_participants': 8,
-         'app_sequence': ['lottery_game','survey'],
-         'DKK_per_point': 0.20,
-         'number_of_rounds_lottery': 3,
-         'doc': """
-         The appropriate number of rounds depends on the number of participants. Please set the number of rounds so that it is half of the number of participants minus 2. If n is the number
-         of participants, then the number of rounds should thus be (n-2)/2.
-         """
-     },
-     {
          'name': 'pat_experiments_new',
          'display_name': 'Pat Experiments',
          'num_demo_participants': 8,

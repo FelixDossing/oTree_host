@@ -16,7 +16,8 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 3
 
-    points_per_task = c(50)
+    points_per_task = c(100)
+    points_per_task_number = 100
     point_conversion = 0.2
 
     worktime_minutes = 15
