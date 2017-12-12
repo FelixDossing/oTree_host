@@ -80,7 +80,7 @@ class Player(BasePlayer):
             elif self.subsession.group_voted_remove == False:
                 self.option_available = True
 
-    def setPayoffs(self):
+    def setPayoff(self):
         self.payoff = c(int(self.tasks_completed)*Constants.points_per_task)
 
     placed_in_group = models.BooleanField()
@@ -91,7 +91,7 @@ class Player(BasePlayer):
     vote_to_remove = models.BooleanField()
     commit_choice_first = models.BooleanField()
 
-    tasks_completed = models.CharField()
+    tasks_completed = models.IntegerField(initial=0)
     play_choice1 = models.CharField()
     play_choice2 = models.CharField()
     play_choice3 = models.CharField()

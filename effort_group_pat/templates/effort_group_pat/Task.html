@@ -12,7 +12,7 @@
 {{ form.play_choice5.errors }}
 {{ form.play_choice6.errors }}
 
-<input type="hidden" name="tasks_completed" value="0" id="tasks_completed"/>
+<input type="hidden" name="tasks_completed" id="tasks_completed"/>
 <input type="hidden" name="play_choice1" id="play_choice1"/>
 <input type="hidden" name="play_choice2" id="play_choice2"/>
 <input type="hidden" name="play_choice3" id="play_choice3"/>
@@ -164,17 +164,19 @@
   var timing;
   var time;
   var sliderInterval;
+  var kcount;
 
 
   function showQuestion() {
     working = true;
-    clearInterval(questionsInterval);
     $('#tetris_frame').hide();
     $('#tetris_box').hide();
     $('#slider_div').hide();
     $('#question_box').show();
     $('#question_timeout').text(30);
+    kcount = 0;
     var questionsInterval = setInterval(function() {
+      kcount += 1;
       if ($('#question_timeout').text() > 0) {
         $('#question_timeout').text(parseInt($('#question_timeout').text()) - 1);
       }
@@ -182,37 +184,39 @@
         $('#question_box').hide();
         $('#play_choice'+period).val('false');
       }
+      if (kcount > 30) {
+        clearInterval(questionsInterval);
+      }
     },1000);
   }
 
   function showSlider() {
     var timing = Math.floor(Math.random()*(temptation_interval_minutes*60-60) + 30);
-    time = 0;
+    var sliderTime = 0;
 
     clearInterval(sliderInterval);
     sliderInterval = setInterval(function() {
-
-      time += 1;
-      if (time == timing && working == true) {
+      sliderTime += 1;
+      if (sliderTime == timing && working == true) {
         $('#slider').val(0);
         $('#slider_div').show();
       }
-      if (time == timing + 30 && working == true) {
+      if (sliderTime == timing + 30 && working == true) {
         $('#slider_div').hide();
         $('#slider').val(0);
-        $('#value'+this.id.substring(6,10)).text($(this).val());
+        $('#value').text($(this).val());
       }
     },1000);
   }
 
   $(document).on('input', '#slider', function() {
-    $('#value'+this.id.substring(6,10)).text($(this).val());
+    $('#value').text($(this).val());
 
     if ($(this).val() == 50) {
       $('#slider_div').hide();
       $('#tasks_completed').val(parseInt($('#tasks_completed').val())+1);
       $('#slider').val(0);
-      $('#value'+this.id.substring(6,10)).text($(this).val());
+      $('#value').text($(this).val());
     }
   })
 
@@ -221,7 +225,6 @@
   $('#playButton').click(function() {
     working = false;
     $('#play_choice'+period).val('true');
-    console.log($('#play_choice'+period).val());
 
     //Start tetris
     $('#question_box').hide();
@@ -240,7 +243,7 @@
   });
 
   window.setInterval(function() {
-    var time = $('.otree-timer__time-left').text();
+    time = $('.otree-timer__time-left').text();
     if (time.substr(0,2) == "14") {
       if (period != 1) {
         showQuestion();
@@ -722,9 +725,6 @@
     },speed);
   };
 
-  window.onbeforeunload = function() {
-    return "Please do not refresh the page. Please cancel or your score may be lost."
-  }
 
   </script>
 

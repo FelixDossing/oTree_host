@@ -8,7 +8,8 @@ class WaitForArrival(WaitPage):
     wait_for_all_groups = True
 
 class WaitForStart(Page):
-    pass
+    def is_displayed(self):
+        return self.player.round_number == 1
 
 class Instructions(Page):
     def is_displayed(self):
@@ -83,7 +84,7 @@ class Happiness(Page):
     form_fields = ['restrospective_preference']
 
     def before_next_page(self):
-        self.player.setPayoffs()
+        self.player.setPayoff()
 
 class TextFeedback(Page):
     def is_displayed(self):
