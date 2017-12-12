@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     points_per_task_number = 100
     point_conversion = 0.2
 
-    worktime_minutes = 3
+    worktime_minutes = 6
     trial_minutes = 2
     temptation_interval_minutes = 3
 
