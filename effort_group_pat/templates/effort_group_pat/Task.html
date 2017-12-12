@@ -166,6 +166,8 @@
   var sliderInterval;
   var kcount;
 
+  $('#tasks_completed').val('0');
+
 
   function showQuestion() {
     working = true;
@@ -214,9 +216,9 @@
 
     if ($(this).val() == 50) {
       $('#slider_div').hide();
-      $('#tasks_completed').val(parseInt($('#tasks_completed').val())+1);
+      $('#tasks_completed').val((parseInt($('#tasks_completed').val())+1).toString());
       $('#slider').val(0);
-      $('#value').text($(this).val());
+      $('#value').text(0);
     }
   })
 

@@ -46,7 +46,6 @@ class Subsession(BaseSubsession):
         self.voted_against = 0
 
         for p in self.get_players():
-            print(p)
             if p.placed_in_group == True and p.leave_group_choice == False:
                 if p.vote_to_remove == True:
                     self.voted_for = self.voted_for + 1
@@ -91,7 +90,7 @@ class Player(BasePlayer):
     vote_to_remove = models.BooleanField()
     commit_choice_first = models.BooleanField()
 
-    tasks_completed = models.IntegerField(initial=0)
+    tasks_completed = models.CharField(initial="0")
     play_choice1 = models.CharField()
     play_choice2 = models.CharField()
     play_choice3 = models.CharField()
