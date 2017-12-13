@@ -14,13 +14,13 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'effort_group_pat'
     players_per_group = None
-    num_rounds = 2
+    num_rounds = 3
 
     points_per_task = c(100)
     points_per_task_number = 100
     point_conversion = 0.2
 
-    worktime_minutes = 6
+    worktime_minutes = 15
     trial_minutes = 2
     temptation_interval_minutes = 3
 
